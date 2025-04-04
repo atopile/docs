@@ -31,14 +31,14 @@
             ]
           },
           {
-            "group": "Tutorial",
+            "group": "Essentials",
             "pages": [
-              "tutorial/1-the-ato-language",
-              "tutorial/2-the-ato-compiler",
-              "tutorial/3-ato-create-component",
-              "tutorial/4-packages",
-              "tutorial/5-layout",
-              "tutorial/6-saving-your-work"
+              "essentials/1-the-ato-language",
+              "essentials/2-the-ato-compiler",
+              "essentials/3-create-component",
+              "essentials/4-packages",
+              "essentials/5-layout",
+              "essentials/6-saving-your-work"
             ]
           },
           {
