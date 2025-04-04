@@ -11,7 +11,16 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "atopile",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Github",
+              "href": "https://github.com/atopile/atopile",
+              "icon": "github"
+            }
+          ]
+        },
         "groups": [
           {
             "group": "Get Started",
@@ -37,7 +46,8 @@
             "pages": [
               "guides/installation",
               "guides/git",
-              "guides/faebryk"
+              "guides/faebryk",
+              "guides/development"
             ]
           },
           {
@@ -50,7 +60,16 @@
         ]
       },
       {
-        "tab": "Development",
+        "tab": "HiL Framework",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Github",
+              "href": "https://github.com/atopile/hil",
+              "icon": "github"
+            }
+          ]
+        },
         "groups": [
           {
             "group": "Core Development",
@@ -69,18 +88,13 @@
           "icon": "box"
         },
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
           "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "href": "https://discord.gg/95jYuPmnUW",
+          "icon": "discord"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://blog.atopile.io",
           "icon": "newspaper"
         }
       ]
@@ -94,20 +108,20 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:hi@atopile.io"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get HiL",
+      "href": "https://form.typeform.com/to/DLMYKqCu"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/atopile_io",
+      "github": "https://github.com/atopile",
+      "linkedin": "https://linkedin.com/company/atopile"
     }
   }
 }

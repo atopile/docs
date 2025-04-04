@@ -1,4 +1,7 @@
-# Development
+---
+title: 'Development'
+description: 'How to set up your development environment for atopile.'
+---
 
 ## Prerequisites
 
@@ -16,8 +19,9 @@ You should have at minimum:
 
 You can increase the verbosity of atopile by using the `-v`, `-vv` or `-vvv` flags, eg. `ato -vv build`
 
-!!! tip "Flag Location"
-    Flags are placed after the `ato` command and before the command you want to run. For example, `ato -vv build` will run the build command with the verbose flag set to the highest level, while `ato build -vv` will not work.
+<Tip title="Flag Location">
+  Flags are placed after the `ato` command and before the command you want to run. For example, `ato -vv build` will run the build command with the verbose flag set to the highest level, while `ato build -vv` will not work.
+</Tip>
 
 ### Debugging
 
@@ -25,7 +29,10 @@ You can start the CLI in debug mode by using the `--debug` flag, eg. `ato --debu
 
 This will run a [`debugpy`](https://github.com/microsoft/debugpy) server on port `5678` which you can connect to with the VSCode built-in debugger.
 
-![connect debugger](assets/images/debugger-vscode.png)
+<Frame caption="Connect debugger in VSCode">
+  <img src="/assets/images/debugger-vscode.png" alt="connect debugger" />
+</Frame>
 
-??? help "Syntax highlighting isn't working"
-    If you're having trouble with syntax highlighting in the debugger, it might be because VSCode sets up a mapping between the remote and local file paths by default - remove it.
+<Tip title="Syntax highlighting isn't working">
+  If you're having trouble with syntax highlighting in the debugger, it might be because VSCode sets up a mapping between the remote and local file paths by default - remove it.
+</Tip>
