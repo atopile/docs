@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "linden",
+  "name": "atopile",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#f95015",
+    "light": "#f95015",
+    "dark": "#f95015"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -18,38 +18,44 @@
             "pages": [
               "introduction",
               "quickstart",
-              "development"
+              "changelog"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Tutorial",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "tutorial/1-the-ato-language",
+              "tutorial/2-the-ato-compiler",
+              "tutorial/3-ato-create-component",
+              "tutorial/4-packages",
+              "tutorial/5-layout",
+              "tutorial/6-saving-your-worx"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/installation",
+              "guides/git",
+              "guides/faebryk"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/attributes",
+              "reference/config"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Development",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Core Development",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "development"
             ]
           }
         ]
@@ -57,6 +63,11 @@
     ],
     "global": {
       "anchors": [
+        {
+          "anchor": "Packages",
+          "href": "https://packages.atopile.io",
+          "icon": "box"
+        },
         {
           "anchor": "Documentation",
           "href": "https://mintlify.com/docs",
