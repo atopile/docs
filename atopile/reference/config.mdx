@@ -1,8 +1,14 @@
-# `ato.yaml` Config Reference
+---
+title: 'config'
+description: 'The `ato.yaml` config file'
+icon: 'gear'
+---
 
-### [`ato-version`](#ato-version) {: #ato-version }
+### `ato-version`
 
-!json-schema::$defs.ProjectConfig.properties.ato-version.description
+The compiler version with which the project was developed.
+
+This is used by the compiler to ensure the code in this project is compatible with the compiler version.
 
 **Default value**: current compiler version
 
@@ -14,9 +20,9 @@
 ato-version: 0.3.0
 ```
 
-### [`paths.src`](#paths.src) {: #paths.src }
+### `paths.src`
 
-!json-schema::$defs.ProjectPaths.properties.src.description
+Project source code directory
 
 **Default value**: `elec/src`
 
@@ -29,9 +35,9 @@ paths:
   src: "./"
 ```
 
-### [`paths.layout`](#paths.layout) {: #paths.layout }
+### `paths.layout`
 
-!json-schema::$defs.ProjectPaths.properties.layout.description
+Project layout directory where KiCAD projects are stored and searched for
 
 **Default value**: `elec/layout`
 
@@ -44,9 +50,9 @@ paths:
   layout: "./"
 ```
 
-### [`dependencies`](#dependencies) {: #dependencies }
+### `dependencies`
 
-!json-schema::$defs.Dependency.description
+List of dependencies for the project
 
 **Default value**: `[]` or no dependencies
 
@@ -67,18 +73,18 @@ dependencies:
     version_spec: ">=3.0.0,<4.0.0"
 ```
 
-### [`builds`](#builds) {: #builds }
+### `builds`
 
-!json-schema::$defs.BuildTargetConfig.description
+Build targets for the project
 
 **Default value**: `{}` or no build targets
 
 **Type**: `dict` (see "builds.name" etc... below for details)
 
 
-### [`builds.entry`](#builds.entry) {: #builds.entry }
+### `builds.entry`
 
-!json-schema::$defs.BuildTargetConfig.properties.entry.description
+Entry point for the build
 
 **Default value**: Required, no default
 
@@ -93,9 +99,9 @@ builds:
 ```
 
 
-### [`builds.targets`](#builds.targets) {: #builds.targets }
+### `builds.targets`
 
-!json-schema::$defs.BuildTargetConfig.properties.targets.description
+Build targets for the project
 
 **Default value**: `["__default__"]`, which is a special value.
 
@@ -112,12 +118,10 @@ builds:
 ```
 
 
-### [`builds.exclude_targets`](#builds.exclude_targets) {: #builds.exclude_targets }
-
-!json-schema::$defs.BuildTargetConfig.properties.exclude_targets.description
+### `builds.exclude_targets`
 
 Excluding the `mfg-data` target is useful, for example, for CI build targets that represent a
- module, but not a board you'd manufacture.
+module, but not a board you'd manufacture.
 
 **Default value**: `[]`, don't actively exclude any targets
 
