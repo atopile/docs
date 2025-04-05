@@ -25,36 +25,37 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
-              "quickstart",
-              "changelog"
+              "atopile/introduction",
+              "atopile/quickstart",
+              "atopile/quickstart2",
+              "atopile/changelog"
             ]
           },
           {
             "group": "Essentials",
             "pages": [
-              "essentials/1-the-ato-language",
-              "essentials/2-the-ato-compiler",
-              "essentials/3-create-component",
-              "essentials/4-packages",
-              "essentials/5-layout",
-              "essentials/6-saving-your-work"
+              "atopile/essentials/1-the-ato-language",
+              "atopile/essentials/2-the-ato-compiler",
+              "atopile/essentials/3-create-component",
+              "atopile/essentials/4-packages",
+              "atopile/essentials/5-layout",
+              "atopile/essentials/6-saving-your-work"
             ]
           },
           {
             "group": "Guides",
             "pages": [
-              "guides/installation",
-              "guides/git",
-              "guides/faebryk",
-              "guides/development"
+              "atopile/guides/install",
+              "atopile/guides/git",
+              "atopile/guides/faebryk",
+              "atopile/guides/development"
             ]
           },
           {
             "group": "Reference",
             "pages": [
-              "reference/attributes",
-              "reference/config"
+              "atopile/reference/attributes",
+              "atopile/reference/config"
             ]
           }
         ]
@@ -74,7 +75,7 @@
           {
             "group": "Core Development",
             "pages": [
-              "development"
+              "hil/placeholder"
             ]
           }
         ]

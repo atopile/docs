@@ -1,22 +1,20 @@
-# Quickstart
+---
+title: 'Quickstart2'
+description: 'Get started with atopile'
+icon: 'rocket'
+---
 
 ## Install `ato` CLI
 
-!!! warning
-    Windows isn't yet natively supported. Install via WSL or Docker using ubuntu 24.
+import QuickstartInstall from '/snippets/atopile/guides/quick-install.mdx';
 
-=== "macOS"
+<QuickstartInstall />
 
-    --8<-- "docs/guides/installation.md:brew"
+<Warning>
+    Windows isn't yet natively supported. You can install atopile via WSL or Docker using ubuntu 24.04.
+</Warning>
 
-=== "Other Platforms"
-
-    --8<-- "docs/guides/installation.md:uv"
-
-
-
-!!! info
-    See the [installation guide](guides/installation.md) for more installation options.
+See the [installation guide](guides/installation) for more details.
 
 
 ## Editor recommendations
@@ -29,7 +27,7 @@ Download it here: https://www.cursor.com/
 
 We also strongly recommend installing the [atopile VSCode/Cursor extension](https://marketplace.visualstudio.com/items?itemName=atopile.atopile). It provides syntax highlighting and some LSP support.
 
-![atopile extension](assets/images/vscode-plugin.png)
+![atopile extension](/atopile/images/vscode-plugin.png)
 
 ## Installing KiCAD
 
@@ -106,9 +104,9 @@ The most important three files in there are:
 
 Here's a simple example of atopile code:
 
-```ato
---8<-- "examples/ch1_0_quickstart.ato"
-```
+import QuickstartExample from '/snippets/atopile/examples/ch1_0_quickstart.mdx';
+
+<QuickstartExample />
 
 Update `demo.ato` (of whatever you've named your source file) with this code.
 
@@ -127,7 +125,7 @@ INFO     Build successful! 🚀
 Then KiCAD will open up (that's what the `--open` flag does).
 You shiny ✨ new  component should be waiting for you in the top left corner (possibly off the current screen).
 
-![layout](assets/images/quickstart-layout.png)
+![layout](/atopile/images/quickstart-layout.png)
 
 Oh yeah! We're in business. 😎
 

@@ -1,6 +1,20 @@
-# Using `git` for Hardware
+---
+title: 'git'
+description: 'Using `git` for Hardware'
+icon: 'git-alt'
+---
 
 `git` is a powerful way to version control your design and one of the key reason we started atopile. If you don't know about `git`, we strongly recommend learning it. There is a high chance you will end up loving it.
+
+## Basic Usage
+
+```sh
+git clone <repo-url>
+git checkout -b <new-branch-name>
+git add <file-to-commit>
+git commit -m "This commits adds an LED indicator..."
+git push -u origin HEAD
+```
 
 ## Workflow Overview
 
@@ -32,16 +46,6 @@ flowchart TD
     J -->|Changes requested in review| D
     J -->|Approved| K[**Merge** to main]
     K --> L[Your changes are now combined with the work of everyone else on the project]
-```
-
-## Basic Usage
-
-```sh
-git clone <repo-url>
-git checkout -b <new-branch-name>
-git add <file-to-commit>
-git commit -m "This commits adds an LED indicator..."
-git push -u origin HEAD
 ```
 
 ## More resources

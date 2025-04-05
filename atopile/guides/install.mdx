@@ -4,9 +4,10 @@ description: 'How to install atopile'
 icon: 'terminal'
 ---
 
-import UvInstall from '/snippets/uv-install.mdx';
+import QuickstartInstall from '/snippets/atopile/guides/quick-install.mdx';
 
-# Installation
+<QuickstartInstall />
+
 
 Ultimately `atopile` is a python package, so you can install it where and however you want - but some python package managers are better than others. Here's how we recommend you install atopile.
 
@@ -20,7 +21,23 @@ brew install atopile/tap/atopile
 
 ## `uv` <small>(recommended for other platforms)</small>
 
-<UvInstall />
+1. Install `uv`. See: https://docs.astral.sh/uv/getting-started/installation/
+
+2. Install atopile with `uv`
+
+    ``` sh
+    uv tool install atopile
+    ```
+
+    !!! important
+        `uv` if this is the first time you've used `uv` for a tool install, it might give you another command to run to finish setup.
+        Do it.
+
+3. Check `ato` is installed
+
+    ``` sh
+    ato --version
+    ```
 
 
 ### Editable installation (Best for development)
