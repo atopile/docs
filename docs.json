@@ -25,9 +25,7 @@
           {
             "group": "Get Started",
             "pages": [
-              "atopile/introduction",
               "atopile/quickstart",
-              "atopile/quickstart2",
               "atopile/changelog"
             ]
           },
@@ -56,26 +54,6 @@
             "pages": [
               "atopile/reference/attributes",
               "atopile/reference/config"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "HiL Framework",
-        "global": {
-          "anchors": [
-            {
-              "anchor": "Github",
-              "href": "https://github.com/atopile/hil",
-              "icon": "github"
-            }
-          ]
-        },
-        "groups": [
-          {
-            "group": "Core Development",
-            "pages": [
-              "hil/placeholder"
             ]
           }
         ]

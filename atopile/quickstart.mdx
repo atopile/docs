@@ -1,97 +1,141 @@
 ---
 title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+description: 'Take-off'
+icon: 'rocket'
 ---
 
-## Setup your development
+## Install `ato` CLI
 
-Learn how to update your docs locally and deploy them to the public.
+import QuickstartInstall from '/snippets/atopile/guides/quick-install.mdx';
 
-### Edit and preview
+<QuickstartInstall />
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 
-    1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `docs.json` is): ``` mintlify dev ```
-    <Note>
-      If you’re currently using the legacy ```mint.json``` configuration file, please update the Mintlify CLI:
+<Warning>
+    Windows isn't yet natively supported. You can install atopile via WSL or Docker using ubuntu 24.04.
+</Warning>
+
+See the [installation guide](guides/installation) for more details.
 
 
-      ```npm i -g mintlify@latest```
-      And run the new upgrade command in your docs repository:
+## Editor recommendations
 
-      ```mintlify upgrade```
-      You should now be using the new ```docs.json``` configuration file. Feel free to delete the ```mint.json``` file from your repository.
-    </Note>
-  </Accordion>
-</AccordionGroup>
+atopile officially supports VSCode and Cursor.
 
-### Deploy your changes
+We recommend using Cursor. AI is already getting very good at writing `ato` code.
 
-<AccordionGroup>
+Download it here: https://www.cursor.com/
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
+We also strongly recommend installing the [atopile VSCode/Cursor extension](https://marketplace.visualstudio.com/items?itemName=atopile.atopile). It provides syntax highlighting and some LSP support.
 
-</AccordionGroup>
+![atopile extension](/atopile/images/vscode-plugin.png)
 
-## Update your docs
+## Installing KiCAD
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
+If you are on OSx, and you have `brew` installed, you can install KiCAD with:
 
-<CardGroup>
+``` sh
+brew install kicad
+```
 
-<Card title="Add Content With MDX" icon="file" href="/essentials/markdown">
-  Add content to your docs with MDX syntax.
-</Card>
+Otherwise, you can download it from here: https://www.kicad.org/download/
 
-<Card
-  title="Add Code Blocks"
-  icon="square-code"
-  href="/essentials/code"
->
-  Add code directly to your docs with syntax highlighting.
-</Card>
 
-<Card
-  title="Add Images"
-  icon="image"
-  href="/essentials/images"
->
-  Add images to your docs to make them more engaging.
-</Card>
+## A typical workflow
 
-<Card
-  title="Add Custom Components"
-  icon="puzzle-piece"
-  href="/essentials/reusable-snippets"
->
-  Add templates to your docs to make them more reusable.
-</Card>
+1. Sketch your circuit on paper.
+2. Search https://packages.atopile.io and Github for pre-existing modules you need, and use `ato install` to install them.
+3. Design a module and do it's calculations using `ato` code.
+4. Run `ato build` to compile your project choose components to suit your design and update your layout (PCB) file.
+5. Use KiCAD to layout any changes
+6. Repeat steps 3-5 until you're happy with your design.
+7. When you're done with your design, push your changes to your repo.
+8. CI will automatically build and test your project, and generate the manufacturing files you need to order your PCBs.
+9. Take these manufacturing files to your PCB manufacturer to get your PCBAs
 
-</CardGroup>
+``` mermaid
+graph TB
+  A[Sketch] --> AA['ato create project'];
+  AA --> BB[Pick a module];
+  BB --> B{Package exists?};
+  B -->|Yes 🥳| C['ato install'];
+  B -->|No| CC['ato create component' and Design it! 👨‍💻];
+  C --> D[Hook it up];
+  CC --> D;
+  D --> E['ato build'];
+  E --> F[Layout using KiCAD];
+  F --> G{More modules to do?};
+  G -->|Yes| BB;
+  G -->|No 🎉| H[Download gerbers from CI ✅];
+  H --> I[Order PCBs from manufacturer 🛠️];
+```
+
+## Creating a project
+
+```sh
+ato create project
+```
+
+And follow the prompts to create a new project from the template.
+
+## Project Structure
+
+Your new project will have a file structure like this:
+
+```
+.
+├── LICENSE                    # 1. Default MIT license. You are free to change this
+├── README.md                  # 2. A description of your project
+├── ato.yaml                   # 3. atopile's configuration file
+├── build                      # 4. Build artifacts and cache (not version controlled)
+├── layouts                    # 5. KiCAD layout files
+│   └── default                # 6. There's a directory / layout per "build target"
+│       └── default.kicad_pcb  # 7. The layout file that will be updated every time you run `ato build -b default`
+└── demo.ato                   # 8. Your atopile source file
+```
+
+The most important three files in there are:
+
+- `demo.ato` - your atopile source file - this is where you write your atopile code
+- `default.kicad_pcb` - the layout file - this is the "board" file that looks like a PCB, and you can order from
+- `ato.yaml` - atopile's configuration file - this file is how atopile knows this is a project and what to do when you run `ato build`
+
+
+## Hello, World!
+
+Here's a simple example of atopile code:
+
+import QuickstartExample from '/snippets/atopile/examples/ch1_0_quickstart.mdx';
+
+<QuickstartExample />
+
+Update `demo.ato` (of whatever you've named your source file) with this code.
+
+To build it, run:
+
+```sh
+ato build --open
+```
+
+You should see a flurry of activity in the terminal with this message towards the end
+
+```sh
+INFO     Build successful! 🚀
+```
+
+Then KiCAD will open up (that's what the `--open` flag does).
+You shiny ✨ new  component should be waiting for you in the top left corner (possibly off the current screen).
+
+![layout](/atopile/images/quickstart-layout.png)
+
+Oh yeah! We're in business. 😎
+
+
+## What's next?
+
+This isn't even a circuit yet, merely a single component however you now:
+
+- Have the `ato` CLI and compiler setup and working
+- Know how to add components to your design
+- Have KiCAD installed and working
+
+In the [tutorial](tutorial/1-the-ato-language.md) we continue with a real circuit, installing and using packages, maths and version control.
