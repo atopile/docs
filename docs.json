@@ -52,8 +52,34 @@
           {
             "group": "Reference",
             "pages": [
-              "atopile/reference/attributes",
               "atopile/reference/config"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "HiL",
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Github",
+              "href": "https://github.com/atopile/hil",
+              "icon": "github"
+            }
+          ]
+        },
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "hil/introduction",
+              "hil/how-to-win"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "hil/reference/os"
             ]
           }
         ]
