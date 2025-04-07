@@ -4,8 +4,6 @@ description: 'The `ato` command line interface is the main way to interact with 
 icon: 'terminal'
 ---
 
-# 2. The `ato` compiler
-
 The `ato` command line interface is the main way to interact with atopile.
 
 The CLI has tools to:
@@ -27,19 +25,22 @@ application command [options] arguments
 3. `options` are the options for the command, typically zero-to-many of `--some-option option-value`
 4. `arguments` are just like options, but they only take a value. Their position tells the application which argument they are.
 
-Add `--help` to the application/command/subcommand to get more information at any point.
+<Tip>
+    Add `--help` to the application/command/subcommand to get more information at any point.
+</Tip>
 
-!!! tip
-    Some things might have multiple commands/subcommands. Think of it like a menu where, from left to right you're choosing deeper and deeper into the menu.
 
-    If an upper command/application accepts options, those options should go right after the application/command, rather than at the end after subcommands.
+## Command Structure
+Some things might have multiple commands/subcommands. Think of it like a menu where, from left to right you're choosing deeper and deeper into the menu.
 
-    For example, `-v` is a special type of option, called a "flag", which doesn't take a value. It's presence or absence is what matters. It increases the amount of information the compiler will print -> increase it's verbosity.
+If an upper command/application accepts options, those options should go right after the application/command, rather than at the end after subcommands.
 
-    The `-v` flag is an application option, so to use it, place it right after the application name.
+For example, `-v` is a special type of option, called a "flag", which doesn't take a value. It's presence or absence is what matters. It increases the amount of information the compiler will print -> increase it's verbosity.
 
-    ```sh
-    ato -v build
+The `-v` flag is an application option, so to use it, place it right after the application name.
+
+```sh
+ato -v build
     ```
 
 ## Build Process
@@ -65,11 +66,11 @@ graph TD
 
 ## Explaining the hello-world project
 
-!!! important
+<Note>
     This tutorial continues from the [quickstart](../quickstart.md) guide.
 
     If you haven't already, complete it, and then come back here.
-
+</Note>
 With the additional explanation of `ato` code and the [build process](#build-process), it should be a little more clear what's happening now in the [quickstart](../quickstart.md) project.
 
 ```ato

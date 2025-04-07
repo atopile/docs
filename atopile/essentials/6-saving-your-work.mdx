@@ -4,8 +4,6 @@ description: 'atopile strongly recommends using `git` for version control.'
 icon: 'github'
 ---
 
-# 6. Saving Your Work
-
 atopile strongly recommends using `git` for version control.
 
 If you're not yet familiar with `git`, check out our short [`git` guide](../guides/git.md) for a general overview on the workflow.
@@ -72,5 +70,6 @@ It builds in CI as a `frozen` project, meaning it'll try its hardest to rebuild 
 
 Additionally, CI is run to build all targets, which means it will also produce the gerber files to order your PCBs.
 
-!!! tip "Git and CI Best Practice"
+<Tip>
     Consistent use of pull requests and CI pipelines not only improves code quality but also fosters better team collaboration. Keep your `main` branch in a deployable state by merging only after successful CI runs.
+</Tip>
