@@ -4,3 +4,16 @@ description: Talking to the hardware
 icon: code
 ---
 
+Each hardware module includes python bindings, that make it as easy to talk to the hardware as:
+
+```python
+async with hil:
+    await cell.set_voltage(1)
+    await cell.get_voltage()
+```
+
+Check out the [Github repo](https://github.com/atopile/hil/tree/main/software/hil/drivers) for the latest.
+
+<Note>
+    This page is under construction. 🚧
+</Note>
