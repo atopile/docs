@@ -79,13 +79,22 @@
             "group": "Overview",
             "pages": [
               "hil/introduction",
-              "hil/how-to-win"
+              "hil/atopilled"
             ]
           },
           {
-            "group": "Reference",
+            "group": "Build",
             "pages": [
-              "hil/reference/os"
+              "hil/build/hardware",
+              "hil/build/drivers",
+              "hil/build/framework",
+              "hil/build/distribution"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "hil/resources/os"
             ]
           }
         ]
