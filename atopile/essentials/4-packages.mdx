@@ -1,105 +1,30 @@
 ---
 title: '4. Packages'
 description: "One of the key benefits to designing circuit boards with code is that it unlocks modularity. As in software, this modularity means you can package up and reuse modules other's have developed and tested."
-icon: 'box'
+icon: 'cubes'
 ---
 
 One of the key benefits to designing circuit boards with code is that it unlocks modularity. As in software, this modularity means you can package up and reuse modules other's have developed and tested.
 
 ## Finding packages
 
-Check [first-party packages](https://packages.atopile.io/) for a list designed and used internally at atopile. Discussion planning to open this up publicly: see ?495
+Check [first-party packages](https://packages.atopile.io/) for a list designed and used internally at atopile. Discussion planning to open this up publicly
 These are built, known to work and come with a functioning layout too.
 
 Also, Google is your friend. Packages are often publicly available on github or other repositories.
 
-## Installing packages
+## Managing dependencies
 
-Use `ato install` to install packages.
+There are three commands to manage dependencies: `ato add`, `ato sync` and `ato remove`.
 
-For example, this command installs the package named `esp32-s3` from atopile's internal package repository.
+Installed dependencies are kept in sync by all of these commands, and so you don't need to think too mush about managing environments too much.
 
-```bash
-ato install esp32-s3
-```
+If you pull a new project, just run `ato sync` to install the dependencies.
 
-You can also directly specify a git repo URL to install from:
+If you want to add a new dependency, run `ato add {package}`. It'll be added to the `ato.yaml` config file and synced for you.
 
-```bash
-ato install https://github.com/atopile/rp2040
-```
+If you want to remove a dependency, run `ato remove {package}`. It'll be removed from the `ato.yaml` config file and synced for you.
 
-This installs the `rp2040` package from the given repo.
-
-## Versioning
-
-`ato` uses version numbers in the format `x.y.z`, and it's recommended using [semantic versioning](https://semver.org/).
-
-Properly specified dependency versions mean that you get upgrades automatically. That said, if you're too loose with your version requirements, you may end up with a lot of upgrades that break things.
-
-By default, `ato install` is tight with version requirements, and, without other directives, adds a specific githash as your dependency's version specification. This means you always get that exact version of the package when installed on new computers or in CI, but that's often too tight.
-
-`ato` also supports the following version operators:
-
-| Operator | Description                                       |
-| -------- | ------------------------------------------------- |
-| `*`      | Any version                                       |
-| `^`      | Any version with the same major version           |
-| `~`      | Any version with the same major and minor version |
-| `!`      | Not this version                                  |
-| `==`     | Exactly this version                              |
-| `>=`     | Any version greater than or equal to              |
-| `<`      | Any version less than                             |
-
-Version requirements are "AND"-ed together when separated by a comma, and can be "OR"-ed together when separated by a `||`.
-
-Versions may, but don't need to have a `v` prefix.
-
-That means, if you want version `1.2.3` or anything within `1.3`, you can specify `1.2.3 || ~1.3.0`.
-
-The most common operator is `^`, which means "any version with the same major version," which when coupled with semantic versioning means "any version that does at least as much as the version you're specifying without breaking things."
-
-That means you might often use a command like `ato install "some_package^1.2.3"` to add that package to your project.
-
-Versions come from `git` tags.
-
-You can use version requirements to specify which version of a package to install.
-
-Additionally, `git` refs work when prefixed with an `@`. For example `ato install some-package@main` always gets the `main` branch of the `some-package` package. This can be unstable.
-
-## Linked vs. vendored
-
-By default, packages install in the directory `.ato/modules`, which isn't version controlled. Other people installing your project need to run `ato install` to install the same packages on their computer. This is how packages typically work in software, and often works well (as long as you're using good versioning), but, if you plan on making changes to a package that don't make sense to commit back to the upstream repo, you may want to vendor the package instead.
-
-```bash
-ato install --vendor esp32-s3
-```
-
-This copies the package into your project's `src` directory instead, and break the link to the upstream repo.
-
-
-## `import`ing things
-
-Two forms of an `import` statement exist in `ato`:
-
-For standard library imports, you can use the `import` statement:
-
-```ato
-import Something
-```
-
-For imports from other files, you can use the `from ... import ...` statement:
-
-```ato
-from "path/to/file.ato" import Something, SomethingElse
-from "path/to/another/file.py" import SomethingMore  # for fabll modules
-```
-
-The search path for `from ... import ...` is (in order):
-
-1. The current file's directory
-2. The project's `src` directory, as defined by the [`ato.yaml` config file](../reference/config.md#paths.src)
-3. The `.ato/modules` directory within the project's root
-
-
-Check out [the publishing guide](/guides/publish) for more information on how to publish your own packages!
+<Tip>
+    atopile manages dependencies in a similar way to [uv](https://docs.astral.sh/uv/). If you know how that works, think about it in the same way!
+</Tip>
