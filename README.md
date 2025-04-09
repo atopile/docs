@@ -1,6 +1,6 @@
 # atopile docs
 
-Source for [https://docs.atopile.com](https://docs.atopile.com)
+Source for [https://docs.atopile.io](https://docs.atopile.io)
 
 ## Development
 
