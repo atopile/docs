@@ -22,7 +22,7 @@ git push -u origin HEAD
 
 | Term | Definition |
 | --- | --- |
-| Repo or Repository | A collection of files and directories that is version controlled together. |
+| "Repo" or Repository | A collection of files and directories that is version controlled together. |
 | Branch | A "branch" is an isolated space for your changes. |
 | Commit | A "commit" is a snapshot of some changes in that place in time. |
 | Push | A "push" is sending your changes to the remote repo. |
@@ -30,15 +30,15 @@ git push -u origin HEAD
 
 ```mermaid
 flowchart TD
-    AA[Find a project you want to work on on Github] --> A[**Clone** a copy of the repo to your computer]
-    AB[Create a new project on Github] --> A
+    AA[Find a project you want to work on on GitHub] --> A[**Clone** a copy of the repo to your computer]
+    AB[Create a new project on GitHub] --> A
     A --> B["Create an isolated space (or **branch**) for your changes"]
     B --> C[Do some work ⛏️]
     C --> D[Check the **status** of your changes]
     D --> E[**Stage** the changes for one topic]
     E --> F[**Commit** the changes with a message explaining what you did]
     F -->|More work to do on this topic| D
-    F -->|Ready for review| H[**Push** your branch to the **remote** repo on Github]
+    F -->|Ready for review| H[**Push** your branch to the **remote** repo on GitHub]
     H --> I[Create **Pull Request** on GitHub]
     I --> II["Continuous Integration (**CI**) runs tests and ensures your project still builds after your updates"]
     II -->|Tests pass| J[**Review** all the changes]
