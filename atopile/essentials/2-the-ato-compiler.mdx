@@ -6,44 +6,44 @@ icon: 'terminal'
 
 The `ato` command line interface is the main way to interact with atopile.
 
-The CLI has tools to:
+The command-line tool has tools to:
 
- - Build your code to update your PCB
- - Test your design
- - Generate files to order your PCBs from manufacturers
- - Install and manage dependencies
- - Create new projects, components or build-targets
+- Build your code to update your PCB
+- Test your design
+- Generate files to order your PCBs from manufacturers
+- Install and manage dependencies
+- Create new projects, components or build-targets
 
-There's a semi-defacto-standard format to running applications from the terminal, including `ato`.
+There's a semi-defacto-standard format to running apps from the terminal, including `ato`.
 
 ```sh
-application command [options] arguments
+app command [options] arguments
 ```
 
-1. `application` is the name of the application you're running.
-2. `command` is the command, think of it as a "menu option" the application provides.
+1. `app` is the name of the app you're running.
+2. `command` is the command, think of it as a "menu option" the app provides.
 3. `options` are the options for the command, typically zero-to-many of `--some-option option-value`
-4. `arguments` are just like options, but they only take a value. Their position tells the application which argument they are.
+4. `arguments` are just like options, but they only take a value. Their position tells the app which argument they are.
 
 <Tip>
-    Add `--help` to the application/command/subcommand to get more information at any point.
+    Add `--help` to the app/command/subcommand to get more information at any point.
 </Tip>
 
 
-## Command Structure
-Some things might have multiple commands/subcommands. Think of it like a menu where, from left to right you're choosing deeper and deeper into the menu.
+## Command structure
+Some commands might have subcommands. Think of it like a menu where, from left to right you're choosing deeper and deeper into the menu.
 
-If an upper command/application accepts options, those options should go right after the application/command, rather than at the end after subcommands.
+If an upper command/app accepts options, those options should go right after the app/command, rather than at the end after subcommands.
 
-For example, `-v` is a special type of option, called a "flag", which doesn't take a value. It's presence or absence is what matters. It increases the amount of information the compiler will print -> increase it's verbosity.
+For example, `-v` is a special option, called a "flag," which doesn't take a value. Its presence or absence is what matters. It increases the amount of information the compiler prints -> increase its verbosity.
 
-The `-v` flag is an application option, so to use it, place it right after the application name.
+The `-v` flag is an app option, so to use it, place it right after the app name.
 
 ```sh
 ato -v build
     ```
 
-## Build Process
+## Build process
 
 As a rough overview, here's what happens when you run `ato build`:
 
@@ -71,13 +71,13 @@ graph TD
 
     If you haven't already, complete it, and then come back here.
 </Note>
-With the additional explanation of `ato` code and the [build process](#build-process), it should be a little more clear what's happening now in the [quickstart](../quickstart.md) project.
+With the explanation of `ato` code and the [build process](#build-process), it should be a little more clear what's happening now in the [quickstart](../quickstart.md) project.
 
 ```ato
 --8<-- "examples/ch1_0_quickstart.ato"
 ```
 
-Let's break it down:
+Here's a breakdown:
 
 
 ### 1. Import a `Resistor`
@@ -102,9 +102,9 @@ This is the [**entry point**](../reference/config.md#builds.entry) of the build 
 
 ### 4. Set the resistor's `value` attribute
 
-This constrains what components can be picked for this resistor.
+This constrains what components the compiler can pick for this resistor.
 
-For picking, the rated resistance must be wholely within the `value` attribute. The precise way to say this in more CS terms / what atopile says internally is that the picked resistor's resistance must be a subset of the quantity interval defined by the value attribute.
+For picking, the rated resistance must be wholly within the `value` attribute. The precise way to say this in more CS terms / what atopile says internally is that the picked resistor's resistance must be a subset of the quantity interval defined by the value attribute.
 
 ```ato
 --8<-- "examples/ch1_0_quickstart.ato:5:5"
@@ -112,31 +112,31 @@ For picking, the rated resistance must be wholely within the `value` attribute. 
 
 ## Extending it
 
-Let's say our circuit needs a simple voltage divider - and the standard library doesn't exist containing one pre-made and tested for you.
+Suppose the circuit needs a simple voltage divider - and the standard library doesn't exist containing one pre-made and tested for you.
 
-We can easily create our own!
+It's easy to create your own!
 
 ```ato
 --8<-- "examples/ch1_1_bad_voltage_divider.ato"
 ```
 
-Now, this is, technically, a voltage divider. And the compiler will happily build it grabbing the right components etc...
+Now, this is, technically, a voltage divider. And the compiler happily builds it grabbing the right components etc.
 
 But, it's not a good voltage divider.
 
- - There's no clear interface showing how it should be connected to
- - The point of a voltage divider is to scale voltage, but we're left in the dark about what it's scaling actually is
- - There is no documentation on what's going on
+ - There's no clear interface showing how to connect to it
+ - The point of a voltage divider is to scale voltage, but it's unclear what its scaling actually is
+ - No documentation describes what's going on
 
-Let's fix that.
+To fix that:
 
 ```ato
 --8<-- "examples/ch1_2_good_voltage_divider.ato"
 ```
 
-Ooooo yeah! Now we're talking.
+Much better! This is a better approach.
 
-Let's break it down.
+Here's a breakdown:
 
 ### More imports
 
@@ -148,7 +148,7 @@ When possible, import from the standard library.
 
 ### Define a new `module`, named `VoltageDivider`
 
-This means we trivially have as many `VoltageDivider`'s as we want, all configured properly with all the same interfaces.
+This means you can trivially have as many `VoltageDivider`'s as you want, all configured properly with all the same interfaces.
 
 ```ato
 --8<-- "examples/ch1_2_good_voltage_divider.ato:4:4"
@@ -162,7 +162,7 @@ This means we trivially have as many `VoltageDivider`'s as we want, all configur
 
 ### Place external interfaces somewhere obvious
 
-... and use sensible types, like `Power` to expose them.
+Use sensible types, like `Power` to expose them.
 
 ```ato
 --8<-- "examples/ch1_2_good_voltage_divider.ato:15:17"
@@ -170,12 +170,12 @@ This means we trivially have as many `VoltageDivider`'s as we want, all configur
 
 ### Embed the relationships between parameters with `assert`
 
-Read these statements as "make sure the following is true".
+Read these statements as "make sure the following is true."
 
 ```ato
 --8<-- "examples/ch1_2_good_voltage_divider.ato:25:27"
 ```
 
-1. The output voltage will be within the range of the voltage divider ratio equation
+1. The output voltage is within the range of the voltage divider ratio equation
 2. The input voltage must be greater than the output voltage
 3. The current through the bottom resistor must be within the allowed range of the maximum quiescent current
