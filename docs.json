@@ -52,6 +52,7 @@
             "pages": [
               "atopile/guides/install",
               "atopile/guides/git",
+              "atopile/guides/publish",
               "atopile/guides/faebryk",
               "atopile/guides/development"
             ]

@@ -1,17 +1,215 @@
 ---
 title: Publishing Packages
-description: How to publish packages to the public atopile registry
-icon: cubes
+description: Standing on the shoulders of giants
+icon: ship
 ---
 
-You've made something awesome and you want to share it! 🥳 🙌 That's incredbile! By standing on the shoulders of giants, we can all build a better ecosystem together.
+You've made something great and you want to share it. Awesome! 🥳 🙌
 
 The best way to do this is to publish it to the [public atopile registry](https://packages.atopile.io), where it becomes available to everyone to embed in their projects.
 
-## Publishing
+<Steps>
+    <Step title="Add package metadata">
+        Packages need some additional metadata in their `ato.yaml` config to explain what they are, their version and to give you credit.
+    </Step>
+    <Step title="Setup GitHub Action">
+        Install and configure our `atopile/publish-package` action.
+    </Step>
+    <Step title="Publish">
+        The action will automatically package and publish your project whenever you're ready!
+    </Step>
+</Steps>
 
-Publishing is done through the `atopile publish` command.
 
-```bash
-ato publish
-```
+There are two common ways to structure your project. Keep an eye out for the notes on each, as they'll affect your workflow slightly
+1. A **single package** in the repo, like [HiL](https://github.com/atopile/hil).
+2. A **monorepo** with multiple separate packages, like [packages](https://github.com/atopile/packages). This is common when you're a larger org, and have a lot to share.
+{/* 3. A project with multiple **sub-packages**, like [HiL](https://github.com/atopile/hil). This is common when you design something, and then later realise some part of it is useful on its own. */}
+
+
+### Package Metadata
+
+Here's an example of some package metadata. Copying this, and updating it with your own information is a good place to start.
+
+**The first section of the identifier must be your GitHub username or organization name.** This is enforced on upload.
+
+<Tabs>
+    <Tab title="Single Package">
+        Recommendations:
+        - Name the repo the same as the package.
+        - Version the package with releases, and use the tag as the version.
+
+        ```yaml ato.yaml
+        package:
+            identifier: atopile/some-package
+            repository: https://github.com/atopile/some-package
+            authors:
+                - name: Pepper
+                  email: pepper@atopile.io
+                - name: Narayan
+                  email: naraya@atopile.io
+            summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            license: MIT
+            homepage: https://github.com/atopile/some-package
+        ```
+    </Tab>
+    {/* <Tab title="Sub-Packages">
+        Recommendations:
+        - Name the package the same as the repo
+        - Version the package with releases, and use the tag as the version.
+
+        ```yaml
+        package:
+            identifier: atopile/some-project
+            repository: https://github.com/atopile/some-project
+            authors:
+                - name: Pepper
+                email: pepper@atopile.io
+                - name: Narayan
+                email: naraya@atopile.io
+            summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            license: MIT
+            homepage: https://github.com/atopile/some-project
+
+        ```
+    </Tab> */}
+    <Tab title="Monorepo">
+        Recommendations:
+        - Create a separate atopile project for each package
+        - Version the packages with a version in their own `ato.yaml` config
+
+        ```yaml packages/some-package/ato.yaml
+        package:
+            identifier: atopile/some-package
+            repository: https://github.com/atopile/packages
+            version: "0.1.0"
+            authors:
+                - name: Pepper
+                  email: pepper@atopile.io
+                - name: Narayan
+                  email: naraya@atopile.io
+            summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            license: MIT
+            homepage: https://github.com/atopile/packages
+        ```
+    </Tab>
+</Tabs>
+
+Check [below](#package-metadata) for more details on the fields.
+
+
+### Configuring your publish workflow
+
+Publishing is currently supported exclusively through the [atopile/publish-package](https://github.com/atopile/publish-package) action.
+
+<Info>
+    The reason only GitHub is supported at the moment is because we only currently support [GitHub OIDC tokens](https://github.com/atopile/fastapi-github-oidc) for authorization.
+</Info>
+
+
+<Tabs>
+    <Tab title="Single Package">
+        Recommendations:
+        - Name the repo the same as the package.
+        - Version the package with releases, and use the tag as the version.
+
+        ```yaml
+        on:
+          release:
+            types: [created]
+
+          jobs:
+            release:
+              if: github.event.release.draft != true && github.event.release.prerelease != true
+              runs-on: ubuntu-latest
+              steps:
+                - uses: actions/checkout@v4
+                - uses: atopile/publish-package@main
+        ```
+    </Tab>
+    <Tab title="Monorepo">
+        Recommendations:
+        - Create a separate atopile project for each package
+        - Version the packages with a version in their own `ato.yaml` config
+        - Use the `package-entrypoint` input to specify the package to publish
+
+        There are a bunch of ways to configure the workflow, but here's an example from our own [packages](https://github.com/atopile/packages/blob/main/.github/workflows/main.yml) repo.
+    </Tab>
+    {/* Add a sub-package example here */}
+</Tabs>
+
+
+### Hitting "publish"!
+
+This must be a valid [semver](https://semver.org/) string, with the following additional restrictions:
+- No leading `v` character
+- No pre-release or dev tags
+- No build metadata
+
+For example: `1.2.3`
+
+<Tabs>
+    <Tab title="Single Package">
+        Create a [release on GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository), tagged as the version you want to publish.
+    </Tab>
+    <Tab title="Monorepo">
+        Update the version in the `ato.yaml` config for the package you want to publish, and merge to main.
+        ```yaml packages/some-package/ato.yaml {2}
+        package:
+            version: "0.1.0"  # <- Update this
+        ```
+    </Tab>
+    {/* Add a sub-package example here */}
+</Tabs>
+
+## Reference
+
+Nitty gritty details for advanced configuration.
+
+### Package Metadata
+
+#### `package.identifier`
+
+The identifier is a unique identifier for the package. It must be in the form `{owner}/{name}`
+, where `owner` is your GitHub username or organization name.
+
+If the URL to your repository is `https://github.com/atopile/packages`, then your "owner" is `atopile`.
+You can name your package whatever you want, but it must be unique within the owner.
+
+#### `package.repository`
+
+The repository is the URL to the repository containing the package source code. This should be a link to the repository on GitHub.
+
+#### `package.version` [optional]
+
+The version is the version of the package.
+
+This must be a valid [semver](https://semver.org/) string, with the following additional restrictions:
+- No leading `v` character
+- No pre-release or dev tags
+- No build metadata
+
+If you want to dynamically generate the version leave this blank, and use the `package-version` action input instead.
+
+#### `package.authors`
+
+The authors are the people who should be credited for the package.
+This is a list of, each with a `name` and `email`.
+
+#### `package.summary`
+
+The summary is a short description of the package.
+
+#### `package.license`
+
+The license describing the terms under which the package is released.
+
+#### `package.homepage`
+
+The homepage is the URL to the website where the package is documented or sold.
+This can be a link to your GitHub repository, or perhaps your website where you sell or document it.
+
+
+### GitHub Action
+
+For the most up to date details on the GitHub Action, see the [GitHub Action README](https://github.com/atopile/publish-package).
