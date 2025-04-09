@@ -16,16 +16,31 @@ mintlify dev
 ```bash
 brew install vale
 npm install -g mdx2vast
+
+vale sync  # install styles
 ```
 
 ```bash
-vale **
-# or
-vale my-file.mdx
+vale .
 ```
 
-### Upgrading styles:
+
+## Link checking
+
+Internal links:
+```bash
+npm install -g mintlify
+```
 
 ```bash
-vale lint
+mintlify broken-links
+```
+
+External links:
+```bash
+brew install lychee
+```
+
+```bash
+lychee .
 ```
