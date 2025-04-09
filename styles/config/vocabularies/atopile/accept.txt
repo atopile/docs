@@ -1,5 +1,6 @@
 (?i)dev
 (?i)faebryk
+(?i)repo
 atopile
 atopilled
 baudrate
@@ -7,15 +8,15 @@ config
 gerber
 githash
 github|GitHub
+ing
 LDO
 microcontroller
 multimeters
 param
 PCB[s]?
 PCBA[s]?
-(?i)repo
 stackability
 subcommand[s]?
+upvote
 vendored
 VSCode
-ing
