@@ -18,6 +18,17 @@ jobs:
         with:
           fail_on_error: true
 
+  internal-links:
+    name: internal-links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+      - run: npm install -g mintlify
+
+      - run: mintlify broken-links
+
   lychee:
     name: lychee
     runs-on: ubuntu-latest
