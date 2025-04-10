@@ -11,10 +11,12 @@ github|GitHub
 ing
 LDO
 microcontroller
+monorepo
 multimeters
 param
 PCB[s]?
 PCBA[s]?
+semver
 stackability
 subcommand[s]?
 upvote
