@@ -139,6 +139,16 @@
       "href": "https://form.typeform.com/to/DLMYKqCu"
     }
   },
+  "redirects": [
+    {
+      "source": "/publish-package",
+      "destination": "/atopile/guides/publish"
+    },
+    {
+      "source": "/package-management",
+      "destination": "/atopile/essentials/4-packages"
+    }
+  ],
   "footer": {
     "socials": {
       "youtube": "https://www.youtube.com/@atopile_io",
