@@ -1,0 +1,5 @@
+#!/bin/sh
+
+vale --minAlertLevel=error .
+mintlify broken-links
+lychee .

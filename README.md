@@ -44,3 +44,10 @@ brew install lychee
 ```bash
 lychee .
 ```
+
+## Quality Control
+
+Run all checks locally:
+```bash
+./test
+```
