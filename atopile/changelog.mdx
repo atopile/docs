@@ -16,7 +16,9 @@ If you're looking to publish your own packages, [check out the guide](guides/pub
 
 ## Upgrading
 
-Run `ato refactor upgrade` to upgrade your project to the latest compiler.
+- The `ato-version` field in your `ato.yaml` is now called `requires-atopile`. It remains a version spec, and we recommend that you set it to `^0.4.0`.
+- The structure of dependencies have changed! It's best to remap them to the new registry, using the `ato add` command. **Note:** that many of the package names have also changed.
+- The `import` identifiers have also changed - to match the new project identifiers. Update these to `from "{package-identifier}/file.ato" import MyThing`.
 
 </Update>
 

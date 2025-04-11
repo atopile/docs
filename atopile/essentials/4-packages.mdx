@@ -28,3 +28,15 @@ If you want to remove a dependency, run `ato remove {package}`. It'll be removed
 <Tip>
     atopile manages dependencies in a similar way to [uv](https://docs.astral.sh/uv/). If you know how that works, think about it in the same way!
 </Tip>
+
+## Development dependencies
+
+You can install dependencies from git:
+
+`ato add git://{git-url}`
+
+or from a local directory:
+
+`ato add file://./path/to/package`
+
+Importantly, you cannot publish a package that depends on unpublished packages.
