@@ -117,6 +117,15 @@ Publishing is currently supported exclusively through the [atopile/publish-packa
 </Info>
 
 
+Whichever workflow you use, you'll need to add the [GitHub OIDC permissions](https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect) to the workflow:
+
+```yaml
+permissions:
+  contents: write
+  packages: write
+```
+
+
 <Tabs>
     <Tab title="Single Package">
         Recommendations:
@@ -131,6 +140,10 @@ Publishing is currently supported exclusively through the [atopile/publish-packa
           jobs:
             release:
               if: github.event.release.draft != true && github.event.release.prerelease != true
+              permissions:
+                contents: write
+                packages: write
+
               runs-on: ubuntu-latest
               steps:
                 - uses: actions/checkout@v4
