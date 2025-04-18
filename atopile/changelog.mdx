@@ -5,6 +5,24 @@ icon: 'rectangle-history'
 
 {/* https://www.mintlify.com/docs/content/components/update */}
 
+<Update label="v0.5" description="`.required` interfaces, i2c checks and `[accessors]`">
+
+If the `.required` attribute is set `True` on an interface, that interface MUST be connected to from outside that module.
+Take the example of a `LDO` - you reasonably MUST connect to the power input and outputs.
+The antagonist concept to this is, like python adding a `_leading_underscore` to private variables.
+
+`I2C` interfaces are now checked to ensure they have 900 to 100kΩ pullups on them.
+
+You can access lists and dicts (from stdlib/fabll) using square braces!
+
+(Beta) Windows support! `atopile` now runs on Windows.
+
+## Upgrading
+
+No required changes for upgrading.
+
+</Update>
+
 <Update label="v0.4" description="Packages 📦">
 atopile's package management system has had a huge upgrade!
 
