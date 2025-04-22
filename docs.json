@@ -156,5 +156,11 @@
       "github": "https://github.com/atopile",
       "linkedin": "https://linkedin.com/company/atopile"
     }
+  },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_IIl9Bip0fvyIzQFaOAubMYYM2aNZcn26Y784HcTeMVt",
+      "apiHost": "https://us.i.posthog.com"
+    }
   }
 }
