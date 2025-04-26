@@ -145,6 +145,10 @@
       "destination": "/atopile/guides/publish"
     },
     {
+      "source": "/quickstart",
+      "destination": "/atopile/quickstart"
+    },
+    {
       "source": "/package-management",
       "destination": "/atopile/essentials/4-packages"
     }
