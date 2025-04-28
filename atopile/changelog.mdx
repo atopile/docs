@@ -5,6 +5,26 @@ icon: 'rectangle-history'
 
 {/* https://www.mintlify.com/docs/content/components/update */}
 
+<Update label="v0.6" description="🌈 Artifacts somewhere nice and I2C Addressors">
+
+Added I2C Addressing & Bus viewer
+
+Build artifacts are now included when publishing. This means that when you go to https://packages.atopile.io/, you'll see the build artifacts ready to order or explore.
+
+Added `hide_designators` [config option](/atopile/reference/config#builds-hide-designators).
+
+Improved checks system with [new exclude capability](/atopile/reference/config#builds-exclude-checks)
+
+Disabled required check for top level modules
+
+Enhanced `ato create component` to handle pins named as numbers
+
+## Upgrading
+
+No required changes for upgrading.
+
+</Update>
+
 <Update label="v0.5" description="🌈 Features and Windows support">
 
 If the `.required` attribute is set `True` on an interface, that interface MUST be connected to from outside that module.

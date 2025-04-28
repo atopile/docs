@@ -136,3 +136,41 @@ builds:
           - bom
           - mfg-data
 ```
+
+### `builds.exclude_checks`
+
+A list of checks to exclude. Use qualified name of check e.g
+  - `PCB.requires_drc_check`
+  - `I2C.requires_unique_addresses`
+  - `requires_external_usage`
+
+**Default value**: `[]`, don't actively exclude any targets
+
+**Type**: `list[str]`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        exclude_checks:
+          - PCB.requires_drc_check
+          - I2C.requires_unique_addresses
+          - requires_external_usage
+```
+
+### `builds.hide_designators`
+
+Hide all the designators from the built PCB.
+
+**Default value**: `false`
+
+**Type**: `bool`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        hide_designators: true
+```
