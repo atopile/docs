@@ -73,42 +73,22 @@ graph TD
 </Note>
 With the explanation of `ato` code and the [build process](#build-process), it should be a little more clear what's happening now in the [quickstart](../quickstart.md) project.
 
-```ato
---8<-- "examples/ch1_0_quickstart.ato"
-```
+
+import Ch1_0_Quickstart from '/snippets/examples/ch1_0_quickstart.mdx';
+
+<Ch1_0_Quickstart />
+
 
 Here's a breakdown:
 
 
-### 1. Import a `Resistor`
-
-```ato
---8<-- "examples/ch1_0_quickstart.ato:1:2"
-```
-
-### 2. Define a new `module`, named `App`
-
-This is the [**entry point**](../reference/config.md#builds.entry) of the build (see your `ato.yaml`).
-
-```ato
---8<-- "examples/ch1_0_quickstart.ato:3:3"
-```
-
-### 3. Create an instance of the `Resistor`
-
-```ato
---8<-- "examples/ch1_0_quickstart.ato:4:4"
-```
-
-### 4. Set the resistor's `value` attribute
-
-This constrains what components the compiler can pick for this resistor.
-
-For picking, the rated resistance must be wholly within the `value` attribute. The precise way to say this in more CS terms / what atopile says internally is that the picked resistor's resistance must be a subset of the quantity interval defined by the value attribute.
-
-```ato
---8<-- "examples/ch1_0_quickstart.ato:5:5"
-```
+1. Import a `Resistor`
+2. Define a new `module`, named `App`.
+    This is the [**entry point**](../reference/config.md#builds.entry) of the build (see your `ato.yaml`).
+3. Create an instance of the `Resistor`
+4. Set the resistor's `value` attribute
+    This constrains what components the compiler can pick for this resistor.
+    For picking, the rated resistance must be wholly within the `value` attribute. The precise way to say this in more CS terms / what atopile says internally is that the picked resistor's resistance must be a subset of the quantity interval defined by the value attribute.
 
 ## Extending it
 
@@ -116,66 +96,36 @@ Suppose the circuit needs a simple voltage divider - and the standard library do
 
 It's easy to create your own!
 
-```ato
---8<-- "examples/ch1_1_bad_voltage_divider.ato"
-```
+import Ch1_1_BadVoltageDivider from '/snippets/examples/ch1_1_bad_voltage_divider.mdx';
+
+<Ch1_1_BadVoltageDivider />
 
 Now, this is, technically, a voltage divider. And the compiler happily builds it grabbing the right components etc.
 
 But, it's not a good voltage divider.
 
- - There's no clear interface showing how to connect to it
- - The point of a voltage divider is to scale voltage, but it's unclear what its scaling actually is
- - No documentation describes what's going on
+- There's no clear interface showing how to connect to it
+- The point of a voltage divider is to scale voltage, but it's unclear what its scaling actually is
+- No documentation describes what's going on
 
 To fix that:
 
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato"
-```
+import Ch1_2_GoodVoltageDivider from '/snippets/examples/ch1_2_good_voltage_divider.mdx';
+
+<Ch1_2_GoodVoltageDivider />
 
 Much better! This is a better approach.
 
 Here's a breakdown:
 
-### More imports
-
-When possible, import from the standard library.
-
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato:1:2"
-```
-
-### Define a new `module`, named `VoltageDivider`
-
-This means you can trivially have as many `VoltageDivider`'s as you want, all configured properly with all the same interfaces.
-
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato:4:4"
-```
-
-### Document with `"""`
-
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato:5:13"
-```
-
-### Place external interfaces somewhere obvious
-
-Use sensible types, like `Power` to expose them.
-
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato:15:17"
-```
-
-### Embed the relationships between parameters with `assert`
-
-Read these statements as "make sure the following is true."
-
-```ato
---8<-- "examples/ch1_2_good_voltage_divider.ato:25:27"
-```
-
-1. The output voltage is within the range of the voltage divider ratio equation
-2. The input voltage must be greater than the output voltage
-3. The current through the bottom resistor must be within the allowed range of the maximum quiescent current
+1. When possible, import from the standard library.
+2. Define a new `module`, named `VoltageDivider`
+    This means you can trivially have as many `VoltageDivider`'s as you want, all configured properly with all the same interfaces.
+3. Document with `"""`
+4. Place external interfaces somewhere obvious
+    Use sensible types, like `Power` to expose them.
+5. Embed the relationships between parameters with `assert`
+    Read these statements as "make sure the following is true."
+    1. The output voltage is within the range of the voltage divider ratio equation
+    2. The input voltage must be greater than the output voltage
+    3. The current through the bottom resistor must be within the allowed range of the maximum quiescent current
