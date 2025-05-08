@@ -110,6 +110,11 @@
           "icon": "box"
         },
         {
+          "anchor": "Support",
+          "href": "https://docs.atopile.io/support",
+          "icon": "question"
+        },
+        {
           "anchor": "Community",
           "href": "https://discord.gg/JY62WubxsP",
           "icon": "discord"
@@ -140,6 +145,10 @@
     }
   },
   "redirects": [
+    {
+      "source": "/support",
+      "destination": "/atopile/support"
+    },
     {
       "source": "/publish-package",
       "destination": "/atopile/guides/publish"
