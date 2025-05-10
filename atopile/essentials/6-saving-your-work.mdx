@@ -6,7 +6,7 @@ icon: 'github'
 
 atopile strongly recommends using `git` for version control.
 
-If you're not yet familiar with `git`, check out the short [`git` guide](../guides/git.md) for a general overview on the workflow.
+If you're not yet familiar with `git`, check out the short [`git` guide](../guides/git.md) for a general overview of the workflow.
 
 ## Committing
 
@@ -18,7 +18,7 @@ If you're not yet familiar with `git`, check out the short [`git` guide](../guid
 
     You can also add all files in a directory by running `git add <directory>`
 
-    This includes the current directory, if you use `git add .` - but careful! This is often a trap and you end up adding a lot of unrelated files. At the start of a project it often makes sense though.
+    This includes the current directory if you use `git add .` — but be careful! This is often a trap, and you end up adding a lot of unrelated files. At the start of a project, however, it often makes sense.
 </Note>
 
 3. Sanity check: `git status`. It'll tell you all the files you've got staged (ready to commit)
@@ -39,7 +39,7 @@ A few paths exist to contribute back to a repository.
 
 If you have permissions to push directly to the repo, by far the easiest way to update it is to contribute directly.
 
-As your project progresses and stabilizes, you typically want to create a new branch and pull-request (PR) for each change you're making, even if you're working alone.
+As your project progresses and stabilizes, you typically want to create a new branch and pull request (PR) for each change you're making, even if you're working alone.
 
 
 ### Directly to `main`
@@ -64,7 +64,7 @@ For a more controlled development process, especially as your project grows, it'
 
 ### Continuous Integration (CI)
 
-atopile's project template include basic CI workflows to check your design, build manufacturing data you can order with and run testing.
+atopile's project template includes basic CI workflows to check your design, build manufacturing data you can order with, and run testing.
 
 It builds in CI as a `frozen` project, meaning it tries its hardest to rebuild your design exactly as it stands, with the exact same parts and layout. When it can't - whether because your source code has changes and the components no longer meet the design, or because the layout is out of date - it fails the build.
 

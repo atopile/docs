@@ -29,7 +29,7 @@ No required changes for upgrading.
 
 If the `.required` attribute is set `True` on an interface, that interface MUST be connected to from outside that module.
 Take the example of a `LDO` - you reasonably MUST connect to the power input and outputs.
-The antagonist concept to this is, like python adding a `_leading_underscore` to private variables.
+The antagonist concept to this is, like python, adding a `_leading_underscore` to private variables.
 
 `I2C` interfaces are now checked to ensure they have 900 to 100kΩ pullups on them.
 
@@ -55,7 +55,7 @@ If you're looking to publish your own packages, [check out the guide](/atopile/g
 ## Upgrading
 
 - The `ato-version` field in your `ato.yaml` is now called `requires-atopile`. It remains a version spec, and we recommend that you set it to `^0.4.0`.
-- The structure of dependencies have changed! It's best to remap them to the new registry, using the `ato add` command. **Note:** that many of the package names have also changed.
+- The structure of dependencies has changed! It's best to remap them to the new registry using the `ato add` command. **Note:** Many of the package names have also changed.
 - The `import` identifiers have also changed - to match the new project identifiers. Update these to `from "{package-identifier}/file.ato" import MyThing`.
 
 </Update>

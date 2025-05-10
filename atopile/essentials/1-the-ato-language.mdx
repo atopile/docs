@@ -13,7 +13,7 @@ A `signal` is a special built-in type of `interface` that represents a single [e
 
 A `component` is a subclass of a `module` that expects to represent a single physical component.
 
-You can also define you own types, in a similar way to define a `class` in Python.
+You can also define your own types, in a similar way to defining a `class` in Python.
 Like classes in most modern languages, you can subclass and inherit from blocks.
 
 ```python
@@ -48,7 +48,7 @@ Configuration of a `module` or `interface` is done by assigning to its attribute
 some_instance.value = 100ohm +/- 10%
 ```
 
-Unlike Python, you don't need to state `self.` Instead any assignments you make within the scope of a block, are automatically assigned to the block.
+Unlike Python, you don't need to state `self.` Instead, any assignments you make within the scope of a block, are automatically assigned to the block.
 
 Built-in attributes influence the behavior of the compiler with respect to the block.
 
@@ -72,9 +72,9 @@ Let's not do that again.
 
 Resistors' resistances must be a resistance; whether `1.23Ω` (option+Z on macOS), `1.23ohm`, `4.56Kohm`, `7.89Mohm` or similar.
 
-Any attribute of any block may have a unit attached written (without a space) after any number.
+Any attribute of any block may have a unit attached, written (without a space) after any number.
 
-Unsurprisingly, caps capacitance needs to be a capacitance; for example, `23.4uF`, other limits in volts, amperes, degrees, and so on.
+Unsurprisingly, a capacitor's capacitance needs to be a capacitance (for example, `23.4uF`); other limits are in volts, amperes, degrees, and so on.
 
 Add units.
 
@@ -83,7 +83,7 @@ Add units.
 Another unfamiliar first-class language feature when dealing with the physical world is the ability (and generally specification)
 to spec tolerances for attributes.
 
-You could try find a `10kΩ` resistor, but it probably won't exist - it'll likely be at least `10kΩ +/- 0.1%` (which you can write!).
+You could try to find a `10kΩ` resistor, but it probably won't exist - it'll likely be at least `10kΩ +/- 0.1%` (which you can write!).
 
 Tolerances can be written in the forms of:
 - `1V to 2V`
@@ -105,7 +105,7 @@ Several legal ways exist to combine them.
 - even `25lb +/- 200g` 🤣
 
 
-### Sweet, so now that all these values are around the place what can be done with them?
+### Sweet, so now that all these values are around the place, what can be done with them?
 
 ✨ **Maths** ✨
 
@@ -130,9 +130,9 @@ assert c within 1Kohm to 10Kohm  # first solved for, then the solution is indepe
 ```
 
 Not sure about you, but this author (Matt) is not fond of working too hard.
-Perhaps you've got a better method, but generally when trying to find resistor values for something even as simple as a voltage divider, one is guessed that seems approximately right, then the other is calculated - giving something that doesn't exist, before finally checking through a few other options close-by until finding a pair that works.
+Perhaps you've got a better method, but generally, when trying to find resistor values for something as simple as a voltage divider, one is guessed that seems approximately right, then the other is calculated—giving something that doesn't exist—before finally checking through a few other nearby options until finding a pair that works.
 
-This is fine and dandy as long as you only care about the ratio of a voltage divider, but as soon as the check for what that does for the regulator's output voltage is needed? Ugh, fine! What about the extremes of the tolerances on those resistors? Fine, it can be done once - but if someone goes to tweak those values for whatever reason, the author is unlikely to be pleased.
+This is fine and dandy as long as you only care about the ratio of a voltage divider, but as soon as the check for what that does for the regulator's output voltage is needed? Ugh, fine! What about the extremes of the tolerances on those resistors? Fine, it can be done once—but if someone goes to tweak those values for whatever reason, the author is unlikely to be pleased.
 
 Therefore, let atopile do it!
 
@@ -140,7 +140,7 @@ atopile automatically solves systems of constraints for you with free variables,
 
 ## Specialization
 
-The `->` operator will specialize a module from it's existing instance, to an instance of the type on the right hand side.
+The `->` operator will specialize a module from its existing instance to an instance of the type on the right-hand side.
 
 ```ato
 some_instance -> AnotherModuleType
@@ -155,8 +155,8 @@ You can import assets by specifying what you want to import and where you want t
 `from "where.ato" import What, Why, Wow`
 
 Notes on that statement:
-- add quotes on the "where.ato" - it's a string
-- `What`, `Why` and `Wow` are capitalized because they are in the source file. It has to match precisely - it's a type and types should be capitalized, though this isn't enforced and you can import things other than types from other files
+- Add quotes on the "where.ato"—it's a string.
+- `What`, `Why`, and `Wow` are capitalized because they are in the source file. It has to match precisely—it's a type, and types should be capitalized, though this isn't enforced, and you can import things other than types from other files.
 
 The import statements are relative to the current project (the root of which is where your `ato.yaml` is), or within the standard library (`.ato/modules/`)
 

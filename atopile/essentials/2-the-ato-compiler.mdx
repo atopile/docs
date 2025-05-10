@@ -14,15 +14,15 @@ The command-line tool has tools to:
 - Install and manage dependencies
 - Create new projects, components or build-targets
 
-There's a semi-defacto-standard format to running apps from the terminal, including `ato`.
+There's a semi-de-facto standard format for running apps from the terminal, including `ato`.
 
 ```sh
 app command [options] arguments
 ```
 
 1. `app` is the name of the app you're running.
-2. `command` is the command, think of it as a "menu option" the app provides.
-3. `options` are the options for the command, typically zero-to-many of `--some-option option-value`
+2. `command` is the command; think of it as a "menu option" the app provides.
+3. `options` are the options for the command, typically zero to many instances of `--some-option option-value`.
 4. `arguments` are just like options, but they only take a value. Their position tells the app which argument they are.
 
 <Tip>
@@ -100,7 +100,7 @@ import Ch1_1_BadVoltageDivider from '/snippets/examples/ch1_1_bad_voltage_divide
 
 <Ch1_1_BadVoltageDivider />
 
-Now, this is, technically, a voltage divider. And the compiler happily builds it grabbing the right components etc.
+Now, this is, technically, a voltage divider. And the compiler happily builds it, grabbing the right components etc.
 
 But, it's not a good voltage divider.
 
@@ -120,7 +120,7 @@ Here's a breakdown:
 
 1. When possible, import from the standard library.
 2. Define a new `module`, named `VoltageDivider`
-    This means you can trivially have as many `VoltageDivider`'s as you want, all configured properly with all the same interfaces.
+    This means you can trivially have as many `VoltageDivider`s as you want, all configured properly with all the same interfaces.
 3. Document with `"""`
 4. Place external interfaces somewhere obvious
     Use sensible types, like `Power` to expose them.

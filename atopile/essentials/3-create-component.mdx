@@ -6,13 +6,13 @@ icon: 'plus'
 
 This embedded tool helps template `ato` code based on a component. Today, it supports JLCPCB components.
 
-It can run as both an interactive tool, or with command line arguments. Go ahead and run it interactively.
+It can run as both an interactive tool or with command-line arguments. Go ahead and run it interactively.
 
 ```bash
 ato create component
 ```
 
-You'll be prompted for a search term of a component. This may be:
+You'll be prompted for a search term for a component. This may be:
 
  - A JLCPCB part number (for example `C7426`)
  - An **exact** manufacturer part number (for example `NE5532DR`)
@@ -52,8 +52,8 @@ Let's break it down.
 The `component` keyword tells the compiler that a new component class is being specified, which is a subclass of `module`.
 
 The `lcsc_id` attribute tells the compiler it can pick that JLCPCB part to fill this spot.
-The `manufacturer` and `mpn` attributes together tell fully specify which component this is as well.
-If you're making a component class of a specific component, it's typically a good idea to include at least either the `lcsc_id` or the `mpn` + `manufacturer`.
+The `manufacturer` and `mpn` attributes together fully specify which component this is as well.
+If you're making a component class for a specific component, it's typically a good idea to include at least either the `lcsc_id` or the `mpn` + `manufacturer`.
 
 The `datasheet_url` and `designator_prefix` attributes are optional, but it's a good idea to include them. They're self-explanatory.
 
