@@ -1,49 +1,33 @@
 ---
-title: 'Quickstart'
-description: 'Take-off'
-icon: 'rocket'
+title: "Quickstart"
+description: "Take-off"
+icon: "rocket"
 ---
 
-## Install `ato` CLI
+See the [installation guide](./guides/install) for advanced setups.
+For the simple way to get started, read on.
 
-import QuickstartInstall from '/snippets/atopile/guides/quick-install.mdx';
+import QuickstartInstall from "/snippets/atopile/guides/quick-install.mdx";
 
 <QuickstartInstall />
 
-See the [installation guide](./guides/install) for more details.
+## Trying out an example
 
+Press `Ctrl+Shift+P` and search for `atopile: Open Example`.
 
-## Editor recommendations
+![open example](./images/quick-select-example.png)
 
-atopile officially supports VSCode and Cursor.
+Choose any example you like from the selection.
+After confirming wait for the `ato menu bar` to appear:
 
-We recommend using Cursor. AI is already getting very good at writing `ato` code.
+![ato menu bar](/atopile/images/ato-menu-bar.png)
 
-Download it here: https://www.cursor.com/
+Press on the play button to compile the example.
+You will be greeted by the logs in the terminal:
 
-We also strongly recommend installing the [atopile VSCode/Cursor extension](https://marketplace.visualstudio.com/items?itemName=atopile.atopile). It provides syntax highlighting and some LSP support.
+![compile example](/atopile/images/ato-example-build.png)
 
-![atopile extension](./images/vscode-plugin.png)
-
-<Accordion title="(Experimental) MCP server">
-    Set up an MCP server for this documentation with
-
-    ``` sh
-    npx mint-mcp add atopile
-    ```
-</Accordion>
-
-
-## Installing KiCAD
-
-If you are on macOS, and you have `brew` installed, you can install KiCAD with:
-
-``` sh
-brew install kicad
-```
-
-Otherwise, you can download it from here: https://www.kicad.org/download/
-
+If you have KiCAD installed, you can now press on the PCB icon in the ato menu bar to open the layout file.
 
 ## A typical workflow
 
@@ -57,7 +41,7 @@ Otherwise, you can download it from here: https://www.kicad.org/download/
 8. CI will automatically build and test your project, and generate the manufacturing files you need to order your PCBs.
 9. Take these manufacturing files to your PCB manufacturer to get your PCBAs.
 
-``` mermaid
+```mermaid
 graph TB
   A[Sketch] --> AA['ato create project'];
   AA --> BB[Pick a module];
@@ -104,12 +88,11 @@ The most important three files in there are:
 - `default.kicad_pcb` - the layout file - this is the "board" file that looks like a PCB, and you can order from
 - `ato.yaml` - atopile's configuration file - this file is how atopile knows this is a project and what to do when you run `ato build`
 
-
 ## Hello, World!
 
 Here's a simple example of atopile code:
 
-import QuickstartExample from '/snippets/atopile/examples/ch1_0_quickstart.mdx';
+import QuickstartExample from "/snippets/atopile/examples/ch1_0_quickstart.mdx";
 
 <QuickstartExample />
 
@@ -128,12 +111,11 @@ INFO     Build successful! 🚀
 ```
 
 Then KiCAD will open up (that's what the `--open` flag does).
-Your shiny ✨ new  component should be waiting for you in the top left corner (possibly off the current screen).
+Your shiny ✨ new component should be waiting for you in the top left corner (possibly off the current screen).
 
 ![layout](/atopile/images/quickstart-layout.png)
 
 Oh yeah! We're in business. 😎
-
 
 ## What's next?
 

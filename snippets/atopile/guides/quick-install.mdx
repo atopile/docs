@@ -1,11 +1,48 @@
-<CodeGroup>
+## Install via VSCode/Cursor (Recommended)
 
-```sh macOS
-brew install atopile/tap/atopile
+atopile officially supports VSCode and Cursor.
+
+We recommend using Cursor. AI is already getting very good at writing `ato` code.
+
+Download it here: https://www.cursor.com/
+
+Once you have VScode/Cursor just install the [atopile VSCode/Cursor extension](vscode:extension/atopile.atopile).
+
+![atopile extension](/atopile/images/vscode-plugin.png)
+
+After installation it will prompt you to install the `ato` CLI. Click the `Install Automatically` button.
+
+![atopile extension install](/atopile/images/vscode-plugin-install-popup.png)
+
+<Accordion title="(Experimental) MCP server">
+    Set up an MCP server for this documentation with
+
+    ``` sh
+    npx mint-mcp add atopile
+    ```
+
+</Accordion>
+
+## Installing KiCAD
+
+If you want to layout or route PCBs you will need to install [KiCAD](https://www.kicad.org/download/).
+
+<CodeGroup>
+```sh macOS (brew)
+brew install kicad
+```
+
+```sh Arch Linux
+sudo pacman -S kicad
+```
+
+```sh Ubuntu
+sudo apt install kicad
 ```
 
 ```sh other
-# See install guide 👇
+https://www.kicad.org/download/
+# or click the KiCAD link above
 ```
 
 </CodeGroup>
