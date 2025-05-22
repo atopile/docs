@@ -150,6 +150,10 @@
       "destination": "/atopile/support"
     },
     {
+      "source": "/installation",
+      "destination": "/atopile/guides/install"
+    },
+    {
       "source": "/publish-package",
       "destination": "/atopile/guides/publish"
     },
