@@ -54,6 +54,7 @@
               "atopile/guides/git",
               "atopile/guides/publish",
               "atopile/guides/faebryk",
+              "atopile/guides/fabll",
               "atopile/guides/development"
             ]
           },
@@ -97,10 +98,6 @@
   },
   "navbar": {
     "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@atopile.io"
-      }
     ]
   },
   "redirects": [
