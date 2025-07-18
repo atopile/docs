@@ -14,6 +14,7 @@ LDO
 microcontroller
 monorepo
 multimeters
+nonos
 param
 PCB[s]?
 PCBA[s]?
