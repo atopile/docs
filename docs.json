@@ -64,42 +64,6 @@
             ]
           }
         ]
-      },
-      {
-        "tab": "HiL",
-        "global": {
-          "anchors": [
-            {
-              "anchor": "GitHub",
-              "href": "https://github.com/atopile/hil",
-              "icon": "github"
-            }
-          ]
-        },
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": [
-              "hil/introduction",
-              "hil/atopilled"
-            ]
-          },
-          {
-            "group": "Build",
-            "pages": [
-              "hil/build/hardware",
-              "hil/build/drivers",
-              "hil/build/framework",
-              "hil/build/distribution"
-            ]
-          },
-          {
-            "group": "Resources",
-            "pages": [
-              "hil/resources/os"
-            ]
-          }
-        ]
       }
     ],
     "global": {
@@ -137,12 +101,7 @@
         "label": "Support",
         "href": "mailto:hi@atopile.io"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Get HiL",
-      "href": "https://form.typeform.com/to/DLMYKqCu"
-    }
+    ]
   },
   "redirects": [
     {
