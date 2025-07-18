@@ -6,6 +6,8 @@ atopile
 atopilled
 baudrate
 config
+fabll
+faebryk
 gerber
 githash
 github|GitHub

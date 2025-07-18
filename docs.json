@@ -54,6 +54,7 @@
               "atopile/guides/git",
               "atopile/guides/publish",
               "atopile/guides/faebryk",
+              "atopile/guides/fabll",
               "atopile/guides/development"
             ]
           },
@@ -80,7 +81,7 @@
         },
         {
           "anchor": "Community",
-          "href": "https://discord.gg/JY62WubxsP",
+          "href": "https://discord.gg/C9kZgkGS",
           "icon": "discord"
         },
         {
@@ -97,10 +98,6 @@
   },
   "navbar": {
     "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@atopile.io"
-      }
     ]
   },
   "redirects": [
