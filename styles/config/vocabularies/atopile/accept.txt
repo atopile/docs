@@ -6,6 +6,8 @@ atopile
 atopilled
 baudrate
 config
+fabll
+faebryk
 gerber
 githash
 github|GitHub
@@ -14,6 +16,7 @@ LDO
 microcontroller
 monorepo
 multimeters
+nonos
 param
 PCB[s]?
 PCBA[s]?

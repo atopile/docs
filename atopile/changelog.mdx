@@ -5,6 +5,65 @@ icon: 'rectangle-history'
 
 {/* https://www.mintlify.com/docs/content/components/update */}
 
+<Update label="v0.11 (Draft)" description="🚧 In Development">
+
+This version is currently under development. Stay tuned for updates!
+
+For up-to-date minor changes check out the [GitHub Releases](https://github.com/atopile/atopile/releases).
+
+
+</Update>
+
+<Update label="v0.10" description="🎉 VSCode Extension Revolution & AI Integration">
+
+Massive VSCode extension improvements with embedded package browser, KiCanvas PCB viewer, and 3D model viewer with GLB export. Added Model Context Protocol (MCP) support enabling AI-assisted development workflows.
+
+Multi-net support for complex routing configurations. Enhanced component lifecycle management with better datasheet handling and footprint loading from dependencies.
+
+Significantly improved Windows support fixing symlink permissions, PosixPath errors, and KiCad plugin issues. Better package management with automatic dependency syncing.
+
+Deterministic builds with stable file hashing and consistent net naming. CLI improvements including telemetry, better DRC error messages, and detection of CI providers.
+
+
+</Update>
+
+<Update label="v0.9" description="🔧 Component Lifecycle Management & 3D Models">
+
+Introduced comprehensive component lifecycle management for tracking part availability and obsolescence. Added support for 3D models in packages with automatic model rebuilding.
+
+Language Server Protocol (LSP) improvements including hover information, definition navigation, and enhanced syntax highlighting in VSCode.
+
+Better error handling with improved logging and diagnostic messages. Fixed deterministic net naming and part selection issues.
+
+Enhanced CLI with better part import path display and archive folder for logs.
+
+## Upgrading
+
+Modules using `footprint =` will need to transition to parts.
+
+</Update>
+
+<Update label="v0.8" description="📝 Enhanced Language Server & Syntax Highlighting">
+
+Major Language Server Protocol (LSP) upgrade providing real-time syntax and compile-time error reporting. VSCode extension refactored with auto-installation of atopile and enhanced syntax highlighting.
+
+Improved snippets and trailing comment support. Fixed KiCad file format issues including pad zone connections and dimension handling.
+
+Better development workflow with automatic rebuilding of editable packages when using `uv sync`.
+
+</Update>
+
+<Update label="v0.7" description="🔌 Extended Language Features & I2C Improvements">
+
+Extended atopile language capabilities with new syntax features. Enhanced I2C support with addressors for 1 and 2 bit implementations and isolated bus checking.
+
+Improved `ato create component` command to handle missing signals and numeric pin names. Better syntax error formatting in the CLI.
+
+Library updates including adjustable regulator improvements and bridgeable trait for regulators.
+
+
+</Update>
+
 <Update label="v0.6" description="🌈 Artifacts somewhere nice and I2C Addressors">
 
 Added I2C Addressing & Bus viewer
