@@ -1,0 +1,132 @@
+---
+title: '7. Traits'
+description: 'Traits are a way to extend the functionality of a module.'
+icon: 'copy-plus'
+---
+
+# Traits
+
+Traits in ato are a way to extend the functionality of a module.
+
+Currently the following traits are supported:
+
+## can_bridge_by_name
+
+This trait enables using the [sperm operator `~>`](./1-the-ato-language.mdx) to make a "bridging" connection over a module.
+
+For example:
+
+```ato
+module BridgableModule:
+    """
+    Module that can be bridged
+    """
+    input = new ElectricLogic
+    output = new ElectricLogic
+
+    trait can_bridge_by_name<input_name="input", output_name="output">
+
+module MainModule:
+    bridgable_module_a = new BridgableModule
+    bridgable_module_b = new BridgableModule
+
+    input_signal = new ElectricLogic
+    output_signal = new ElectricLogic
+
+    input_signal ~> bridgable_module_a ~> bridgable_module_b ~> output_signal
+```
+
+The default input_name and output_name are `input` and `output` respectively, but you can use any name of any interface you want.
+
+It is even possible to bridge with different interface types, as long as they match the interface type in the other side of the connection.
+
+```ato
+module BridgableModule:
+    """
+    Module that can be bridged with a different interface type
+    """
+    input = new ElectricLogic
+    output = new I2C
+
+    trait can_bridge_by_name
+
+module MainModule:
+    bridgable_module = new BridgableModule
+
+    input_signal = new ElectricLogic
+    output_signal = new I2C
+
+    input_signal ~> bridgable_module ~> output_signal
+```
+
+<Note>
+Import with:
+
+```ato
+#pragma experiment("MODULE_TEMPLATING")
+#pragma experiment("BRIDGE_CONNECT")
+#pragma experiment("TRAITS")
+import can_bridge_by_name
+```
+</Note>
+
+## has_single_electric_reference_shared
+
+This trait is very useful to connect all the electric references within the module together.
+
+Instead of doing this:
+
+```ato
+module SomeModule:
+    logic_a = new ElectricLogic
+    logic_b = new ElectricLogic
+    power = new ElectricPower
+
+    power ~ logic_a.reference
+    power ~ logic_b.reference
+```
+
+You can do this:
+
+```ato
+module SomeModule:
+    """
+    Module with 1 single reference power rail:
+    - power is connected to logic_a.reference and logic_b.reference
+    """
+    logic_a = new ElectricLogic
+    logic_b = new ElectricLogic
+    power = new ElectricPower
+
+    trait has_single_electric_reference_shared
+```
+
+if you only want to connect the lv (gnd) of the references together, you can do this:
+
+```ato
+module SomeModule:
+    """
+    Module with 3 different reference power rails:
+    - logic_a.reference/power_a
+    - logic_b.reference
+    - power_c
+    """
+    logic_a = new ElectricLogic
+    logic_b = new ElectricLogic
+    power_a = new ElectricPower
+    power_c = new ElectricPower
+
+    logic_a.reference ~ power_a
+
+    trait has_single_electric_reference_shared<gnd_only=true>
+```
+
+<Note>
+Import with:
+
+```ato
+#pragma experiment("MODULE_TEMPLATING")
+#pragma experiment("TRAITS")
+import has_single_electric_reference_shared
+```
+</Note>
