@@ -11,35 +11,38 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 # Base path to the atopile library source
-LIBRARY_PATH = Path("/Users/nicholaskrstevski/github/atopile/src/faebryk/library")
-ATTRIBUTES_PATH = Path("/Users/nicholaskrstevski/github/atopile/src/atopile/attributes.py")
+LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "library"
+ATTRIBUTES_PATH = Path(__file__).parent.parent / "atopile" / "src" / "atopile" / "attributes.py"
 
+# Not all traits are functional or reasonable to expose to users
 functional_trait_names = [
     'can_bridge',
     'can_bridge_by_name',
     'has_single_electric_reference',
-    'is_pickable'
+    'is_pickable',
+    'requires_pulls',
 ]
+excluded_attributes = {"datasheet_url", "designator_prefix", "footprint", "suggest_net_name"}
 
-def extract_component_info(component_name: str) -> Optional[Dict[str, Any]]:
-    """Extract detailed information from a component file."""
-    component_file = LIBRARY_PATH / f"{component_name}.py"
+def extract_module_info(module_name: str) -> Optional[Dict[str, Any]]:
+    """Extract detailed information from a module file."""
+    module_file = LIBRARY_PATH / f"{module_name}.py"
     
-    if not component_file.exists():
-        print(f"Component file not found: {component_file}")
+    if not module_file.exists():
+        print(f"module file not found: {module_file}")
         return None
     
     try:
-        with open(component_file, 'r', encoding='utf-8') as f:
+        with open(module_file, 'r', encoding='utf-8') as f:
             content = f.read()
         
         tree = ast.parse(content)
         
-        # Find the component class
+        # Find the module class
         for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef) and node.name == component_name:
-                component_info = {
-                    "name": component_name,
+            if isinstance(node, ast.ClassDef) and node.name == module_name:
+                module_info = {
+                    "name": module_name,
                     "docstring": ast.get_docstring(node),
                     "parameters": [],
                     "traits": [],
@@ -66,9 +69,9 @@ def extract_component_info(component_name: str) -> Optional[Dict[str, Any]]:
                                 field_info = analyze_field_assignment(item, field_name, field_docstring)
                                 if field_info:
                                     if field_info["type"] == "parameter":
-                                        component_info["parameters"].append(field_info)
+                                        module_info["parameters"].append(field_info)
                                     elif field_info["type"] == "interface":
-                                        component_info["interfaces"].append(field_info)
+                                        module_info["interfaces"].append(field_info)
                     
                     elif isinstance(item, ast.AnnAssign):
                         # Handle annotated assignments like "scl: F.ElectricLogic"
@@ -87,7 +90,7 @@ def extract_component_info(component_name: str) -> Optional[Dict[str, Any]]:
                             field_info = analyze_annotated_assignment(item, field_name, field_docstring)
                             if field_info:
                                 if field_info["type"] == "interface":
-                                    component_info["interfaces"].append(field_info)
+                                    module_info["interfaces"].append(field_info)
                     
                     elif isinstance(item, ast.FunctionDef):
                         if item.name.startswith('__'):
@@ -101,14 +104,14 @@ def extract_component_info(component_name: str) -> Optional[Dict[str, Any]]:
                         
                         # Categorize based on decorator and name
                         if func_info["decorator"] == "property":
-                            component_info["properties"].append(func_info)
+                            module_info["properties"].append(func_info)
                         elif (func_info["decorator"] == "L.rt_field" and is_rt_field_returning_trait(item)) or item.name in ['pickable', 'can_bridge', 'simple_value_representation']:
-                            component_info["traits"].append(func_info)
+                            module_info["traits"].append(func_info)
                 
-                return component_info
+                return module_info
                 
     except Exception as e:
-        print(f"Error parsing {component_name} file: {e}")
+        print(f"Error parsing {module_name} file: {e}")
         return None
 
 def analyze_field_assignment(node: ast.Assign, field_name: str, docstring: Optional[str] = None) -> Optional[Dict[str, Any]]:
@@ -355,277 +358,92 @@ def get_trait_description(trait_name: str) -> str:
         print(f"Error reading trait file {trait_name}.py: {e}")
         return ""
 
-def generate_component_markdown(component_info: Dict[str, Any], global_attributes: List[Dict[str, Any]], global_attributes_docstring: Optional[str]) -> str:
-    """Generate the complete markdown documentation for a component."""
+def append_mkdn_parameter(param: dict[str, Any])-> str:
+    param_name = param["name"]
+    param_units = param.get("units", "")
+    param_desc = param.get("description", "")
     
-    component_name = component_info["name"]
+    # Add unit info to the type
+    param_type = param_units if param_units else "string"
+    
+    # Only include description if it's not empty
+    if param_desc.strip():
+        return f"<ParamField path='{param_name}' type='{param_type}'>\n\n{param_desc}\n</ParamField>\n\n"
+    else:
+        return f"<ParamField path='{param_name}' type='{param_type}'>\n</ParamField>\n\n"
+
+def append_mkdn_trait(trait: dict[str, Any])-> str:
+    trait_name = trait["name"]
+    trait_desc = get_trait_description(trait_name)
+    
+    # Get the actual trait class name for proper linking
+    trait_url_name = trait_name.replace("_", "-")
+    trait_link = f"/atopile/api-reference/traits/{trait_url_name}"
+    traits_m = ""
+    if trait_name in functional_trait_names:
+        traits_m += f"[{trait_name}]({trait_link})\n\n"
+    else:
+        traits_m += f"**{trait_name}**\n\n"
+    if trait_desc.strip():
+        traits_m += f"{trait_desc}\n\n"
+    return traits_m
+
+def generate_module_markdown(module_info: Dict[str, Any], icon_name: str, global_attributes: List[Dict[str, Any]], global_attributes_docstring: Optional[str]) -> str:
+    """Generate the complete markdown documentation for a module."""
+    
+    module_name = module_info["name"]
     
     # Build parameters section
     parameters_md = ""
-    if component_info.get("parameters"):
+    if module_info.get("parameters"):
         parameters_md = "\n## Parameters\n\n"
-        for param in component_info["parameters"]:
-            param_name = param["name"]
-            param_units = param.get("units", "")
-            param_desc = param.get("description", "")
-            
-            # Add unit info to the type
-            param_type = param_units if param_units else "string"
-            
-            # Only include description if it's not empty
-            if param_desc.strip():
-                parameters_md += f"""<ParamField path="{param_name}" type="{param_type}">
-  {param_desc}
-</ParamField>
-
-"""
-            else:
-                parameters_md += f"""<ParamField path="{param_name}" type="{param_type}">
-</ParamField>
-
-"""
+        for param in module_info["parameters"]:
+            parameters_md += append_mkdn_parameter(param)
 
     # Build interfaces section  
     interfaces_md = ""
-    if component_info.get("interfaces"):
+    if module_info.get("interfaces"):
         interfaces_md = "\n## Interfaces\n\n"
-        for interface in component_info["interfaces"]:
-            interface_name = interface["name"]
-            interface_desc = interface.get("description", "")
-            interface_type = interface.get("interface_type", "Electrical")
-            
-            if interface.get("count", 1) > 1:
-                interface_type = f"{interface_type}[{interface['count']}]"
-            
-            # Only include description if it's not empty
-            if interface_desc.strip():
-                interfaces_md += f"""<ParamField path="{interface_name}" type="{interface_type}">
-  {interface_desc}
-</ParamField>
-
-"""
-            else:
-                interfaces_md += f"""<ParamField path="{interface_name}" type="{interface_type}">
-</ParamField>
-
-"""
+        for interface in module_info["interfaces"]:
+            interfaces_md += append_mkdn_parameter(interface)
 
     # Build properties section
     properties_md = ""
-    if component_info.get("properties"):
+    if module_info.get("properties"):
         properties_md = "\n## Properties\n\n"
-        for prop in component_info["properties"]:
-            prop_name = prop["name"]
-            prop_desc = prop.get("docstring", "") or ""
-            
-            # Only include description if it's not empty
-            if prop_desc and prop_desc.strip():
-                properties_md += f"""<ParamField path="{prop_name}" type="Electrical" readonly>
-  {prop_desc}
-</ParamField>
-
-"""
-            else:
-                properties_md += f"""<ParamField path="{prop_name}" type="Electrical" readonly>
-</ParamField>
-
-"""
+        for prop in module_info["properties"]:
+            properties_md += append_mkdn_parameter(prop)
 
     # Build traits section
     traits_md = ""
-    if component_info.get("traits"):
+    if module_info.get("traits"):
         traits_md = "\n## Traits\n\n"
-        for trait in component_info["traits"]:
-            trait_name = trait["name"]
-            trait_desc = get_trait_description(trait_name)
-            
-            # Get the actual trait class name for proper linking
-            trait_url_name = trait_name.replace("_", "-")
-            trait_link = f"/atopile/api-reference/traits/{trait_url_name}"
-            
-            if trait_desc.strip():
-                traits_md += f"[{trait_name}]({trait_link})\n\n{trait_desc}\n\n"
-            else:
-                traits_md += f"[{trait_name}]({trait_link})\n\n"
+        for trait in module_info["traits"]:
+            traits_md += append_mkdn_trait(trait)
+
 
     # Build global attributes section
     global_attributes_md = ""
     if global_attributes:
         # Filter out specific attributes that shouldn't be in docs
-        excluded_attributes = {"datasheet_url", "designator_prefix", "footprint", "suggest_net_name"}
         filtered_attributes = [attr for attr in global_attributes 
                               if attr["name"] not in excluded_attributes]
-        
         if filtered_attributes:  # Only create section if there are attributes to show
             global_attributes_md = "\n## Global Attributes\n\n"
-            
             # Add class docstring if available
             if global_attributes_docstring and global_attributes_docstring.strip():
                 global_attributes_md += f"{global_attributes_docstring.strip()}\n\n"
-            
             for attr in filtered_attributes:
-                attr_name = attr["name"]
-                attr_desc = attr.get("docstring", "")
-                
-                # Only include description if it's not empty
-                if attr_desc.strip():
-                    global_attributes_md += f"""<ParamField path="{attr_name}" type="string">
-  {attr_desc}
-</ParamField>
+                attr['description'] = attr.get("docstring", "")
+                global_attributes_md += append_mkdn_parameter(attr)
 
-"""
-                else:
-                    global_attributes_md += f"""<ParamField path="{attr_name}" type="string">
-</ParamField>
-
-"""
-
-    # Component description
-    description = component_info.get("docstring") or ""
+    # module description
+    description = module_info.get("docstring") or ""
     
     # Generate the complete markdown
-    markdown = f"""---
-title: "{component_name}"
-icon: "microchip"
-description: "{description}"
----
-
-{parameters_md}{interfaces_md}{properties_md}{traits_md}{global_attributes_md}"""
+    markdown = f'---\n\ntitle: "{module_name}"\nicon: {icon_name}\ndescription: "{description}"\n---\n\n{parameters_md}{interfaces_md}{properties_md}{traits_md}{global_attributes_md}'
 
     return markdown
-
-def generate_interface_markdown(interface_name: str) -> str:
-    """Generate markdown for an interface with detailed parameter and field extraction."""
-    # Try to extract interface info from source using the same approach as components
-    interface_info = extract_component_info(interface_name)
-    
-    if not interface_info:
-        # Fallback to basic extraction if component extraction fails
-        interface_file = LIBRARY_PATH / f"{interface_name}.py"
-        docstring = ""
-        
-        if interface_file.exists():
-            try:
-                with open(interface_file, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                
-                tree = ast.parse(content)
-                
-                # Find the interface class
-                for node in ast.walk(tree):
-                    if isinstance(node, ast.ClassDef) and node.name == interface_name:
-                        docstring = ast.get_docstring(node) or ""
-                        break
-                        
-            except Exception as e:
-                print(f"Error parsing {interface_name}: {e}")
-        
-        description = docstring or ""
-        
-        return f"""---
-title: "{interface_name}"
-icon: "right-left"
-description: "{description}"
----
-"""
-    
-    # Use the extracted component info to generate detailed interface documentation
-    description = interface_info.get("docstring") or ""
-    
-    # Build parameters section
-    parameters_md = ""
-    if interface_info.get("parameters"):
-        parameters_md = "\n## Parameters\n\n"
-        for param in interface_info["parameters"]:
-            param_name = param["name"]
-            param_units = param.get("units", "")
-            param_desc = param.get("description", "")
-            
-            # Add unit info to the type
-            param_type = param_units if param_units else "string"
-            
-            # Only include description if it's not empty
-            if param_desc.strip():
-                parameters_md += f"""<ParamField path="{param_name}" type="{param_type}">
-  {param_desc}
-</ParamField>
-
-"""
-            else:
-                parameters_md += f"""<ParamField path="{param_name}" type="{param_type}">
-</ParamField>
-
-"""
-
-    # Build interface fields section (sub-interfaces)
-    interfaces_md = ""
-    if interface_info.get("interfaces"):
-        interfaces_md = "\n## Interface Fields\n\n"
-        for interface in interface_info["interfaces"]:
-            interface_name_field = interface["name"]
-            interface_desc = interface.get("description", "")
-            interface_type = interface.get("interface_type", "Electrical")
-            
-            if interface.get("count", 1) > 1:
-                interface_type = f"{interface_type}[{interface['count']}]"
-            
-            # Only include description if it's not empty
-            if interface_desc.strip():
-                interfaces_md += f"""<ParamField path="{interface_name_field}" type="{interface_type}">
-  {interface_desc}
-</ParamField>
-
-"""
-            else:
-                interfaces_md += f"""<ParamField path="{interface_name_field}" type="{interface_type}">
-</ParamField>
-
-"""
-
-    # Build properties section
-    properties_md = ""
-    if interface_info.get("properties"):
-        properties_md = "\n## Properties\n\n"
-        for prop in interface_info["properties"]:
-            prop_name = prop["name"]
-            prop_desc = prop.get("docstring", "") or ""
-            
-            # Only include description if it's not empty
-            if prop_desc and prop_desc.strip():
-                properties_md += f"""<ParamField path="{prop_name}" type="property" readonly>
-  {prop_desc}
-</ParamField>
-
-"""
-            else:
-                properties_md += f"""<ParamField path="{prop_name}" type="property" readonly>
-</ParamField>
-
-"""
-
-    # Build traits section
-    traits_md = ""
-    if interface_info.get("traits"):
-        traits_md = "\n## Traits\n\n"
-        for trait in interface_info["traits"]:
-            trait_name = trait["name"]
-            trait_desc = get_trait_description(trait_name)
-            
-            # Get the actual trait class name for proper linking
-            trait_url_name = trait_name.replace("_", "-")
-            trait_link = f"/atopile/api-reference/traits/{trait_url_name}"
-            
-            if trait_desc.strip():
-                traits_md += f"[{trait_name}]({trait_link})\n\n{trait_desc}\n\n"
-            else:
-                traits_md += f"[{trait_name}]({trait_link})\n\n"
-
-    return f"""---
-title: "{interface_name}"
-icon: "right-left"
-description: "{description}"
----
-{parameters_md}{interfaces_md}{properties_md}{traits_md}"""
 
 def generate_trait_markdown(trait_name: str) -> str:
     """Generate markdown for a trait."""
@@ -635,15 +453,10 @@ def generate_trait_markdown(trait_name: str) -> str:
     if not description:
         description = ""
     
-    return f"""---
-title: "{trait_name}"
-#icon: "fingerprint"
-description: "{description}"
----
-"""
+    return f"""---\n\ntitle: "{trait_name}"\nicon: "fingerprint"\ndescription: "{description}"\n---\n\n"""
 
 def get_all_library_files() -> Dict[str, List[str]]:
-    """Get all component, interface, and trait files from the library based on direct inheritance."""
+    """Get all components, interface, and trait files from the library based on direct inheritance."""
     if not LIBRARY_PATH.exists():
         print(f"Library path not found: {LIBRARY_PATH}")
         return {"components": [], "interfaces": [], "traits": []}
@@ -659,10 +472,9 @@ def get_all_library_files() -> Dict[str, List[str]]:
             
         try:
             with open(py_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
+                content = f.read()        
+
             tree = ast.parse(content)
-            
             # Find class definitions and check direct inheritance
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef):
@@ -744,13 +556,8 @@ def clear_existing_docs():
 
 def generate_all_docs():
     """Generate documentation for all library components, interfaces, and traits."""
-    print("Clearing existing documentation files...")
     clear_existing_docs()
-    
-    # Extract global attributes once for all components
-    print("Extracting Global Attributes...")
     global_attributes, global_attributes_docstring = extract_global_attributes()
-    print(f"Found {len(global_attributes)} global attributes")
     
     # Get all library files
     library_files = get_all_library_files()
@@ -759,55 +566,40 @@ def generate_all_docs():
     # Generate component pages
     components_path = base_path / "components"
     components_path.mkdir(parents=True, exist_ok=True)
-    
     print(f"\nGenerating {len(library_files['components'])} component pages...")
-    for component_name in library_files['components']:  # Remove limit [:10]
-        print(f"  Processing {component_name}...")
-        component_info = extract_component_info(component_name)
-        
+    for component_name in library_files['components']:
+        component_info = extract_module_info(component_name)  
         if component_info:
             file_path = components_path / f"{component_name.lower()}.mdx"
-            content = generate_component_markdown(component_info, global_attributes, global_attributes_docstring)
-            
+            content = generate_module_markdown(component_info, "microchip", global_attributes, global_attributes_docstring)
             with open(file_path, 'w') as f:
                 f.write(content)
-            
-            print(f"    Created {file_path}")
-        else:
-            print(f"    Failed to extract info for {component_name}")
     
-    # # Generate interface pages
-    # interfaces_path = base_path / "interfaces"
-    # interfaces_path.mkdir(parents=True, exist_ok=True)
-    
-    # print(f"\nGenerating {len(library_files['interfaces'])} interface pages...")
-    # for interface_name in library_files['interfaces']:  # Remove limit [:10]
-    #     print(f"  Processing {interface_name}...")
-    #     file_path = interfaces_path / f"{interface_name.lower().replace('_', '-')}.mdx"
-    #     content = generate_interface_markdown(interface_name)
-        
-    #     with open(file_path, 'w') as f:
-    #         f.write(content)
-        
-    #     print(f"    Created {file_path}")
+    # Generate interface pages
+    interfaces_path = base_path / "interfaces"
+    interfaces_path.mkdir(parents=True, exist_ok=True)
+    for interface_name in library_files['interfaces']:
+        interface_info = extract_module_info(interface_name)
+        if interface_info:
+            file_path = interfaces_path / f"{interface_name.lower().replace('_', '-')}.mdx"
+            content = generate_module_markdown(interface_info, "right-left", None, None)
+            with open(file_path, 'w') as f:
+                f.write(content)
     
     # Generate trait pages  
     traits_path = base_path / "traits"
     traits_path.mkdir(parents=True, exist_ok=True)
-
+    
     # Manually select functional traits
     functional_traits = [trait for trait in library_files['traits'] if trait in functional_trait_names]
-    
-    print(f"\nGenerating {len(functional_traits)} trait pages...")
-    for trait_name in functional_traits:  # Remove limit [:10]
-        print(f"  Processing {trait_name}...")
+    for trait_name in functional_traits:
         file_path = traits_path / f"{trait_name.replace('_', '-')}.mdx"
-        content = generate_trait_markdown(trait_name)
+        # content = generate_trait_markdown(trait_name)
+        trait_info = extract_module_info(trait_name)
+        content = generate_module_markdown(trait_info, "right-left", None, None)
         
         with open(file_path, 'w') as f:
             f.write(content)
-            
-        print(f"    Created {file_path}")
 
 def update_navigation():
     """Update docs.json Library Reference section with only existing files in api-reference folder."""
@@ -941,29 +733,5 @@ def update_navigation():
     print(f"🔄 Only existing .mdx files are included in navigation")
 
 if __name__ == "__main__":
-    import sys
-    
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "--update-nav-only":
-            print("Updating navigation in docs.json...")
-            update_navigation()
-            print("\n✅ Navigation update complete!")
-        elif sys.argv[1] == "--clear-only":
-            print("Clearing existing documentation files...")
-            clear_existing_docs()
-            print("✅ Clear complete!")
-        elif sys.argv[1] == "--help":
-            print("Usage:")
-            print("  python generate-all-docs.py                  # Generate all docs + update navigation")
-            print("  python generate-all-docs.py --update-nav-only # Update navigation only")
-            print("  python generate-all-docs.py --clear-only      # Clear existing docs only")
-            print("  python generate-all-docs.py --help            # Show this help")
-        else:
-            print(f"Unknown option: {sys.argv[1]}")
-            print("Use --help for available options")
-    else:
-        print("Generating atopile library documentation...")
-        generate_all_docs()
-        update_navigation()
-        print("\n✅ Documentation generation complete!")
-        print("📖 View your docs at: http://localhost:3001") 
+    generate_all_docs()
+    update_navigation()

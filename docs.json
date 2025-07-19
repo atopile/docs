@@ -13,6 +13,11 @@
       "dark": "#151413"
     }
   },
+  "styling": {
+    "icons": {
+      "library": "fontawesome"
+    }
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
@@ -105,7 +110,36 @@
               },
               {
                 "group": "Interfaces",
-                "pages": []
+                "pages": [
+                  "atopile/api-reference/interfaces/addressor",
+                  "atopile/api-reference/interfaces/differentialpair",
+                  "atopile/api-reference/interfaces/electrical",
+                  "atopile/api-reference/interfaces/enablepin",
+                  "atopile/api-reference/interfaces/ethernet",
+                  "atopile/api-reference/interfaces/hdmi",
+                  "atopile/api-reference/interfaces/i2c",
+                  "atopile/api-reference/interfaces/i2s",
+                  "atopile/api-reference/interfaces/jtag",
+                  "atopile/api-reference/interfaces/mechanical",
+                  "atopile/api-reference/interfaces/multispi",
+                  "atopile/api-reference/interfaces/pad",
+                  "atopile/api-reference/interfaces/pdm",
+                  "atopile/api-reference/interfaces/power",
+                  "atopile/api-reference/interfaces/rs232",
+                  "atopile/api-reference/interfaces/rs485halfduplex",
+                  "atopile/api-reference/interfaces/sercom",
+                  "atopile/api-reference/interfaces/signal",
+                  "atopile/api-reference/interfaces/spi",
+                  "atopile/api-reference/interfaces/swd",
+                  "atopile/api-reference/interfaces/uart-base",
+                  "atopile/api-reference/interfaces/uart",
+                  "atopile/api-reference/interfaces/usb-c",
+                  "atopile/api-reference/interfaces/usb2-0-if",
+                  "atopile/api-reference/interfaces/usb2-0",
+                  "atopile/api-reference/interfaces/usb3-if",
+                  "atopile/api-reference/interfaces/usb3",
+                  "atopile/api-reference/interfaces/xtalif"
+                ]
               },
               {
                 "group": "Traits",
@@ -113,7 +147,8 @@
                   "atopile/api-reference/traits/can-bridge-by-name",
                   "atopile/api-reference/traits/can-bridge",
                   "atopile/api-reference/traits/has-single-electric-reference",
-                  "atopile/api-reference/traits/is-pickable"
+                  "atopile/api-reference/traits/is-pickable",
+                  "atopile/api-reference/traits/requires-pulls"
                 ]
               }
             ]
