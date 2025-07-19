@@ -26,3 +26,9 @@ subcommand[s]?
 upvote
 vendored
 VSCode
+facto
+input_name
+output_name
+gnd
+can_bridge_by_name
+has_single_electric_reference_shared

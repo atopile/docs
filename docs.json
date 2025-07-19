@@ -13,6 +13,11 @@
       "dark": "#151413"
     }
   },
+  "styling": {
+    "icons": {
+      "library": "fontawesome"
+    }
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
@@ -44,7 +49,8 @@
               "atopile/essentials/3-create-component",
               "atopile/essentials/4-packages",
               "atopile/essentials/5-layout",
-              "atopile/essentials/6-saving-your-work"
+              "atopile/essentials/6-saving-your-work",
+              "atopile/essentials/7-traits"
             ]
           },
           {
@@ -59,9 +65,94 @@
             ]
           },
           {
-            "group": "Reference",
+            "group": "Library Reference",
             "pages": [
-              "atopile/reference/config"
+              {
+                "group": "Components",
+                "pages": [
+                  "atopile/api-reference/components/battery",
+                  "atopile/api-reference/components/bjt",
+                  "atopile/api-reference/components/capacitor",
+                  "atopile/api-reference/components/common_mode_filter",
+                  "atopile/api-reference/components/comparator",
+                  "atopile/api-reference/components/crystal",
+                  "atopile/api-reference/components/crystal_oscillator",
+                  "atopile/api-reference/components/diode",
+                  "atopile/api-reference/components/eeprom",
+                  "atopile/api-reference/components/fan",
+                  "atopile/api-reference/components/filter",
+                  "atopile/api-reference/components/footprint",
+                  "atopile/api-reference/components/fuse",
+                  "atopile/api-reference/components/gdt",
+                  "atopile/api-reference/components/genericbusprotection",
+                  "atopile/api-reference/components/inductor",
+                  "atopile/api-reference/components/ldo",
+                  "atopile/api-reference/components/ledindicator",
+                  "atopile/api-reference/components/logicgate",
+                  "atopile/api-reference/components/mosfet",
+                  "atopile/api-reference/components/mounting_hole",
+                  "atopile/api-reference/components/net",
+                  "atopile/api-reference/components/nettie",
+                  "atopile/api-reference/components/opamp",
+                  "atopile/api-reference/components/pinmux",
+                  "atopile/api-reference/components/potentiometer",
+                  "atopile/api-reference/components/poweredled",
+                  "atopile/api-reference/components/powermux",
+                  "atopile/api-reference/components/powerswitch",
+                  "atopile/api-reference/components/regulator",
+                  "atopile/api-reference/components/relay",
+                  "atopile/api-reference/components/resistor",
+                  "atopile/api-reference/components/resistorarray",
+                  "atopile/api-reference/components/resistorvoltagedivider",
+                  "atopile/api-reference/components/spiflash",
+                  "atopile/api-reference/components/surgeprotection",
+                  "atopile/api-reference/components/symbol",
+                  "atopile/api-reference/components/testpoint"
+                ]
+              },
+              {
+                "group": "Interfaces",
+                "pages": [
+                  "atopile/api-reference/interfaces/addressor",
+                  "atopile/api-reference/interfaces/differentialpair",
+                  "atopile/api-reference/interfaces/electrical",
+                  "atopile/api-reference/interfaces/enablepin",
+                  "atopile/api-reference/interfaces/ethernet",
+                  "atopile/api-reference/interfaces/hdmi",
+                  "atopile/api-reference/interfaces/i2c",
+                  "atopile/api-reference/interfaces/i2s",
+                  "atopile/api-reference/interfaces/jtag",
+                  "atopile/api-reference/interfaces/mechanical",
+                  "atopile/api-reference/interfaces/multispi",
+                  "atopile/api-reference/interfaces/pad",
+                  "atopile/api-reference/interfaces/pdm",
+                  "atopile/api-reference/interfaces/power",
+                  "atopile/api-reference/interfaces/rs232",
+                  "atopile/api-reference/interfaces/rs485halfduplex",
+                  "atopile/api-reference/interfaces/sercom",
+                  "atopile/api-reference/interfaces/signal",
+                  "atopile/api-reference/interfaces/spi",
+                  "atopile/api-reference/interfaces/swd",
+                  "atopile/api-reference/interfaces/uart-base",
+                  "atopile/api-reference/interfaces/uart",
+                  "atopile/api-reference/interfaces/usb-c",
+                  "atopile/api-reference/interfaces/usb2-0-if",
+                  "atopile/api-reference/interfaces/usb2-0",
+                  "atopile/api-reference/interfaces/usb3-if",
+                  "atopile/api-reference/interfaces/usb3",
+                  "atopile/api-reference/interfaces/xtalif"
+                ]
+              },
+              {
+                "group": "Traits",
+                "pages": [
+                  "atopile/api-reference/traits/can-bridge-by-name",
+                  "atopile/api-reference/traits/can-bridge",
+                  "atopile/api-reference/traits/has-single-electric-reference",
+                  "atopile/api-reference/traits/is-pickable",
+                  "atopile/api-reference/traits/requires-pulls"
+                ]
+              }
             ]
           }
         ]
