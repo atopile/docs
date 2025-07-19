@@ -594,7 +594,7 @@ def generate_all_docs():
         file_path = traits_path / f"{trait_name.replace('_', '-')}.mdx"
         # content = generate_trait_markdown(trait_name)
         trait_info = extract_module_info(trait_name)
-        content = generate_module_markdown(trait_info, "right-left", None, None)
+        content = generate_module_markdown(trait_info, "", None, None)
         
         with open(file_path, 'w') as f:
             f.write(content)

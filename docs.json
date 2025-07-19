@@ -13,11 +13,6 @@
       "dark": "#151413"
     }
   },
-  "styling": {
-    "icons": {
-      "library": "fontawesome"
-    }
-  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
@@ -188,8 +183,7 @@
     "dark": "/logo/dark.svg"
   },
   "navbar": {
-    "links": [
-    ]
+    "links": []
   },
   "redirects": [
     {
