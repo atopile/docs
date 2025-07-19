@@ -1,0 +1,83 @@
+---
+title: "Fuse"
+icon: "microchip"
+description: ""
+---
+
+
+## Parameters
+
+<ParamField path="fuse_type" type="string">
+</ParamField>
+
+<ParamField path="response_type" type="string">
+</ParamField>
+
+<ParamField path="trip_current" type="A">
+</ParamField>
+
+
+## Interfaces
+
+<ParamField path="unnamed" type="Electrical[2]">
+</ParamField>
+
+<ParamField path="attach_to_footprint" type="can_attach_to_footprint_symmetrically">
+</ParamField>
+
+
+## Traits
+
+[can_bridge](/atopile/api-reference/traits/can-bridge)
+
+Allows component or module to be used in bridging connections with the ~> operator for series connections.
+
+
+## Global Attributes
+
+These attributes are available to all modules and interfaces in a design.
+
+<ParamField path="lcsc_id" type="string">
+  Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path="manufacturer" type="string">
+  This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path="mpn" type="string">
+  This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path="package" type="string">
+  The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path="exclude_from_bom" type="string">
+</ParamField>
+
+<ParamField path="override_net_name" type="string">
+  When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path="required" type="string">
+  Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+

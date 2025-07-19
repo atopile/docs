@@ -58,9 +58,64 @@
             ]
           },
           {
-            "group": "Reference",
+            "group": "Library Reference",
             "pages": [
-              "atopile/reference/config"
+              {
+                "group": "Components",
+                "pages": [
+                  "atopile/api-reference/components/battery",
+                  "atopile/api-reference/components/bjt",
+                  "atopile/api-reference/components/capacitor",
+                  "atopile/api-reference/components/common_mode_filter",
+                  "atopile/api-reference/components/comparator",
+                  "atopile/api-reference/components/crystal",
+                  "atopile/api-reference/components/crystal_oscillator",
+                  "atopile/api-reference/components/diode",
+                  "atopile/api-reference/components/eeprom",
+                  "atopile/api-reference/components/fan",
+                  "atopile/api-reference/components/filter",
+                  "atopile/api-reference/components/footprint",
+                  "atopile/api-reference/components/fuse",
+                  "atopile/api-reference/components/gdt",
+                  "atopile/api-reference/components/genericbusprotection",
+                  "atopile/api-reference/components/inductor",
+                  "atopile/api-reference/components/ldo",
+                  "atopile/api-reference/components/ledindicator",
+                  "atopile/api-reference/components/logicgate",
+                  "atopile/api-reference/components/mosfet",
+                  "atopile/api-reference/components/mounting_hole",
+                  "atopile/api-reference/components/net",
+                  "atopile/api-reference/components/nettie",
+                  "atopile/api-reference/components/opamp",
+                  "atopile/api-reference/components/pinmux",
+                  "atopile/api-reference/components/potentiometer",
+                  "atopile/api-reference/components/poweredled",
+                  "atopile/api-reference/components/powermux",
+                  "atopile/api-reference/components/powerswitch",
+                  "atopile/api-reference/components/regulator",
+                  "atopile/api-reference/components/relay",
+                  "atopile/api-reference/components/resistor",
+                  "atopile/api-reference/components/resistorarray",
+                  "atopile/api-reference/components/resistorvoltagedivider",
+                  "atopile/api-reference/components/spiflash",
+                  "atopile/api-reference/components/surgeprotection",
+                  "atopile/api-reference/components/symbol",
+                  "atopile/api-reference/components/testpoint"
+                ]
+              },
+              {
+                "group": "Interfaces",
+                "pages": []
+              },
+              {
+                "group": "Traits",
+                "pages": [
+                  "atopile/api-reference/traits/can-bridge-by-name",
+                  "atopile/api-reference/traits/can-bridge",
+                  "atopile/api-reference/traits/has-single-electric-reference",
+                  "atopile/api-reference/traits/is-pickable"
+                ]
+              }
             ]
           }
         ]
