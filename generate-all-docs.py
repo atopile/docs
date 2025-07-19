@@ -335,29 +335,25 @@ def get_trait_description(trait_name: str) -> str:
     
     # Path to the trait file in the atopile source  
     trait_file_path = LIBRARY_PATH / f"{trait_name}.py"
-    
     if not trait_file_path.exists():
         return ""
-    
     try:
         with open(trait_file_path, 'r', encoding='utf-8') as f:
             content = f.read()
-        
         tree = ast.parse(content)
-        
         # Find the class definition and extract its docstring
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 docstring = ast.get_docstring(node)
                 if docstring and docstring.strip():
                     return docstring.strip()
-        
         return ""
         
     except Exception as e:
         print(f"Error reading trait file {trait_name}.py: {e}")
         return ""
 
+# Generate one parameter line in a page
 def append_mkdn_parameter(param: dict[str, Any])-> str:
     param_name = param["name"]
     param_units = param.get("units", "")
@@ -372,6 +368,7 @@ def append_mkdn_parameter(param: dict[str, Any])-> str:
     else:
         return f"<ParamField path='{param_name}' type='{param_type}'>\n</ParamField>\n\n"
 
+# Generate one trait line in a page
 def append_mkdn_trait(trait: dict[str, Any])-> str:
     trait_name = trait["name"]
     trait_desc = get_trait_description(trait_name)
@@ -388,6 +385,7 @@ def append_mkdn_trait(trait: dict[str, Any])-> str:
         traits_m += f"{trait_desc}\n\n"
     return traits_m
 
+# Generate one page of documentation
 def generate_module_markdown(module_info: Dict[str, Any], icon_name: str, global_attributes: List[Dict[str, Any]], global_attributes_docstring: Optional[str]) -> str:
     """Generate the complete markdown documentation for a module."""
     
