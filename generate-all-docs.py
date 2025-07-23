@@ -5,14 +5,45 @@ Uses AST parsing to extract real docstrings and information from source files.
 """
 
 import ast
-import json
 import re
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
+import importlib
+import inspect
+
+import faebryk.library._F as F
+
+
+from faebryk.core.node import Node
+from faebryk.core.module import Module
+from faebryk.core.moduleinterface import ModuleInterface
+from faebryk.core.trait import Trait
+from faebryk.core.parameter import Parameter
+
+from atopile.mcp.tools.library import _get_library_node, _get_library_nodes
 
 # Base path to the atopile library source
 LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "library"
 ATTRIBUTES_PATH = Path(__file__).parent.parent / "atopile" / "src" / "atopile" / "attributes.py"
+BASE_DOC_PATH = Path(__file__).parent / "atopile" / "api-reference"
+
+doc_types = {
+    'component': Module,
+    'interface': ModuleInterface,
+    'trait': Trait
+}
+
+icons = {
+    'component': 'microchip',
+    'interface': 'right-left',
+    'trait': 'right-left'
+}
+
+data_types = {
+    'parameter': Parameter,
+    'interface': ModuleInterface,
+    'trait': Trait
+}
 
 # Not all traits are functional or reasonable to expose to users
 functional_trait_names = [
@@ -23,6 +54,58 @@ functional_trait_names = [
     'requires_pulls',
 ]
 excluded_attributes = {"datasheet_url", "designator_prefix", "footprint", "suggest_net_name"}
+
+def create_library_node(name: str, t: type[Node] = Node) -> Node:
+    if name not in F.__dict__: # name of the module to be searched in the imports of the internal namespace __dict__ of _F imports
+        raise ValueError(f"Type {name} not found")
+
+    m = F.__dict__[name]
+
+    if not isinstance(m, type) or not issubclass(m, t):
+        raise ValueError(f"Type {name} is not a valid {t.__name__}")
+
+    # get file of module
+    file = m.__module__
+    if file is None:
+        raise ValueError(f"Type {name} is not part of a module")
+
+    module = importlib.import_module(file)
+
+    if module.__file__ is None:
+        raise ValueError(f"Type {name} has no file")
+
+    # Get the class from the module and instantiate it
+    module_class = getattr(module, name)
+    if not isinstance(module_class, type):
+        raise ValueError(f"{name} is not a class")
+    
+    # Instantiate the class object
+    node = module_class()
+
+    return node
+
+def get_global_attributes():
+    from atopile.attributes import GlobalAttributes
+    props = [{"name": "GlobalAttributes", "doc": GlobalAttributes.__doc__, "type": "GlobalAttributes"}]
+    for name, obj in vars(GlobalAttributes).items():
+        if isinstance(obj, property):
+            doc = inspect.getdoc(obj.fget) if obj.fget else ""
+            arg_type = None
+            if obj.fset:
+                try:
+                    sig = inspect.signature(obj.fset)
+                    # skip 'self', get 'value'
+                    for param in list(sig.parameters.values())[1:]:
+                        arg_type = param.annotation
+                        break
+                except ValueError:
+                    pass
+            props.append({
+                "name": name,
+                "type": arg_type,
+                "doc": doc
+            })
+    return props
 
 def extract_module_info(module_name: str) -> Optional[Dict[str, Any]]:
     """Extract detailed information from a module file."""
@@ -40,6 +123,7 @@ def extract_module_info(module_name: str) -> Optional[Dict[str, Any]]:
         
         # Find the module class
         for node in ast.walk(tree):
+            print(type(node))
             if isinstance(node, ast.ClassDef) and node.name == module_name:
                 module_info = {
                     "name": module_name,
@@ -286,50 +370,6 @@ def is_rt_field_returning_trait(node: ast.FunctionDef) -> bool:
         # If we can't parse it, default to False to be safe
         return False
 
-def extract_global_attributes() -> tuple[List[Dict[str, Any]], Optional[str]]:
-    """Extract global attributes from the GlobalAttributes class."""
-    
-    if not ATTRIBUTES_PATH.exists():
-        print(f"GlobalAttributes file not found: {ATTRIBUTES_PATH}")
-        return [], None
-    
-    try:
-        with open(ATTRIBUTES_PATH, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        tree = ast.parse(content)
-        attributes = []
-        class_docstring = None
-        
-        # Find the GlobalAttributes class
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef) and node.name == "GlobalAttributes":
-                
-                # Extract the class docstring
-                class_docstring = ast.get_docstring(node)
-                
-                # Look for property methods (getters)
-                for item in node.body:
-                    if isinstance(item, ast.FunctionDef) and len(item.decorator_list) > 0:
-                        # Check if it's a property
-                        for decorator in item.decorator_list:
-                            if isinstance(decorator, ast.Name) and decorator.id == "property":
-                                attr_name = item.name
-                                attr_docstring = ast.get_docstring(item)
-                                
-                                # Skip private attributes and methods
-                                if not attr_name.startswith('_'):
-                                    attributes.append({
-                                        "name": attr_name,
-                                        "docstring": attr_docstring.strip() if attr_docstring else ""
-                                    })
-                
-                return attributes, class_docstring
-                
-    except Exception as e:
-        print(f"Error parsing GlobalAttributes file: {e}")
-        return [], None
-
 def get_trait_description(trait_name: str) -> str:
     """Get descriptive text for traits from their actual source files."""
     
@@ -353,11 +393,26 @@ def get_trait_description(trait_name: str) -> str:
         print(f"Error reading trait file {trait_name}.py: {e}")
         return ""
 
-# Generate one parameter line in a page
-def append_mkdn_parameter(param: dict[str, Any])-> str:
+
+
+def append_mkdn_attributes(param)-> str:
     param_name = param["name"]
-    param_units = param.get("units", "")
-    param_desc = param.get("description", "")
+    param_units = param["type"]
+    param_desc = param["doc"] 
+    
+    # Add unit info to the type
+    param_type = param_units if param_units else "string"
+    
+    # Only include description if it's not empty
+    if param_desc:
+        return f"<ParamField path='{param_name}' type='{param_type}'>\n\n{param_desc}\n</ParamField>\n\n"
+    else:
+        return f"<ParamField path='{param_name}' type='{param_type}'>\n</ParamField>\n\n"
+
+def append_mkdn_parameter(param: Parameter)-> str:
+    param_name = param.get_name()
+    param_units = param.units
+    param_desc = param.__doc__ or ""
     
     # Add unit info to the type
     param_type = param_units if param_units else "string"
@@ -367,10 +422,21 @@ def append_mkdn_parameter(param: dict[str, Any])-> str:
         return f"<ParamField path='{param_name}' type='{param_type}'>\n\n{param_desc}\n</ParamField>\n\n"
     else:
         return f"<ParamField path='{param_name}' type='{param_type}'>\n</ParamField>\n\n"
+# Generate one parameter line in a page
+def append_mkdn_interface(param: ModuleInterface)-> str:
+    param_name = param.get_name()
+    param_desc = param.__doc__ or ""
+    if_type = type(param)
+    
+    # Only include description if it's not empty
+    if param_desc.strip():
+        return f"<ParamField path='{param_name}' type='{if_type}'>\n\n{param_desc}\n</ParamField>\n\n"
+    else:
+        return f"<ParamField path='{param_name}' type='{if_type}'>\n</ParamField>\n\n"
 
 # Generate one trait line in a page
-def append_mkdn_trait(trait: dict[str, Any])-> str:
-    trait_name = trait["name"]
+def append_mkdn_trait(trait: Node)-> str:
+    trait_name = trait.__class__.__name__
     trait_desc = get_trait_description(trait_name)
     
     # Get the actual trait class name for proper linking
@@ -386,37 +452,30 @@ def append_mkdn_trait(trait: dict[str, Any])-> str:
     return traits_m
 
 # Generate one page of documentation
-def generate_module_markdown(module_info: Dict[str, Any], icon_name: str, global_attributes: List[Dict[str, Any]], global_attributes_docstring: Optional[str]) -> str:
+def generate_node_markdown(node_data: Dict[str, Any], icon_name: str, global_attributes: List[Dict[str, Any]], global_attributes_docstring: Optional[str]) -> str:
     """Generate the complete markdown documentation for a module."""
     
-    module_name = module_info["name"]
+    node_name = node_data["name"]
     
     # Build parameters section
     parameters_md = ""
-    if module_info.get("parameters"):
+    if node_data.get("parameters"):
         parameters_md = "\n## Parameters\n\n"
-        for param in module_info["parameters"]:
+        for param in node_data["parameters"]:
             parameters_md += append_mkdn_parameter(param)
 
     # Build interfaces section  
     interfaces_md = ""
-    if module_info.get("interfaces"):
+    if node_data.get("interfaces"):
         interfaces_md = "\n## Interfaces\n\n"
-        for interface in module_info["interfaces"]:
-            interfaces_md += append_mkdn_parameter(interface)
-
-    # Build properties section
-    properties_md = ""
-    if module_info.get("properties"):
-        properties_md = "\n## Properties\n\n"
-        for prop in module_info["properties"]:
-            properties_md += append_mkdn_parameter(prop)
+        for interface in node_data["interfaces"]:
+            interfaces_md += append_mkdn_interface(interface)
 
     # Build traits section
     traits_md = ""
-    if module_info.get("traits"):
+    if node_data.get("traits"):
         traits_md = "\n## Traits\n\n"
-        for trait in module_info["traits"]:
+        for trait in node_data["traits"]:
             traits_md += append_mkdn_trait(trait)
 
 
@@ -433,13 +492,13 @@ def generate_module_markdown(module_info: Dict[str, Any], icon_name: str, global
                 global_attributes_md += f"{global_attributes_docstring.strip()}\n\n"
             for attr in filtered_attributes:
                 attr['description'] = attr.get("docstring", "")
-                global_attributes_md += append_mkdn_parameter(attr)
+                global_attributes_md += append_mkdn_attributes(attr)
 
     # module description
-    description = module_info.get("docstring") or ""
+    description = node_data.get("docstring", "")
     
     # Generate the complete markdown
-    markdown = f'---\n\ntitle: "{module_name}"\nicon: {icon_name}\ndescription: "{description}"\n---\n\n{parameters_md}{interfaces_md}{properties_md}{traits_md}{global_attributes_md}'
+    markdown = f'---\n\ntitle: "{node_name}"\nicon: {icon_name}\ndescription: "{description}"\n---\n\n{parameters_md}{interfaces_md}{traits_md}{global_attributes_md}'
 
     return markdown
 
@@ -452,75 +511,6 @@ def generate_trait_markdown(trait_name: str) -> str:
         description = ""
     
     return f"""---\n\ntitle: "{trait_name}"\nicon: "fingerprint"\ndescription: "{description}"\n---\n\n"""
-
-def get_all_library_files() -> Dict[str, List[str]]:
-    """Get all components, interface, and trait files from the library based on direct inheritance."""
-    if not LIBRARY_PATH.exists():
-        print(f"Library path not found: {LIBRARY_PATH}")
-        return {"components": [], "interfaces": [], "traits": []}
-    
-    components = []
-    interfaces = []
-    traits = []
-    
-    # Get all Python files
-    for py_file in LIBRARY_PATH.glob("*.py"):
-        if py_file.name.startswith("_"):
-            continue
-            
-        try:
-            with open(py_file, 'r', encoding='utf-8') as f:
-                content = f.read()        
-
-            tree = ast.parse(content)
-            # Find class definitions and check direct inheritance
-            for node in ast.walk(tree):
-                if isinstance(node, ast.ClassDef):
-                    class_name = node.name
-                    
-                    # Get direct base classes (only immediate parents)
-                    direct_bases = []
-                    for base in node.bases:
-                        if isinstance(base, ast.Attribute):
-                            # Handle cases like Module.TraitT
-                            if isinstance(base.value, ast.Name):
-                                direct_bases.append(f"{base.value.id}.{base.attr}")
-                            else:
-                                direct_bases.append(base.attr)
-                        elif isinstance(base, ast.Name):
-                            # Handle cases like Module, ModuleInterface
-                            direct_bases.append(base.id)
-                        elif isinstance(base, ast.Call):
-                            # Handle cases like Module.TraitT.decless(), F.SomeClass.impl()
-                            if isinstance(base.func, ast.Attribute):
-                                if isinstance(base.func.value, ast.Attribute):
-                                    # Handle Module.TraitT.decless()
-                                    if isinstance(base.func.value.value, ast.Name):
-                                        full_name = f"{base.func.value.value.id}.{base.func.value.attr}.{base.func.attr}"
-                                        direct_bases.append(full_name)
-                                        # Also add the parent class for categorization
-                                        direct_bases.append(f"{base.func.value.value.id}.{base.func.value.attr}")
-                    
-                    # Categorize based on DIRECT inheritance only
-                    if py_file.stem in functional_trait_names:
-                        if class_name not in traits:
-                            traits.append(class_name)
-                    elif "Module" in direct_bases and "Module.TraitT" not in direct_bases:
-                        # Must inherit from Module but NOT Module.TraitT
-                        if class_name not in components:
-                            components.append(class_name)
-                    elif "ModuleInterface" in direct_bases:
-                        if class_name not in interfaces:
-                            interfaces.append(class_name)
-                            
-        except Exception as e:
-            print(f"Error analyzing {py_file.name}: {e}")
-    
-    return {
-        "components": sorted(components),
-        "interfaces": sorted(interfaces),
-        "traits": sorted(traits)
-    }
 
 def clear_existing_docs():
     """Clear existing documentation files in components, interfaces, and traits directories."""
@@ -555,49 +545,29 @@ def clear_existing_docs():
 def generate_all_docs():
     """Generate documentation for all library components, interfaces, and traits."""
     clear_existing_docs()
-    global_attributes, global_attributes_docstring = extract_global_attributes()
+    
+    # Get global attributes
+    global_attributes = get_global_attributes()
     
     # Get all library files
-    library_files = get_all_library_files()
-    base_path = Path(__file__).parent / "atopile" / "api-reference"
-    
-    # Generate component pages
-    components_path = base_path / "components"
-    components_path.mkdir(parents=True, exist_ok=True)
-    print(f"\nGenerating {len(library_files['components'])} component pages...")
-    for component_name in library_files['components']:
-        component_info = extract_module_info(component_name)  
-        if component_info:
-            file_path = components_path / f"{component_name.lower()}.mdx"
-            content = generate_module_markdown(component_info, "microchip", global_attributes, global_attributes_docstring)
-            with open(file_path, 'w') as f:
+    for doc_name, node_type in doc_types.items():
+        node_info_list = _get_library_nodes(t=node_type)
+        base_file_path = BASE_DOC_PATH / doc_name
+        base_file_path.mkdir(parents=True, exist_ok=True)
+        for node_info in node_info_list:
+            node = create_library_node(node_info.name, t=node_type)
+            node_data = {}
+            node_data["name"] = node_info.name
+            node_data["docstring"] = node_info.docstring
+            node_data["parameters"] = node.get_children(direct_only=False, types=Parameter, include_root=False)
+            node_data["interfaces"] = node.get_children(direct_only=False, types=ModuleInterface, include_root=False)
+            node_data["traits"] = node.get_children(direct_only=False, types=Trait, include_root=False)
+            node_data["modules"] = node.get_children(direct_only=False, types=Module, include_root=False)
+            doc_file_path = base_file_path / f"{node_info.name.lower()}.mdx"
+            # doc_file_path.mkdir(parents=True, exist_ok=True)
+            content = generate_node_markdown(node_data, icons[doc_name], global_attributes, None)
+            with open(doc_file_path, 'w') as f:
                 f.write(content)
-    
-    # Generate interface pages
-    interfaces_path = base_path / "interfaces"
-    interfaces_path.mkdir(parents=True, exist_ok=True)
-    for interface_name in library_files['interfaces']:
-        interface_info = extract_module_info(interface_name)
-        if interface_info:
-            file_path = interfaces_path / f"{interface_name.lower().replace('_', '-')}.mdx"
-            content = generate_module_markdown(interface_info, "right-left", None, None)
-            with open(file_path, 'w') as f:
-                f.write(content)
-    
-    # Generate trait pages  
-    traits_path = base_path / "traits"
-    traits_path.mkdir(parents=True, exist_ok=True)
-    
-    # Manually select functional traits
-    functional_traits = [trait for trait in library_files['traits'] if trait in functional_trait_names]
-    for trait_name in functional_traits:
-        file_path = traits_path / f"{trait_name.replace('_', '-')}.mdx"
-        # content = generate_trait_markdown(trait_name)
-        trait_info = extract_module_info(trait_name)
-        content = generate_module_markdown(trait_info, "", None, None)
-        
-        with open(file_path, 'w') as f:
-            f.write(content)
 
 def update_navigation():
     """Update docs.json Library Reference section with only existing files in api-reference folder."""
@@ -726,10 +696,11 @@ def update_navigation():
     with open(docs_json_path, 'w') as f:
         json.dump(docs_config, f, indent=2)
     
-    print(f"\n✅ Updated navigation in docs.json")
+    print("\n✅ Updated navigation in docs.json")
     print(f"📁 Scanned: {base_path}")
-    print(f"🔄 Only existing .mdx files are included in navigation")
+    print("🔄 Only existing .mdx files are included in navigation")
 
 if __name__ == "__main__":
+    print(get_global_attributes())
     generate_all_docs()
-    update_navigation()
+    # update_navigation()
