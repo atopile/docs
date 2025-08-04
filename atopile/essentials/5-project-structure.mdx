@@ -1,0 +1,53 @@
+---
+title: '5. Project Structure'
+#description: "One of the key benefits of designing circuit boards with code is that it unlocks modularity. As in software, this modularity means you can package up and reuse modules others have developed and tested."
+icon: 'list-tree'
+---
+
+
+A well-organised folder structure makes it easy to navigate, build and publish atopile projects. This page walks through the **recommended structure** for both everyday projects and reusable packages.
+
+## 1. High–level layout
+
+```text
+<project_name>/
+ ├─ .ato/               # Cached dependencies
+ ├─ build/              # Build outputs
+ ├─ layouts/            # Board layout files
+ ├─ ato.yaml            # Project manifest (paths, builds, dependencies)
+ ├─ parts/              # Part info (pinout, footprint, 3d model)
+ ├─ <project_name>.ato  # Main project file
+```
+
+* **ato.yaml** – the central manifest read by the compiler and package manager.
+* **src/** – pure ato source; keep one module per file where possible.
+* **layout/** – KiCad footprints, STEP models or manual board tweaks.
+
+## 2. The `ato.yaml` manifest
+
+The manifest glues everything together. A minimal example:
+
+```yaml
+requires-atopile: "^0.10.8"
+
+paths:
+  src: ./src
+  layout: ./layout
+
+builds:
+  default:            # The target you usually build
+    entry: main.ato:App
+    hide_designators: true
+    exclude_checks: ["PCB.requires_drc_check"]
+
+dependencies:         # Added automatically by `ato add`
+  - type: registry
+    identifier: atopile/ti-ads1115
+    release: 0.1.6
+```
+
+* **paths** – lets you move `src/` or `layout/` somewhere else if needed.
+* **builds** – define one or more build targets (e.g. default, panelised, test-jig).
+* **dependencies** – registry, git or local packages installed with `ato add`.
+
+For a full reference see the [Config file guide](/docs/atopile/reference/config).

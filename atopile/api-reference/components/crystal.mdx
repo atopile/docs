@@ -8,52 +8,52 @@ description: ""
 
 ## Parameters
 
-<ParamField path='frequency' type='Hz'>
+<ParamField path='equivalent_series_resistance' type='ohm'>
 </ParamField>
 
-<ParamField path='frequency_tolerance' type='ppm'>
-</ParamField>
-
-<ParamField path='frequency_temperature_tolerance' type='ppm'>
+<ParamField path='frequency' type='hertz'>
 </ParamField>
 
 <ParamField path='frequency_ageing' type='ppm'>
 </ParamField>
 
-<ParamField path='equivalent_series_resistance' type='Ω'>
+<ParamField path='frequency_temperature_tolerance' type='ppm'>
 </ParamField>
 
-<ParamField path='shunt_capacitance' type='F'>
+<ParamField path='frequency_tolerance' type='ppm'>
 </ParamField>
 
-<ParamField path='load_capacitance' type='F'>
+<ParamField path='load_capacitance' type='farad'>
+</ParamField>
+
+<ParamField path='shunt_capacitance' type='farad'>
 </ParamField>
 
 
 ## Interfaces
 
-<ParamField path='gnd' type='string'>
+<ParamField path='gnd' type='Electrical'>
 </ParamField>
 
-<ParamField path='unnamed' type='string'>
+<ParamField path='unnamed[0]' type='Electrical'>
 </ParamField>
 
-<ParamField path='footprint' type='string'>
+<ParamField path='unnamed[1]' type='Electrical'>
 </ParamField>
 
 
 ## Global Attributes
 
-These attributes are available to all modules and interfaces in a design.
 
-<ParamField path='lcsc_id' type='string'>
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
 
 Assign the LCSC ID of the module.
 
 If set, this will tell the picker to select that part from LCSC for this block.
 </ParamField>
 
-<ParamField path='manufacturer' type='string'>
+<ParamField path='manufacturer' type='str'>
 
 This module's manufacturer name, as a string.
 
@@ -62,7 +62,7 @@ It's recommended to fill this information based on what `ato create component`
 provides.
 </ParamField>
 
-<ParamField path='mpn' type='string'>
+<ParamField path='mpn' type='str'>
 
 This module's manufacturer part number, as a string.
 
@@ -70,7 +70,7 @@ For the picker to select the correct part from the manufacturer,
 this must be set.
 </ParamField>
 
-<ParamField path='package' type='string'>
+<ParamField path='package' type='str'>
 
 The package of the module.
 
@@ -79,17 +79,17 @@ This drives which components can be selected, and what footprint is used.
 Must exactly match a known package name.
 </ParamField>
 
-<ParamField path='exclude_from_bom' type='string'>
+<ParamField path='exclude_from_bom' type='bool'>
 </ParamField>
 
-<ParamField path='override_net_name' type='string'>
+<ParamField path='override_net_name' type='str'>
 
 When set on an interface, this will override the net name of the interface.
 
 This is useful for renaming nets which are automatically generated.
 </ParamField>
 
-<ParamField path='required' type='string'>
+<ParamField path='required' type='bool'>
 
 Only for ModuleInterfaces.
 If set to `True`, require that interface is connected to something outside

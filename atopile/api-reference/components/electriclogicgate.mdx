@@ -1,0 +1,77 @@
+---
+
+title: "ElectricLogicGate"
+icon: microchip
+description: ""
+---
+
+
+## Interfaces
+
+<ParamField path='inputs[0]' type='ElectricLogic'>
+</ParamField>
+
+<ParamField path='inputs[1]' type='ElectricLogic'>
+</ParamField>
+
+<ParamField path='outputs[0]' type='ElectricLogic'>
+</ParamField>
+
+<ParamField path='outputs[1]' type='ElectricLogic'>
+</ParamField>
+
+
+## Global Attributes
+
+
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
+
+Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path='manufacturer' type='str'>
+
+This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path='mpn' type='str'>
+
+This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path='package' type='str'>
+
+The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path='exclude_from_bom' type='bool'>
+</ParamField>
+
+<ParamField path='override_net_name' type='str'>
+
+When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path='required' type='bool'>
+
+Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+

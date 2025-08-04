@@ -13,17 +13,58 @@ These are built, known to work and come with a functioning layout too.
 
 Also, Google is your friend. Packages are often publicly available on github or other repositories.
 
+## Using packages
+
+First, add the package dependency to your project with `ato add`
+
+```bash
+ato add atopile/ti-ads1115
+```
+```ato
+from "ti-ads1115.ato" import TI_ADS1115
+
+module ExampleADCProject
+    adc = new TI_ADS1115
+```
+
+After building your project, use the [KiCad plugins](./6-layout#start-with-existing-packages) to pull the layout from the package.
+
+
+
 ## Managing dependencies
+
+Dependencies of your project can be found in the project/ato.yaml file.
+
+```ato
+dependencies:
+  - type: registry
+    identifier: atopile/buttons
+    release: 0.2.2
+  - type: registry
+    identifier: atopile/ti-ads1115
+    release: 0.1.6
+```
 
 You can manage dependencies using three commands: `ato add`, `ato sync` and `ato remove`.
 
-Installed dependencies are kept in sync by all of these commands, so you don't need to think too much about managing environments.
+All dependency commands keep your installed packages in sync automatically, so you don't need to think too much about managing environments.
 
-If you pull a new project, just run `ato sync` to install the dependencies.
+Here are the key commands:
 
-If you want to add a new dependency, run `ato add {package}`. It'll be added to the `ato.yaml` config file and synced for you.
+### `ato sync`
+Installs all dependencies listed in `ato.yaml`. Run this when you pull a new project. Dependencies are cached in project/.ato directory
 
-If you want to remove a dependency, run `ato remove {package}`. It'll be removed from the `ato.yaml` config file and synced for you.
+### `ato add {package}`
+Adds a new package dependency to your project:
+- Adds the package to `ato.yaml`
+- Installs the package locally
+- Syncs all dependencies
+
+### `ato remove {package}` 
+Removes a package dependency from your project:
+- Removes the package from `ato.yaml`
+- Removes the package locally
+- Syncs remaining dependencies
 
 <Tip>
     atopile manages dependencies in a similar way to [uv](https://docs.astral.sh/uv/). If you know how that works, think about it in the same way!
