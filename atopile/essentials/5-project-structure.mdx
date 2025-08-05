@@ -21,9 +21,9 @@ A well-organised folder structure makes it easy to navigate, build and publish a
  ├─── parts/            # Part info (pinout, footprint, 3d model)
 ```
 
-* **ato.yaml** – the central manifest read by the compiler and package manager.
-* **src/** – pure ato source; keep one module per file where possible.
-* **layout/** – KiCad footprints, STEP models or manual board tweaks.
+* **ato.yaml**–the central manifest read by the compiler and package manager.
+* **src/**–pure ato source; keep one module per file where possible.
+* **layout/**–KiCad footprints, STEP models or manual board tweaks.
 
 ## 2. The `ato.yaml` manifest
 
@@ -48,6 +48,6 @@ dependencies:         # Added automatically by `ato add`
     release: 0.1.6
 ```
 
-* **paths** – lets you move `src/` or `layout/` somewhere else if needed.
-* **builds** – define one or more build targets (e.g. default, panelised, test-jig).
-* **dependencies** – registry, git or local packages installed with `ato add`.
+* **paths**–lets you move `src/` or `layout/` somewhere else if needed.
+* **builds**–define one or more build targets (for example: default, panelized, test-jig).
+* **dependencies**–registry, git or local packages installed with `ato add`.
