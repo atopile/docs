@@ -13,10 +13,12 @@ A well-organised folder structure makes it easy to navigate, build and publish a
 <project_name>/
  ├─ .ato/               # Cached dependencies
  ├─ build/              # Build outputs
- ├─ layouts/            # Board layout files
- ├─ ato.yaml            # Project manifest (paths, builds, dependencies)
- ├─ parts/              # Part info (pinout, footprint, 3d model)
- ├─ <project_name>.ato  # Main project file
+ ├─ ato.yaml          # Project manifest (paths, builds, dependencies)
+ ├─ elec/               # Electrical files and layouts
+ ├── layouts/           # Board layout files
+ ├── src/               # Core ato code and parts
+ ├─── <project_name>.ato  # Main project file
+ ├─── parts/            # Part info (pinout, footprint, 3d model)
 ```
 
 * **ato.yaml** – the central manifest read by the compiler and package manager.
@@ -49,5 +51,3 @@ dependencies:         # Added automatically by `ato add`
 * **paths** – lets you move `src/` or `layout/` somewhere else if needed.
 * **builds** – define one or more build targets (e.g. default, panelised, test-jig).
 * **dependencies** – registry, git or local packages installed with `ato add`.
-
-For a full reference see the [Config file guide](/docs/atopile/reference/config).
