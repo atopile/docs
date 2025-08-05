@@ -24,9 +24,6 @@ description: ""
 <ParamField path='data[0]' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='data[1]' type='ElectricLogic'>
-</ParamField>
-
 
 ## Global Attributes
 
@@ -82,3 +79,17 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import MultiSPI, SPI
+
+# Microcontroller SPI peripheral
+mcu_spi = new SPI
+
+# Quad-SPI flash interface (4 data lanes)
+qspi = new MultiSPI<int_=4>
+
+# Connect the buses
+mcu_spi ~ qspi
+```
+</RequestExample>

@@ -102,7 +102,7 @@
                   "atopile/api-reference/components/powermux",
                   "atopile/api-reference/components/powerswitch",
                   "atopile/api-reference/components/powerswitchmosfet",
-                  "atopile/api-reference/components/qfn",
+                  "atopile/api-reference/components/powerswitchstatic",
                   "atopile/api-reference/components/regulator",
                   "atopile/api-reference/components/relay",
                   "atopile/api-reference/components/resistor",
@@ -159,7 +159,8 @@
               {
                 "group": "Traits",
                 "pages": [
-                  "atopile/api-reference/traits/can_bridge_by_name"
+                  "atopile/api-reference/traits/can_bridge_by_name",
+                  "atopile/api-reference/traits/requires_pulls"
                 ]
               }
             ]

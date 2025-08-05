@@ -23,6 +23,7 @@ from faebryk.core.parameter import Parameter
 from atopile.attributes import GlobalAttributes
 
 from atopile.mcp.tools.library import _get_library_nodes
+from numpy import is_busday
 
 # Base path to the atopile library source
 LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "library"
@@ -53,6 +54,84 @@ excluded_attributes = {
 }
 
 
+# TODO: this is a hack, fix once types are first class in graph
+def generate_dummy_value(param_type, param_name: str):
+    """Generate appropriate dummy values based on parameter type annotation."""
+    import typing
+
+    # Handle actual type objects
+    if param_type is int:
+        return 1
+    elif param_type is str:
+        return "dummy"
+    elif param_type is bool:
+        # Special cases for common boolean parameter names
+        if "closed" in param_name.lower():
+            return False
+        return True
+    elif param_type is float:
+        return 1.0
+    elif param_type is list:
+        return ["dummy"]
+    elif param_type is dict:
+        return {}
+    elif param_type is tuple:
+        return ("dummy",)
+    elif hasattr(param_type, "__origin__"):
+        # Handle generic types like Callable, etc.
+        from typing import get_origin, get_args
+
+        origin = get_origin(param_type)
+        args = get_args(param_type)
+
+        if param_type.__origin__ is typing.Union:
+            # For Union types, try the first non-None type
+            type_args = param_type.__args__
+            for arg in type_args:
+                if arg is not type(None):
+                    return generate_dummy_value(arg, param_name)
+        elif origin is list or origin is typing.List:
+            # For List[T], return a list with one dummy element
+            if args:
+                dummy_element = generate_dummy_value(args[0], param_name)
+                return [dummy_element] if dummy_element is not None else ["dummy"]
+            return ["dummy"]
+        elif origin is dict or origin is typing.Dict:
+            return {}
+        elif origin is tuple or origin is typing.Tuple:
+            if args:
+                return tuple(generate_dummy_value(arg, param_name) for arg in args)
+            return ("dummy",)
+        elif origin is typing.Callable:
+            # For Callable types, return a simple lambda
+            return lambda: None
+        return None
+    else:
+        # For custom types or complex types, try to instantiate with common patterns
+        try:
+            # Try no-argument constructor first
+            if hasattr(param_type, "__call__"):
+                return param_type()
+        except:
+            try:
+                # Try with a single string argument (common pattern)
+                if hasattr(param_type, "__call__"):
+                    return param_type("dummy")
+            except:
+                pass
+
+    # Fallback for specific parameter names
+    if "factory" in param_name.lower():
+        # For factory parameters, return a simple lambda
+        return lambda: None
+    elif "list" in param_name.lower() or "items" in param_name.lower():
+        return ["dummy"]
+    elif "count" in param_name.lower() or "num" in param_name.lower():
+        return 1
+
+    return None
+
+
 def create_library_node(name: str, t: type[Node] = Node) -> Optional[Node]:
     try:
         if (
@@ -80,10 +159,43 @@ def create_library_node(name: str, t: type[Node] = Node) -> Optional[Node]:
         if not isinstance(module_class, type):
             raise ValueError(f"{name} is not a class")
 
-        # Instantiate the class object
-        node = module_class()
+        # Try to instantiate with no arguments first
+        try:
+            node = module_class()
+            return node
+        except TypeError as init_error:
+            # If that fails, try to get the original signature and generate arguments
+            if hasattr(module_class, "__original_init__"):
+                try:
+                    sig = inspect.signature(module_class.__original_init__)
+                    args = []
+                    kwargs = {}
 
-        return node
+                    for param_name, param in sig.parameters.items():
+                        if param_name == "self":
+                            continue
+
+                        # Generate dummy value based on type annotation
+                        dummy_value = generate_dummy_value(param.annotation, param_name)
+
+                        if param.default != inspect.Parameter.empty:
+                            # Has default, skip it
+                            continue
+                        elif param.kind == inspect.Parameter.KEYWORD_ONLY:
+                            kwargs[param_name] = dummy_value
+                        else:
+                            args.append(dummy_value)
+
+                    node = module_class(*args, **kwargs)
+                    return node
+                except Exception as sig_error:
+                    raise ValueError(
+                        f"Failed to instantiate {name} with generated args: {sig_error}"
+                    )
+            else:
+                # No original init available, re-raise the original error
+                raise init_error
+
     except Exception as e:
         print(f"Error creating library node {name}: {e}")
         return None

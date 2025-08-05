@@ -1,86 +1,31 @@
 ---
 
-title: "QFN"
+title: "PowerSwitchStatic"
 icon: microchip
-description: ""
+description: "
+A power switch that bridges power through statically
+
+This is useful when transforming an F.ElectricLogic to an F.ElectricPower
+"
 ---
 
 
 ## Init Args
 
-<ParamField path='pin_cnt' type='int'>
-
-</ParamField>
-
-<ParamField path='exposed_thermal_pad_cnt' type='int'>
-
-</ParamField>
-
-<ParamField path='size_xy' type='tuple[Quantity, Quantity]'>
-
-</ParamField>
-
-<ParamField path='pitch' type='Quantity'>
-
-</ParamField>
-
-<ParamField path='exposed_thermal_pad_dimensions' type='tuple[Quantity, Quantity]'>
-
-</ParamField>
-
-<ParamField path='has_thermal_vias' type='bool'>
+<ParamField path='normally_closed' type='bool'>
 
 </ParamField>
 
 
 ## Interfaces
 
-<ParamField path='pins[0]' type='Pad'>
+<ParamField path='logic_in' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='pins[10]' type='Pad'>
+<ParamField path='power_in' type='ElectricPower'>
 </ParamField>
 
-<ParamField path='pins[11]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[12]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[13]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[14]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[15]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[1]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[2]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[3]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[4]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[5]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[6]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[7]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[8]' type='Pad'>
-</ParamField>
-
-<ParamField path='pins[9]' type='Pad'>
+<ParamField path='switched_power_out' type='ElectricPower'>
 </ParamField>
 
 
@@ -138,3 +83,33 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import PowerSwitch, ElectricPower, ElectricLogic
+
+# Create normally-open power switch
+power_switch = new PowerSwitch(normally_closed=False)
+
+# Connect input power
+input_power = new ElectricPower
+assert input_power.voltage within 5V +/- 5%
+power_switch.power_in ~ input_power
+
+# Connect control signal
+enable_signal = new ElectricLogic
+enable_signal.reference ~ input_power
+power_switch.logic_in ~ enable_signal
+
+# Connect switched output to load
+switched_output = new ElectricPower
+power_switch.switched_power_out ~ switched_output
+load_circuit ~ switched_output
+
+# When enable_signal is HIGH, power flows to load
+# When enable_signal is LOW (or floating), power is disconnected
+
+# For normally-closed switch (fails safe)
+fail_safe_switch = new PowerSwitch(normally_closed=True)
+# This switch passes power when control is LOW or floating
+```
+</RequestExample>

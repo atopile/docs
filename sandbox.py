@@ -18,10 +18,19 @@ LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "l
 # for node in nodes:
 #     print(node.name)
 
-m = MultiCapacitor.__new__(MultiCapacitor)
-m.__init__
-# m = MultiCapacitor(2)
-print(m.get_children(direct_only=True, types=ModuleInterface))
+# m = MultiCapacitor.__new__(MultiCapacitor)
+# m.__init__
+# # m = MultiCapacitor(2)
+# print(m.get_children(direct_only=True, types=ModuleInterface))
+
+# sig = inspect.getsource(MultiCapacitor.__init__)
+# print(sig)
+print("Regular __init__:", inspect.signature(MultiCapacitor.__init__))
+print("Original __init__:", inspect.signature(MultiCapacitor.__original_init__))
+
+# You can also check if the decorator is present
+print("Has decorator:", hasattr(MultiCapacitor, "__original_init__"))
+print("Decorator base:", getattr(MultiCapacitor, "__post_init_decorator", None))
 
 # print("\n=== Reading source file directly ===")
 # # Parse the AST

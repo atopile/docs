@@ -87,3 +87,16 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import PowerSwitchMOSFET, ElectricPower
+
+# High-side power switch controlled by logic
+pwr_sw = new PowerSwitchMOSFET
+supply   = new ElectricPower
+load_pwr = new ElectricPower
+
+supply   ~ pwr_sw.power_in
+pwr_sw.switched_power_out ~ load_pwr
+```
+</RequestExample>

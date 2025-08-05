@@ -68,3 +68,13 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import TestPoint
+
+test_point = new TestPoint
+
+# Connect to signal you want to probe
+signal_to_test ~ test_point.contact
+```
+</RequestExample>

@@ -78,3 +78,19 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import Potentiometer, ElectricPower, Electrical
+
+potentiometer = new Potentiometer
+potentiometer.total_resistance = 10kohm +/- 5%
+
+power_supply = new ElectricPower
+output_voltage = new Electrical
+
+# Use as voltage divider
+power_supply.hv ~ potentiometer.resistors_ifs[0]
+power_supply.lv ~ potentiometer.resistors_ifs[1]
+output_voltage ~ potentiometer.wiper
+```
+</RequestExample>

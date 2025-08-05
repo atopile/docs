@@ -62,3 +62,29 @@ If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import Electrical, Resistor, Capacitor
+
+# Basic electrical connection point
+electrical1 = new Electrical
+electrical2 = new Electrical
+
+# Connect two electrical interfaces directly
+electrical1 ~ electrical2
+
+# Connect through components
+resistor = new Resistor
+resistor.resistance = 1kohm +/- 5%
+electrical1 ~ resistor.unnamed[0]
+resistor.unnamed[1] ~ electrical2
+
+# Or using bridge syntax
+electrical1 ~> resistor ~> electrical2
+
+# Multiple connections to same net
+capacitor = new Capacitor
+electrical1 ~ capacitor.unnamed[0]
+capacitor.unnamed[1] ~ electrical2
+```
+</RequestExample>
