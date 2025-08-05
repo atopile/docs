@@ -23,7 +23,6 @@ from faebryk.core.parameter import Parameter
 from atopile.attributes import GlobalAttributes
 
 from atopile.mcp.tools.library import _get_library_nodes
-from numpy import is_busday
 
 # Base path to the atopile library source
 LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "library"
