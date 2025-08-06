@@ -228,8 +228,7 @@ def get_init_args(node_name: str) -> list:
     if not trait_file_path.exists():
         return init_args
     try:
-        with open(trait_file_path, "r", encoding="utf-8") as f:
-            content = f.read()
+        content = trait_file_path.read_text()
         tree = ast.parse(content)
         # Find the class definition and extract its docstring
         for node in ast.walk(tree):
