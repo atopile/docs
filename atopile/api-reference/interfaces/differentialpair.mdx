@@ -8,20 +8,96 @@ description: ""
 
 ## Parameters
 
-<ParamField path='impedance' type='Ω'>
+<ParamField path='impedance' type='ohm'>
 </ParamField>
 
 
 ## Interfaces
 
-<ParamField path='p' type='string'>
+<ParamField path='n' type='ElectricSignal'>
 </ParamField>
 
-<ParamField path='n' type='string'>
+<ParamField path='p' type='ElectricSignal'>
 </ParamField>
 
 
-## Traits
+## Global Attributes
 
-**single_electric_reference**
 
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
+
+Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path='manufacturer' type='str'>
+
+This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path='mpn' type='str'>
+
+This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path='package' type='str'>
+
+The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path='exclude_from_bom' type='bool'>
+</ParamField>
+
+<ParamField path='override_net_name' type='str'>
+
+When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path='required' type='bool'>
+
+Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+
+<RequestExample>
+```ato Basic Usage
+import DifferentialPair, ElectricPower
+
+diff_pair = new DifferentialPair
+diff_pair.impedance = 100ohm +/- 10%  # Common for high-speed signals
+
+# Connect power reference for signal levels
+power_3v3 = new ElectricPower
+assert power_3v3.voltage within 3.3V +/- 5%
+diff_pair.p.reference ~ power_3v3
+diff_pair.n.reference ~ power_3v3
+
+# Connect between transmitter and receiver
+transmitter.diff_out ~ diff_pair
+diff_pair ~ receiver.diff_in
+
+# For terminated transmission line
+terminated_pair = diff_pair.terminated()
+transmitter.diff_out ~ terminated_pair
+
+# Common applications: USB, Ethernet, PCIe, HDMI
+usb_dp_dn = new DifferentialPair
+usb_dp_dn.impedance = 90ohm +/- 10%
+```
+</RequestExample>

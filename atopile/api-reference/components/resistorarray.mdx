@@ -6,30 +6,37 @@ description: ""
 ---
 
 
+## Init Args
+
+<ParamField path='resistor_count' type='int'>
+
+</ParamField>
+
+
 ## Parameters
 
+<ParamField path='rated_power' type='watt'>
+</ParamField>
+
+<ParamField path='rated_voltage' type='volt'>
+</ParamField>
+
 <ParamField path='resistance' type='ohm'>
-</ParamField>
-
-<ParamField path='rated_power' type='W'>
-</ParamField>
-
-<ParamField path='rated_voltage' type='V'>
 </ParamField>
 
 
 ## Global Attributes
 
-These attributes are available to all modules and interfaces in a design.
 
-<ParamField path='lcsc_id' type='string'>
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
 
 Assign the LCSC ID of the module.
 
 If set, this will tell the picker to select that part from LCSC for this block.
 </ParamField>
 
-<ParamField path='manufacturer' type='string'>
+<ParamField path='manufacturer' type='str'>
 
 This module's manufacturer name, as a string.
 
@@ -38,7 +45,7 @@ It's recommended to fill this information based on what `ato create component`
 provides.
 </ParamField>
 
-<ParamField path='mpn' type='string'>
+<ParamField path='mpn' type='str'>
 
 This module's manufacturer part number, as a string.
 
@@ -46,7 +53,7 @@ For the picker to select the correct part from the manufacturer,
 this must be set.
 </ParamField>
 
-<ParamField path='package' type='string'>
+<ParamField path='package' type='str'>
 
 The package of the module.
 
@@ -55,20 +62,51 @@ This drives which components can be selected, and what footprint is used.
 Must exactly match a known package name.
 </ParamField>
 
-<ParamField path='exclude_from_bom' type='string'>
+<ParamField path='exclude_from_bom' type='bool'>
 </ParamField>
 
-<ParamField path='override_net_name' type='string'>
+<ParamField path='override_net_name' type='str'>
 
 When set on an interface, this will override the net name of the interface.
 
 This is useful for renaming nets which are automatically generated.
 </ParamField>
 
-<ParamField path='required' type='string'>
+<ParamField path='required' type='bool'>
 
 Only for ModuleInterfaces.
 If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import ResistorArray, ElectricPower, ElectricLogic
+
+# Create 8-resistor array for pull-ups
+pullup_array = new ResistorArray(resistor_count=8)
+pullup_array.resistance = 10kohm +/- 5%
+pullup_array.rated_power = 125mW
+pullup_array.rated_voltage = 50V
+pullup_array.package = "4816"  # 8-pin SIP package
+
+# Connect power supply
+power_3v3 = new ElectricPower
+assert power_3v3.voltage within 3.3V +/- 5%
+
+# Use for GPIO pull-ups
+gpio_signals = new ElectricLogic[8]
+for i in range(8):
+    gpio_signals[i].reference ~ power_3v3
+    gpio_signals[i].line ~> pullup_array.resistors[i] ~> power_3v3.hv
+    microcontroller.gpio[i] ~ gpio_signals[i].line
+
+# Alternative: 4-resistor array for I2C/SPI bus termination
+termination_array = new ResistorArray(resistor_count=4)
+termination_array.resistance = 33ohm +/- 1%
+termination_array.package = "4806"  # 4-pin array
+
+# Common applications: pull-up/pull-down networks, bus termination,
+# voltage dividers, current limiting, LED drivers
+```
+</RequestExample>

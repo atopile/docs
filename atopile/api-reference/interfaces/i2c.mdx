@@ -8,31 +8,102 @@ description: ""
 
 ## Parameters
 
-<ParamField path='address' type='string'>
+<ParamField path='address' type='dimensionless'>
 </ParamField>
 
-<ParamField path='bus_addresses' type='string'>
+<ParamField path='bus_addresses' type='dimensionless'>
 </ParamField>
 
-<ParamField path='frequency' type='Hz'>
+<ParamField path='frequency' type='hertz'>
 </ParamField>
 
 
 ## Interfaces
 
-<ParamField path='scl' type='string'>
+<ParamField path='scl' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='sda' type='string'>
-</ParamField>
-
-<ParamField path='address_check' type='string'>
+<ParamField path='sda' type='ElectricLogic'>
 </ParamField>
 
 
 ## Traits
 
-**single_electric_reference**
+**requires_pulls**
 
-[requires_pulls](/atopile/api-reference/traits/requires-pulls)
 
+## Global Attributes
+
+
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
+
+Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path='manufacturer' type='str'>
+
+This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path='mpn' type='str'>
+
+This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path='package' type='str'>
+
+The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path='exclude_from_bom' type='bool'>
+</ParamField>
+
+<ParamField path='override_net_name' type='str'>
+
+When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path='required' type='bool'>
+
+Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+
+<RequestExample>
+```ato Basic Usage
+import I2C, ElectricPower
+
+i2c_bus = new I2C
+i2c_bus.frequency = 400kHz  # Fast mode
+i2c_bus.address = 0x48  # Device address
+
+# Connect power reference for logic levels
+power_3v3 = new ElectricPower
+assert power_3v3.voltage within 3.3V +/- 5%
+i2c_bus.scl.reference ~ power_3v3
+i2c_bus.sda.reference ~ power_3v3
+
+# Connect to microcontroller
+microcontroller.i2c ~ i2c_bus
+
+# Connect to I2C sensor
+sensor.i2c ~ i2c_bus
+```
+</RequestExample>

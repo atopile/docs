@@ -8,24 +8,108 @@ description: ""
 
 ## Interfaces
 
-<ParamField path='base_uart' type='string'>
+<ParamField path='base_uart' type='UART_Base'>
 </ParamField>
 
-<ParamField path='rts' type='string'>
+<ParamField path='cts' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='cts' type='string'>
+<ParamField path='dcd' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='dtr' type='string'>
+<ParamField path='dsr' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='dsr' type='string'>
+<ParamField path='dtr' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='dcd' type='string'>
+<ParamField path='ri' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='ri' type='string'>
+<ParamField path='rts' type='ElectricLogic'>
 </ParamField>
 
+
+## Global Attributes
+
+
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
+
+Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path='manufacturer' type='str'>
+
+This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path='mpn' type='str'>
+
+This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path='package' type='str'>
+
+The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path='exclude_from_bom' type='bool'>
+</ParamField>
+
+<ParamField path='override_net_name' type='str'>
+
+When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path='required' type='bool'>
+
+Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+
+<RequestExample>
+```ato Basic Usage
+import UART, ElectricPower
+
+uart = new UART
+uart.base_uart.baud_rate = 115200
+
+# Connect power reference for logic levels
+power_3v3 = new ElectricPower
+assert power_3v3.voltage within 3.3V +/- 5%
+uart.base_uart.tx.reference ~ power_3v3
+uart.base_uart.rx.reference ~ power_3v3
+uart.rts.reference ~ power_3v3
+uart.cts.reference ~ power_3v3
+
+# Connect to microcontroller
+microcontroller.uart ~ uart
+
+# Connect to external UART device or RS232 transceiver
+external_device.uart_rx ~ uart.base_uart.tx.line
+external_device.uart_tx ~ uart.base_uart.rx.line
+
+# Hardware flow control (optional)
+external_device.rts ~ uart.cts.line
+external_device.cts ~ uart.rts.line
+
+# Common baud rates: 9600, 38400, 115200, 230400, 460800
+```
+</RequestExample>

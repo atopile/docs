@@ -9,7 +9,7 @@ icon: 'atom'
 
 The most basic types in `ato` are a `module` and an `interface`.
 
-A `signal` is a special built-in type of `interface` that represents a single [electrical](https://github.com/atopile/atopile/blob/main/src/faebryk/library/Electrical.py#L7) interface.
+An `Electrical` is a special built-in type of `interface` that represents a single [electrical](https://github.com/atopile/atopile/blob/main/src/faebryk/library/Electrical.py#L7) interface.
 
 A `component` is a subclass of a `module` that expects to represent a single physical component.
 
@@ -18,8 +18,9 @@ Like classes in most modern languages, you can subclass and inherit from blocks.
 
 ```python
 module SomeModule:
-    signal some_signal
-    signal gnd
+    some_signal = new ElectricSignal
+    gnd = new Electrical
+    some_signal.reference.lv ~ gnd
     some_variable = "some value"
 
 module SubclassedModule from SomeModule:
@@ -29,7 +30,7 @@ module SubclassedModule from SomeModule:
     some_variable = "some other value"
 
 module Test:
-    signal gnd
+    gnd = new Electrical
     # creates an instance of the SubclassedModule
     subclassed_module = new SubclassedModule
     # connects the some_signal of the SubclassedModule to the gnd of Test

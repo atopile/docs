@@ -1,5 +1,5 @@
 ---
-title: '5. Layout'
+title: '6. Layout'
 #description: "`ato` code defines the function of the circuit via the connections between elements. Unlike a software compiler, these components all need to end up placed somewhere and copper traces need routing between the elements for the circuit to function."
 icon: 'arrows-split-up-and-left'
 ---
@@ -20,7 +20,7 @@ The `ato` compiler automatically installs a KiCad plugin to help you with layout
 
 The plugin installs automatically when you run the `ato` command-line tool, but in case something went wrong, you can re-trigger the installation by running `ato configure`.
 
-## Start with existing modules
+## Start with existing packages
 
 If you import the `rp2040` module installed in the [previous section](./4-packages), you can reuse its layout.
 
@@ -34,7 +34,7 @@ module App:
 
 ```
 
-To reuse a layout from a module:
+To reuse a layout from a package:
 
 - run an `ato build`, to make sure the layout syncs with the code
 - hit the "Sync Group" button in the KiCad plugin
@@ -52,6 +52,9 @@ To reuse a layout from a module:
 
     If you want to create a reusable layout for a class of your own, the easiest way is to add a new build config with `ato create build`, and then point the newly created [entry](../reference/config.md#builds.entry) at the module you've made.
 </Note>
+<Tip>
+    If the plugin is not available in KiCad, try running `ato configure` to set it up
+</Tip>
 
 ## Layout the rest of your design
 

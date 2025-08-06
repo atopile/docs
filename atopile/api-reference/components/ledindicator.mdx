@@ -6,30 +6,38 @@ description: ""
 ---
 
 
+## Init Args
+
+<ParamField path='use_mosfet' type='bool'>
+
+</ParamField>
+
+<ParamField path='active_low' type='bool'>
+
+</ParamField>
+
+
 ## Interfaces
 
-<ParamField path='logic_in' type='string'>
+<ParamField path='logic_in' type='ElectricLogic'>
 </ParamField>
 
-<ParamField path='power_in' type='string'>
-</ParamField>
-
-<ParamField path='led' type='string'>
+<ParamField path='power_in' type='ElectricPower'>
 </ParamField>
 
 
 ## Global Attributes
 
-These attributes are available to all modules and interfaces in a design.
 
-<ParamField path='lcsc_id' type='string'>
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
 
 Assign the LCSC ID of the module.
 
 If set, this will tell the picker to select that part from LCSC for this block.
 </ParamField>
 
-<ParamField path='manufacturer' type='string'>
+<ParamField path='manufacturer' type='str'>
 
 This module's manufacturer name, as a string.
 
@@ -38,7 +46,7 @@ It's recommended to fill this information based on what `ato create component`
 provides.
 </ParamField>
 
-<ParamField path='mpn' type='string'>
+<ParamField path='mpn' type='str'>
 
 This module's manufacturer part number, as a string.
 
@@ -46,7 +54,7 @@ For the picker to select the correct part from the manufacturer,
 this must be set.
 </ParamField>
 
-<ParamField path='package' type='string'>
+<ParamField path='package' type='str'>
 
 The package of the module.
 
@@ -55,20 +63,60 @@ This drives which components can be selected, and what footprint is used.
 Must exactly match a known package name.
 </ParamField>
 
-<ParamField path='exclude_from_bom' type='string'>
+<ParamField path='exclude_from_bom' type='bool'>
 </ParamField>
 
-<ParamField path='override_net_name' type='string'>
+<ParamField path='override_net_name' type='str'>
 
 When set on an interface, this will override the net name of the interface.
 
 This is useful for renaming nets which are automatically generated.
 </ParamField>
 
-<ParamField path='required' type='string'>
+<ParamField path='required' type='bool'>
 
 Only for ModuleInterfaces.
 If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import LEDIndicator, ElectricPower, ElectricLogic
+
+# Basic LED indicator (active high)
+status_led = new LEDIndicator(use_mosfet=False, active_low=False)
+
+# Connect power supply
+power_5v = new ElectricPower
+assert power_5v.voltage within 5V +/- 5%
+status_led.power_in ~ power_5v
+
+# Connect control signal
+status_signal = new ElectricLogic
+status_signal.reference ~ power_5v
+status_led.logic_in ~ status_signal
+
+# Connect to microcontroller
+microcontroller.gpio_status ~ status_signal.line
+
+# Configure LED properties
+status_led.led.led.color = LED.Color.GREEN
+status_led.led.led.current = 20mA +/- 5%
+status_led.led.led.forward_voltage = 2.1V +/- 10%
+
+# High-power LED with MOSFET driver
+power_led = new LEDIndicator(use_mosfet=True, active_low=False)
+power_led.power_in ~ power_5v
+power_led.logic_in ~ power_control_signal
+power_led.led.led.current = 100mA +/- 10%  # Higher current
+
+# Active-low indicator (ON when signal is LOW)
+error_led = new LEDIndicator(use_mosfet=False, active_low=True)
+error_led.power_in ~ power_5v
+error_led.logic_in ~ error_signal
+error_led.led.led.color = LED.Color.RED
+
+# Common applications: status indication, debugging, user feedback
+```
+</RequestExample>

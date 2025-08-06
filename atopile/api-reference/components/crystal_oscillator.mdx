@@ -8,36 +8,22 @@ description: ""
 
 ## Interfaces
 
-<ParamField path='crystal' type='string'>
+<ParamField path='xtal_if' type='XtalIF'>
 </ParamField>
-
-<ParamField path='capacitors' type='string'>
-</ParamField>
-
-<ParamField path='current_limiting_resistor' type='string'>
-</ParamField>
-
-<ParamField path='xtal_if' type='string'>
-</ParamField>
-
-
-## Traits
-
-[can_bridge](/atopile/api-reference/traits/can-bridge)
 
 
 ## Global Attributes
 
-These attributes are available to all modules and interfaces in a design.
 
-<ParamField path='lcsc_id' type='string'>
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
 
 Assign the LCSC ID of the module.
 
 If set, this will tell the picker to select that part from LCSC for this block.
 </ParamField>
 
-<ParamField path='manufacturer' type='string'>
+<ParamField path='manufacturer' type='str'>
 
 This module's manufacturer name, as a string.
 
@@ -46,7 +32,7 @@ It's recommended to fill this information based on what `ato create component`
 provides.
 </ParamField>
 
-<ParamField path='mpn' type='string'>
+<ParamField path='mpn' type='str'>
 
 This module's manufacturer part number, as a string.
 
@@ -54,7 +40,7 @@ For the picker to select the correct part from the manufacturer,
 this must be set.
 </ParamField>
 
-<ParamField path='package' type='string'>
+<ParamField path='package' type='str'>
 
 The package of the module.
 
@@ -63,20 +49,52 @@ This drives which components can be selected, and what footprint is used.
 Must exactly match a known package name.
 </ParamField>
 
-<ParamField path='exclude_from_bom' type='string'>
+<ParamField path='exclude_from_bom' type='bool'>
 </ParamField>
 
-<ParamField path='override_net_name' type='string'>
+<ParamField path='override_net_name' type='str'>
 
 When set on an interface, this will override the net name of the interface.
 
 This is useful for renaming nets which are automatically generated.
 </ParamField>
 
-<ParamField path='required' type='string'>
+<ParamField path='required' type='bool'>
 
 Only for ModuleInterfaces.
 If set to `True`, require that interface is connected to something outside
 of the module it's defined in.
 </ParamField>
 
+<RequestExample>
+```ato Basic Usage
+import Crystal_Oscillator, ElectricPower
+
+crystal_osc = new Crystal_Oscillator
+
+# Configure crystal parameters
+crystal_osc.crystal.frequency = 16MHz +/- 20ppm
+crystal_osc.crystal.load_capacitance = 18pF +/- 10%
+crystal_osc.crystal.equivalent_series_resistance = 80ohm +/- 20%
+crystal_osc.crystal.package = "HC49U"
+
+# Connect power for ground reference
+power_3v3 = new ElectricPower
+assert power_3v3.voltage within 3.3V +/- 5%
+crystal_osc.xtal_if.gnd ~ power_3v3.lv
+
+# Connect to microcontroller crystal pins
+microcontroller.xtal_in ~ crystal_osc.xtal_if.xin
+microcontroller.xtal_out ~ crystal_osc.xtal_if.xout
+
+# Load capacitors are automatically calculated:
+# C_load = (Crystal_load_cap - Stray_cap) * 2
+# Typically results in 22pF capacitors for 18pF crystal
+
+# Current limiting resistor prevents overdrive (optional)
+crystal_osc.current_limiting_resistor.resistance = 1kohm +/- 5%
+
+# Common frequencies: 8MHz, 12MHz, 16MHz, 20MHz, 25MHz
+# Used for: microcontroller clocks, RTC, timing references
+```
+</RequestExample>
