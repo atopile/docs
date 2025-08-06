@@ -117,12 +117,9 @@ def generate_dummy_value(param_type, param_name: str):
             if hasattr(param_type, "__call__"):
                 return param_type()
         except Exception:
-            try:
-                # Try with a single string argument (common pattern)
-                if hasattr(param_type, "__call__"):
-                    return param_type("dummy")
-            except Exception:
-                pass
+            # Try with a single string argument (common pattern)
+            if hasattr(param_type, "__call__"):
+                return param_type("dummy")
 
     # Fallback for specific parameter names
     if "factory" in param_name.lower():
