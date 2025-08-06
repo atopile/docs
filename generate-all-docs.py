@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "atopile",
+# ]
+# ///
 """
 Generate markdown documentation for all atopile library components, interfaces, and traits.
 Uses AST parsing to extract real docstrings and information from source files.
@@ -21,14 +27,13 @@ from faebryk.core.moduleinterface import ModuleInterface
 from faebryk.core.trait import Trait
 from faebryk.core.parameter import Parameter
 from atopile.attributes import GlobalAttributes
+from atopile import attributes
 
 from atopile.mcp.tools.library import _get_library_nodes
 
 # Base path to the atopile library source
-LIBRARY_PATH = Path(__file__).parent.parent / "atopile" / "src" / "faebryk" / "library"
-ATTRIBUTES_PATH = (
-    Path(__file__).parent.parent / "atopile" / "src" / "atopile" / "attributes.py"
-)
+LIBRARY_PATH = Path(F.__file__).parent
+ATTRIBUTES_PATH = Path(attributes.__file__)
 BASE_DOC_PATH = Path(__file__).parent / "atopile" / "api-reference"
 
 doc_types = {"component": Module, "interface": ModuleInterface, "trait": Trait}
@@ -111,12 +116,12 @@ def generate_dummy_value(param_type, param_name: str):
             # Try no-argument constructor first
             if hasattr(param_type, "__call__"):
                 return param_type()
-        except:
+        except Exception:
             try:
                 # Try with a single string argument (common pattern)
                 if hasattr(param_type, "__call__"):
                     return param_type("dummy")
-            except:
+            except Exception:
                 pass
 
     # Fallback for specific parameter names
