@@ -15,12 +15,23 @@ After installation it will prompt you to install the `ato` CLI. Click the `Insta
 ![atopile extension install](/atopile/images/vscode-plugin-install-popup.png)
 
 <Accordion title="(Experimental) MCP server">
-    Set up an MCP server for this documentation with
+  Use the following to connect AI applications to this documentation
 
-    ``` sh
-    npx mint-mcp add atopile
-    ```
-
+  <Tabs>
+    <Tab title="URL">
+      ```cURL
+      https://docs.atopile.io/mcp
+      ```
+    </Tab>
+    <Tab title="Cursor">
+      [Install MCP Server](cursor://anysphere.cursor-deeplink/mcp/install?name=atopile-docs&config=eyJ1cmwiOiJodHRwczogLy9kb2NzLmF0b3BpbGUuaW8vbWNwIn0%3D)
+    </Tab>
+    <Tab title="Claude Code">
+      ```bash
+      claude mcp add --transport http atopile-docs https://docs.atopile.io/mcp
+      ```
+    </Tab>
+  </Tabs>
 </Accordion>
 
 ## Installing KiCAD
