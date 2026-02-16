@@ -5,11 +5,17 @@ icon: 'rectangle-history'
 
 {/* https://www.mintlify.com/docs/content/components/update */}
 
-<Update label="v0.12 (Draft)" description="🚧 In Development">
+<Update label="v0.12" description="✨ LSP Autocomplete, Go to Definition & Build DAG">
 
-This version is currently under development. Stay tuned for updates!
+LSP autocomplete is here! The language server now provides dot auto-complete suggestions, import suggestions, and "go to definition" navigation, making the editor experience significantly more productive. The VSCode extension is also less noisy with annoying popups removed.
 
-For up-to-date minor changes check out the [GitHub Releases](https://github.com/atopile/atopile/releases).
+The build system has been rearchitected to model builds as a DAG of individual steps, improving reliability and fixing issues with extra build directories being generated for dependencies.
+
+A new `ato package verify` command helps validate packages before publishing. Package management is more robust with version fallback support, system cert store usage, and fixed authentication headers.
+
+Library improvements include support for parallel pull resistors in `requires_pulls` checks and hidden value text on the fab layer for cleaner board outputs.
+
+**Full Changelog**: https://github.com/atopile/atopile/releases/tag/v0.12.0
 
 </Update>
 

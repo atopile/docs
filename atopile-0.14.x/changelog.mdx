@@ -5,11 +5,31 @@ icon: 'rectangle-history'
 
 {/* https://www.mintlify.com/docs/content/components/update */}
 
-<Update label="v0.12 (Draft)" description="🚧 In Development">
+<Update label="v0.14 (Draft)" description="🔥 Complete Core Rewrite & New VSCode Extension UI">
 
-This version is currently under development. Stay tuned for updates!
+This release features a complete rewrite of the atopile core, laying the foundation for faster builds and new language capabilities. The VSCode extension has a brand new UI for a more polished development experience, including a migration flow for upgrading from earlier versions, tightened project selection, and faster startup times.
 
-For up-to-date minor changes check out the [GitHub Releases](https://github.com/atopile/atopile/releases).
+Windows support has been improved for 0.14.x compatibility. The extension also adds an "open ato shell" menu option and fixes for SSH port forwarding and GLB workflows.
+
+The CLI now has better `ato package verify` behavior with fixes for overly broad file globbing. The core compiler improves detection of duplicate and unused import statements. KiCad integration fixes ensure correct layer type handling in SEXP output.
+
+Under the hood, Python 3.14 compatibility has been addressed across the toolchain, including ABI fixes, pynng version pinning, and KiCad Dockerfile updates.
+
+**Full Changelog**: https://github.com/atopile/atopile/releases/tag/v0.14.0
+
+</Update>
+
+<Update label="v0.12" description="✨ LSP Autocomplete, Go to Definition & Build DAG">
+
+LSP autocomplete is here! The language server now provides dot auto-complete suggestions, import suggestions, and "go to definition" navigation, making the editor experience significantly more productive. The VSCode extension is also less noisy with annoying popups removed.
+
+The build system has been rearchitected to model builds as a DAG of individual steps, improving reliability and fixing issues with extra build directories being generated for dependencies.
+
+A new `ato package verify` command helps validate packages before publishing. Package management is more robust with version fallback support, system cert store usage, and fixed authentication headers.
+
+Library improvements include support for parallel pull resistors in `requires_pulls` checks and hidden value text on the fab layer for cleaner board outputs.
+
+**Full Changelog**: https://github.com/atopile/atopile/releases/tag/v0.12.0
 
 </Update>
 
