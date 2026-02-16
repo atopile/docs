@@ -1,0 +1,134 @@
+---
+
+title: "LDO"
+icon: microchip
+description: ""
+---
+
+
+## Parameters
+
+<ParamField path='dropout_voltage' type='volt'>
+</ParamField>
+
+<ParamField path='max_input_voltage' type='volt'>
+</ParamField>
+
+<ParamField path='output_current' type='ampere'>
+</ParamField>
+
+<ParamField path='output_polarity' type='dimensionless'>
+</ParamField>
+
+<ParamField path='output_type' type='dimensionless'>
+</ParamField>
+
+<ParamField path='output_voltage' type='volt'>
+</ParamField>
+
+<ParamField path='quiescent_current' type='ampere'>
+</ParamField>
+
+<ParamField path='ripple_rejection_ratio' type='decibel'>
+</ParamField>
+
+
+## Interfaces
+
+<ParamField path='enable' type='EnablePin'>
+</ParamField>
+
+<ParamField path='power_in' type='ElectricPower'>
+</ParamField>
+
+<ParamField path='power_out' type='ElectricPower'>
+</ParamField>
+
+
+## Global Attributes
+
+
+These attributes are available to all modules and interfaces in a design.
+<ParamField path='lcsc_id' type='str'>
+
+Assign the LCSC ID of the module.
+
+If set, this will tell the picker to select that part from LCSC for this block.
+</ParamField>
+
+<ParamField path='manufacturer' type='str'>
+
+This module's manufacturer name, as a string.
+
+Only exact matches on the manufacturer's name will be found by the picker.
+It's recommended to fill this information based on what `ato create component`
+provides.
+</ParamField>
+
+<ParamField path='mpn' type='str'>
+
+This module's manufacturer part number, as a string.
+
+For the picker to select the correct part from the manufacturer,
+this must be set.
+</ParamField>
+
+<ParamField path='package' type='str'>
+
+The package of the module.
+
+This drives which components can be selected, and what footprint is used.
+
+Must exactly match a known package name.
+</ParamField>
+
+<ParamField path='exclude_from_bom' type='bool'>
+</ParamField>
+
+<ParamField path='override_net_name' type='str'>
+
+When set on an interface, this will override the net name of the interface.
+
+This is useful for renaming nets which are automatically generated.
+</ParamField>
+
+<ParamField path='required' type='bool'>
+
+Only for ModuleInterfaces.
+If set to `True`, require that interface is connected to something outside
+of the module it's defined in.
+</ParamField>
+
+<RequestExample>
+```ato Basic Usage
+import LDO, ElectricPower, Capacitor
+
+ldo = new LDO
+ldo.output_voltage = 3.3V +/- 2%
+ldo.max_input_voltage = 6V
+ldo.max_current = 1A
+ldo.dropout_voltage = 300mV +/- 50%
+ldo.output_type = LDO.OutputType.FIXED
+ldo.package = "SOT-223"
+
+# Connect input power (typically 5V)
+power_5v = new ElectricPower
+assert power_5v.voltage within 5V +/- 5%
+ldo.power_in ~ power_5v
+
+# Connect output power (regulated 3.3V)
+power_3v3 = new ElectricPower
+ldo.power_out ~ power_3v3
+
+# Enable the LDO
+ldo.enable_output()
+
+# Add input and output capacitors
+input_cap = new Capacitor
+output_cap = new Capacitor
+input_cap.capacitance = 1uF +/- 20%
+output_cap.capacitance = 10uF +/- 20%
+ldo.power_in.hv ~> input_cap ~> ldo.power_in.lv
+ldo.power_out.hv ~> output_cap ~> ldo.power_out.lv
+```
+</RequestExample>

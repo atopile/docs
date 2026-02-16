@@ -1,0 +1,30 @@
+---
+title: 'fabll (python)'
+description: fabll is atopile's Python framework for modeling circuits.
+icon: 'python'
+---
+
+
+`fabll` is a Python framework to model circuits, much like `ato`. It unlocks the whole Turing-complete power of Python to do design in, plus low-level procedural code and logic. Think of it like writing C for a Python module. Its focus is power—not ease of use like `ato`—so it's not recommended for most designs to start with.
+
+<Warning>
+    `fabll` is currently in a very early stage of development. It's not publicly supported yet.
+</Warning>
+
+## Disambiguation: `fabll` vs `ato`
+Think of it like the difference between C (fabll) and JavaScript (ato).
+fabll is for really complicated modular building block modules, while ato is better for most of the composition and simple modules.
+
+## Building `fabll` code
+
+To build a `fabll` module with atopile, you just need to point to the module within your `ato.yaml` configuration file.
+
+When you run `ato build`, atopile automatically builds the `fabll` module and links it to your project.
+
+## Importing `fabll` code
+
+You can just import `fabll` modules in `ato` like any other import:
+
+```python
+from "path/to/some/fabll.py" import SomeModule
+```
