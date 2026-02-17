@@ -213,11 +213,19 @@
             },
             "groups": [
               {
-                "group": "Get Started",
+                "group": "Introduction",
                 "pages": [
                   "atopile-0.14.x/introduction",
-                  "atopile-0.14.x/quickstart",
                   "atopile-0.14.x/changelog"
+                ]
+              },
+              {
+                "group": "Getting Started Guide",
+                "pages": [
+                  "atopile-0.14.x/quickstart/1-installation",
+                  "atopile-0.14.x/quickstart/2-create-a-project",
+                  "atopile-0.14.x/quickstart/3-hello-world",
+                  "atopile-0.14.x/quickstart/4-examples"
                 ]
               },
               {
@@ -236,7 +244,6 @@
               {
                 "group": "Guides",
                 "pages": [
-                  "atopile-0.14.x/guides/install",
                   "atopile-0.14.x/guides/git",
                   "atopile-0.14.x/guides/publish",
                   "atopile-0.14.x/guides/faebryk",

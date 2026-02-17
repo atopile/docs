@@ -1,0 +1,35 @@
+---
+title: "2. Create a Project"
+description: "Scaffold a new atopile project"
+icon: "folder-plus"
+---
+
+## Creating a project
+
+```sh
+ato create project
+```
+
+Follow the prompts to create a new project from the template.
+
+## Project structure
+
+Your new project will have a file structure like this:
+
+```
+.
+├── LICENSE                    # 1. Default MIT license. You are free to change this
+├── README.md                  # 2. A description of your project
+├── ato.yaml                   # 3. atopile's configuration file
+├── build                      # 4. Build artifacts and cache (not version controlled)
+├── layouts                    # 5. KiCAD layout files
+│   └── default                # 6. There's a directory / layout per "build target"
+│       └── default.kicad_pcb  # 7. The layout file that will be updated every time you run `ato build -b default`
+└── demo.ato                   # 8. Your atopile source file
+```
+
+The most important three files in there are:
+
+- `demo.ato` - your atopile source file - this is where you write your atopile code
+- `default.kicad_pcb` - the layout file - this is the "board" file that looks like a PCB, and you can order from
+- `ato.yaml` - atopile's configuration file - this file is how atopile knows this is a project and what to do when you run `ato build`

@@ -51,3 +51,32 @@ dependencies:         # Added automatically by `ato add`
 * **paths**–lets you move `src/` or `layout/` somewhere else if needed.
 * **builds**–define one or more build targets (for example: default, panelized, test-jig).
 * **dependencies**–registry, git or local packages installed with `ato add`.
+
+## 3. A typical workflow
+
+1. Sketch your circuit on paper.
+2. Search https://packages.atopile.io and GitHub for pre-existing modules you need, and use `ato add` to install them.
+3. Design a module and do its calculations using `ato` code.
+4. Run `ato build` to compile your project, choose components to suit your design, and update your layout (PCB) file.
+5. Use KiCAD to lay out any changes
+6. Repeat steps 3-5 until you're happy with your design.
+7. When you're done with your design, push your changes to your repo.
+8. CI will automatically build and test your project, and generate the manufacturing files you need to order your PCBs.
+9. Take these manufacturing files to your PCB manufacturer to get your PCBAs.
+
+```mermaid
+graph TB
+  A[Sketch] --> AA['ato create project'];
+  AA --> BB[Pick a module];
+  BB --> B{Package exists?};
+  B -->|Yes| C['ato add'];
+  B -->|No| CC['ato create component' and Design it!];
+  C --> D[Hook it up];
+  CC --> D;
+  D --> E['ato build'];
+  E --> F[Layout using KiCAD];
+  F --> G{More modules to do?};
+  G -->|Yes| BB;
+  G -->|No| H[Download gerbers from CI];
+  H --> I[Order PCBs from manufacturer];
+```
