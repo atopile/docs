@@ -1,0 +1,28 @@
+---
+title: "4. Manufacturing Export"
+description: "Generate manufacturing outputs from your design"
+icon: "file-export"
+---
+
+## Exporting production files
+
+Once you've built your design, you can export production files for manufacturing.
+
+Run the following command to generate your production files:
+
+```sh
+ato build
+```
+
+This will generate the necessary manufacturing outputs in your project's `build/` directory, including:
+
+- **Gerber files** - PCB layer artwork for fabrication
+- **Drill files** - Hole locations and sizes
+- **BOM (Bill of Materials)** - Component list for procurement
+- **Pick and place files** - Component placement data for assembly
+
+## Viewing your outputs
+
+You can find all generated files in the `build/` directory of your project.
+
+These files are ready to upload to your preferred PCB manufacturer (eg. JLCPCB, PCBWay, OSH Park).
