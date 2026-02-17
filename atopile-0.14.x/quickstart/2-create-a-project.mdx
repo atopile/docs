@@ -6,11 +6,21 @@ icon: "hand-wave"
 
 ## Create a project
 
-```sh
-ato create project
-```
+Click the `+` button next to the project selector to create a new project.
 
-Follow the prompts to create a new project from the template.
+![Create a project](/atopile-0.14.x/images/project-create-1.png)
+
+Fill in the the prompts, then click **Create**.
+
+![Fill in project details](/atopile-0.14.x/images/project-create-2.png)
+
+Click on `main.ato` in the file explorer to open it in the editor. 
+
+![Project overview](/atopile-0.14.x/images/project-overview.png)
+
+`.ato` files are where design intent is captured. See [`ato` Language](/atopile-0.14.x/essentials/1-the-ato-language) for more details. 
+
+Other project files contain metadata and export artifacts. They are auto-generated when creating a new project. See [Project Structure](/atopile-0.14.x/essentials/5-project-structure) for more details.
 
 ## Build it
 
@@ -18,19 +28,16 @@ import QuickstartExample from "/snippets/examples/ch1_0_quickstart.mdx";
 
 <QuickstartExample />
 
-Update `demo.ato` with this code, then run:
+Update `main.ato` with this code, then click the **Build** button in the extension.
 
-```sh
-ato build --open
-```
+![Build button](/atopile-0.14.x/images/project-build.png)
 
-You should see a flurry of activity in the terminal with this message towards the end
+Build progress will appear in the **Build Queue** at the bottom of the sidebar.
 
-```sh
-INFO     Build successful! 🚀
-```
+A green checkmark means success! 🎉
 
-Then KiCAD will open up (that's what the `--open` flag does).
+You can open KiCad or the built-in viewers next to the build button.
+
 Your shiny new component should be waiting for you in the top left corner (possibly off the current screen).
 
 ![layout](/atopile-0.14.x/images/quickstart-layout.png)
