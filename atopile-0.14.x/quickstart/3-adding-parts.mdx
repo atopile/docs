@@ -1,0 +1,52 @@
+---
+title: "3. Adding Parts"
+description: "Add components to your design from packages and LCSC"
+icon: "plus"
+---
+
+There are three ways to add parts to your design:
+
+- Install a pre-made **package**
+- Add a specific component by **supplier search**
+- Let the **auto-picker** select passives for you
+
+## Packages
+
+Install a pre-made package with `ato add`:
+
+```bash
+ato add atopile/rp2040
+```
+
+```ato
+from "rp2040.ato" import RP2040
+
+module MyProject:
+    mcu = new RP2040
+```
+
+See the [packages guide](../essentials/4-packages) for more details.
+
+## Supplier Search
+
+Add a specific component by LCSC or manufacturer part number with `ato create part`:
+
+```bash
+ato create part
+```
+
+Search by LCSC part number (eg. `C7426`) or manufacturer part number (eg. `NE5532DR`).
+
+See the [adding components guide](../essentials/3-add-component) for more details.
+
+## Auto-picker
+
+For passives, specify your requirements and atopile will automatically select a matching part:
+
+```ato
+resistor = new Resistor
+resistor.resistance = 10kohm +/- 5%
+resistor.package = "0402"
+```
+
+See the [adding components guide](../essentials/3-add-component) for more details.

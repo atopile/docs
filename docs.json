@@ -224,8 +224,9 @@
                 "pages": [
                   "atopile-0.14.x/quickstart/1-installation",
                   "atopile-0.14.x/quickstart/2-create-a-project",
-                  "atopile-0.14.x/quickstart/3-manufacturing-files",
-                  "atopile-0.14.x/quickstart/4-examples"
+                  "atopile-0.14.x/quickstart/3-adding-parts",
+                  "atopile-0.14.x/quickstart/4-manufacturing-files",
+                  "atopile-0.14.x/quickstart/5-examples"
                 ]
               },
               {
