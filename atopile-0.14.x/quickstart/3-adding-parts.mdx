@@ -12,9 +12,9 @@ There are three ways to add parts to your design:
 
 ## Packages
 
-Click the **Add package dependency** button in the sidebar, then enter the package name (eg. `atopile/rp2040`).
+In the sidebar, open the **Packages** tab. Under the **Browse** tab, you can search for and browse available packages. Click on a package to add it to your project.
 
-You can also browse available packages by clicking **Open Package Explorer** in the sidebar.
+You can also switch to the **Project** tab to view and manage the packages already installed in your project.
 
 ```ato
 from "rp2040.ato" import RP2040
@@ -25,22 +25,24 @@ module MyProject:
 
 See the [packages guide](../essentials/4-packages) for more details.
 
-## Supplier Search
+## Supplier Part Search
 
-Click the **Add part to project** button in the sidebar, then enter an LCSC part number (eg. `C7426`) or manufacturer part number (eg. `NE5532DR`).
+In the sidebar, open the **Find Parts** tab. Under the **Find Parts** sub-tab, search for JLCPCB parts by name, description, or part number. Click on a part to add it to your project.
 
-The extension will fetch the part and add the pinout, footprint, and 3D model to your project.
+You can switch to the **Project** tab to view the parts already added to your project.
 
 See the [adding components guide](../essentials/3-add-component) for more details.
 
 ## Auto-picker
 
-For passives, specify your requirements and atopile will automatically select a matching part:
+For passives and other common components, specify your requirements and atopile will automatically select a matching part:
 
 ```ato
 resistor = new Resistor
 resistor.resistance = 10kohm +/- 5%
 resistor.package = "0402"
 ```
+
+The **Standard Library** tab in the sidebar lists built-in interfaces and modules (such as `Resistor`, `Capacitor`, `LED`, `MOSFET`, and more). Most of the components in the standard library are auto-pickable.
 
 See the [adding components guide](../essentials/3-add-component) for more details.
