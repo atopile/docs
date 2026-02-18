@@ -12,11 +12,9 @@ There are three ways to add parts to your design:
 
 ## Packages
 
-Install a pre-made package with `ato add`:
+Click the **Add package dependency** button in the sidebar, then enter the package name (eg. `atopile/rp2040`).
 
-```bash
-ato add atopile/rp2040
-```
+You can also browse available packages by clicking **Open Package Explorer** in the sidebar.
 
 ```ato
 from "rp2040.ato" import RP2040
@@ -29,13 +27,9 @@ See the [packages guide](../essentials/4-packages) for more details.
 
 ## Supplier Search
 
-Add a specific component by LCSC or manufacturer part number with `ato create part`:
+Click the **Add part to project** button in the sidebar, then enter an LCSC part number (eg. `C7426`) or manufacturer part number (eg. `NE5532DR`).
 
-```bash
-ato create part
-```
-
-Search by LCSC part number (eg. `C7426`) or manufacturer part number (eg. `NE5532DR`).
+The extension will fetch the part and add the pinout, footprint, and 3D model to your project.
 
 See the [adding components guide](../essentials/3-add-component) for more details.
 

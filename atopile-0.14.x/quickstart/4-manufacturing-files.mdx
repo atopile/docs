@@ -6,23 +6,28 @@ icon: "file-export"
 
 ## Exporting production files
 
-Once you've built your design, you can export production files for manufacturing.
+Click the **Generate manufacturing data** button in the sidebar to open the manufacturing export wizard. The wizard walks you through three stages:
 
-Run the following command to generate your production files:
+### 1. Build
 
-```sh
-ato build
-```
+The wizard checks for uncommitted changes and then builds your project to generate manufacturing outputs. Click **Start Build** to begin. You'll see live progress as each build step completes.
 
-This will generate the necessary manufacturing outputs in your project's `build/` directory, including:
+### 2. Review
 
-- **Gerber files** - PCB layer artwork for fabrication
-- **Drill files** - Hole locations and sizes
-- **BOM (Bill of Materials)** - Component list for procurement
-- **Pick and place files** - Component placement data for assembly
+Once the build finishes, review your outputs across three tabs:
 
-## Viewing your outputs
+- **Gerbers** - Visual preview of your PCB layers
+- **BOM** - Bill of materials with part pricing and stock availability
+- **3D Preview** - 3D model of your assembled board
 
-You can find all generated files in the `build/` directory of your project.
+Mark each tab as reviewed by clicking the checkmark button. The wizard also runs post-build checks including verifying that gerbers, BOM, and pick-and-place files were generated, and checking parts availability.
 
-These files are ready to upload to your preferred PCB manufacturer (eg. JLCPCB, PCBWay, OSH Park).
+### 3. Export
+
+After reviewing, the wizard shows a board summary and estimated cost breakdown (PCB fabrication, components, and assembly). Choose an export directory and click **Export Files** to generate:
+
+- **Gerber files** (.zip) - PCB layer artwork for fabrication
+- **BOM** (.csv) - Component list for procurement
+- **Pick and place** (.csv) - Component placement data for assembly
+
+The exported files are ready to upload to JLCPCB — the wizard includes a direct link to their order page.
