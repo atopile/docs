@@ -64,13 +64,13 @@ Convenience properties for accessing resistor terminals:
 
 The Resistor component automatically includes these traits:
 
-### [pickable](/atopile/api-reference/traits/pickable)
+### pickable
 Enables automatic part selection from the component database based on resistance, power, and voltage requirements.
 
-### [can_bridge](/atopile/api-reference/traits/can-bridge)
+### can_bridge
 Allows the resistor to be used in bridging connections with the `~>` operator for series connections.
 
-### [simple_value_representation](/atopile/api-reference/traits/simple-value-representation)
+### simple_value_representation
 Provides a simplified string representation showing key parameters for debugging and documentation.
 
 ## Package Selection
