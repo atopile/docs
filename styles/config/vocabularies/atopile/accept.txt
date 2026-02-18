@@ -8,7 +8,7 @@ baudrate
 config
 fabll
 faebryk
-gerber
+(?i)gerbers?
 githash
 github|GitHub
 ing
@@ -36,3 +36,6 @@ CLI
 pinout
 panelized
 partnumber
+lightbulb
+[Uu]v
+auto-pickable
