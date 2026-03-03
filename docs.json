@@ -15,183 +15,377 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
+    "versions": [
       {
-        "tab": "atopile",
-        "global": {
-          "anchors": [
-            {
-              "anchor": "GitHub",
-              "href": "https://github.com/atopile/atopile",
-              "icon": "github"
-            }
-          ]
-        },
-        "groups": [
+        "version": "0.12.x",
+        "default": true,
+        "tabs": [
           {
-            "group": "Get Started",
-            "pages": [
-              "atopile/introduction",
-              "atopile/quickstart",
-              "atopile/changelog"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "atopile/essentials/1-the-ato-language",
-              "atopile/essentials/2-the-ato-compiler",
-              "atopile/essentials/3-add-component",
-              "atopile/essentials/4-packages",
-              "atopile/essentials/5-project-structure",
-              "atopile/essentials/6-layout",
-              "atopile/essentials/7-saving-your-work",
-              "atopile/essentials/8-traits"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "atopile/guides/install",
-              "atopile/guides/git",
-              "atopile/guides/publish",
-              "atopile/guides/faebryk",
-              "atopile/guides/fabll",
-              "atopile/guides/development"
-            ]
-          },
-          {
-            "group": "Library Reference",
-            "pages": [
+            "tab": "atopile",
+            "global": {
+              "anchors": [
+                {
+                  "anchor": "GitHub",
+                  "href": "https://github.com/atopile/atopile",
+                  "icon": "github"
+                }
+              ]
+            },
+            "groups": [
               {
-                "group": "Components",
+                "group": "Get Started",
                 "pages": [
-                  "atopile/api-reference/components/battery",
-                  "atopile/api-reference/components/bjt",
-                  "atopile/api-reference/components/capacitor",
-                  "atopile/api-reference/components/capacitorelectrolytic",
-                  "atopile/api-reference/components/common_mode_filter",
-                  "atopile/api-reference/components/comparator",
-                  "atopile/api-reference/components/crystal",
-                  "atopile/api-reference/components/crystal_oscillator",
-                  "atopile/api-reference/components/diode",
-                  "atopile/api-reference/components/dip",
-                  "atopile/api-reference/components/eeprom",
-                  "atopile/api-reference/components/electriclogicgate",
-                  "atopile/api-reference/components/fan",
-                  "atopile/api-reference/components/filter",
-                  "atopile/api-reference/components/filterelectricallc",
-                  "atopile/api-reference/components/filterelectricalrc",
-                  "atopile/api-reference/components/footprint",
-                  "atopile/api-reference/components/fuse",
-                  "atopile/api-reference/components/gdt",
-                  "atopile/api-reference/components/inductor",
-                  "atopile/api-reference/components/kicadfootprint",
-                  "atopile/api-reference/components/ldo",
-                  "atopile/api-reference/components/led",
-                  "atopile/api-reference/components/ledindicator",
-                  "atopile/api-reference/components/logicgate",
-                  "atopile/api-reference/components/mosfet",
-                  "atopile/api-reference/components/multicapacitor",
-                  "atopile/api-reference/components/net",
-                  "atopile/api-reference/components/nfet",
-                  "atopile/api-reference/components/opamp",
-                  "atopile/api-reference/components/pfet",
-                  "atopile/api-reference/components/potentiometer",
-                  "atopile/api-reference/components/poweredled",
-                  "atopile/api-reference/components/powermux",
-                  "atopile/api-reference/components/powerswitch",
-                  "atopile/api-reference/components/powerswitchmosfet",
-                  "atopile/api-reference/components/powerswitchstatic",
-                  "atopile/api-reference/components/regulator",
-                  "atopile/api-reference/components/relay",
-                  "atopile/api-reference/components/resistor",
-                  "atopile/api-reference/components/resistorarray",
-                  "atopile/api-reference/components/resistorvoltagedivider",
-                  "atopile/api-reference/components/smdtwopin",
-                  "atopile/api-reference/components/soic",
-                  "atopile/api-reference/components/spiflash",
-                  "atopile/api-reference/components/surgeprotection",
-                  "atopile/api-reference/components/symbol",
-                  "atopile/api-reference/components/testpoint",
-                  "atopile/api-reference/components/tvs"
+                  "atopile-0.12.x/introduction",
+                  "atopile-0.12.x/quickstart",
+                  "atopile-0.12.x/changelog"
                 ]
               },
               {
-                "group": "Interfaces",
+                "group": "Essentials",
                 "pages": [
-                  "atopile/api-reference/interfaces/addressor",
-                  "atopile/api-reference/interfaces/can",
-                  "atopile/api-reference/interfaces/can_ttl",
-                  "atopile/api-reference/interfaces/differentialpair",
-                  "atopile/api-reference/interfaces/electrical",
-                  "atopile/api-reference/interfaces/electriclogic",
-                  "atopile/api-reference/interfaces/electricpower",
-                  "atopile/api-reference/interfaces/electricsignal",
-                  "atopile/api-reference/interfaces/enablepin",
-                  "atopile/api-reference/interfaces/ethernet",
-                  "atopile/api-reference/interfaces/hdmi",
-                  "atopile/api-reference/interfaces/i2c",
-                  "atopile/api-reference/interfaces/i2s",
-                  "atopile/api-reference/interfaces/jtag",
-                  "atopile/api-reference/interfaces/logic",
-                  "atopile/api-reference/interfaces/mechanical",
-                  "atopile/api-reference/interfaces/multispi",
-                  "atopile/api-reference/interfaces/pad",
-                  "atopile/api-reference/interfaces/pdm",
-                  "atopile/api-reference/interfaces/power",
-                  "atopile/api-reference/interfaces/rs232",
-                  "atopile/api-reference/interfaces/rs485halfduplex",
-                  "atopile/api-reference/interfaces/sercom",
-                  "atopile/api-reference/interfaces/signal",
-                  "atopile/api-reference/interfaces/spi",
-                  "atopile/api-reference/interfaces/swd",
-                  "atopile/api-reference/interfaces/uart",
-                  "atopile/api-reference/interfaces/uart_base",
-                  "atopile/api-reference/interfaces/usb2_0",
-                  "atopile/api-reference/interfaces/usb2_0_if",
-                  "atopile/api-reference/interfaces/usb3",
-                  "atopile/api-reference/interfaces/usb3_if",
-                  "atopile/api-reference/interfaces/usb_c",
-                  "atopile/api-reference/interfaces/xtalif"
+                  "atopile-0.12.x/essentials/1-the-ato-language",
+                  "atopile-0.12.x/essentials/2-the-ato-compiler",
+                  "atopile-0.12.x/essentials/3-add-component",
+                  "atopile-0.12.x/essentials/4-packages",
+                  "atopile-0.12.x/essentials/5-project-structure",
+                  "atopile-0.12.x/essentials/6-layout",
+                  "atopile-0.12.x/essentials/7-saving-your-work",
+                  "atopile-0.12.x/essentials/8-traits"
                 ]
               },
               {
-                "group": "Traits",
+                "group": "Guides",
                 "pages": [
-                  "atopile/api-reference/traits/can_bridge_by_name",
-                  "atopile/api-reference/traits/requires_pulls"
+                  "atopile-0.12.x/guides/install",
+                  "atopile-0.12.x/guides/git",
+                  "atopile-0.12.x/guides/publish",
+                  "atopile-0.12.x/guides/faebryk",
+                  "atopile-0.12.x/guides/fabll",
+                  "atopile-0.12.x/guides/development"
+                ]
+              },
+              {
+                "group": "Library Reference",
+                "pages": [
+                  {
+                    "group": "Components",
+                    "pages": [
+                      "atopile-0.12.x/api-reference/components/battery",
+                      "atopile-0.12.x/api-reference/components/bjt",
+                      "atopile-0.12.x/api-reference/components/capacitor",
+                      "atopile-0.12.x/api-reference/components/capacitorelectrolytic",
+                      "atopile-0.12.x/api-reference/components/common_mode_filter",
+                      "atopile-0.12.x/api-reference/components/comparator",
+                      "atopile-0.12.x/api-reference/components/crystal",
+                      "atopile-0.12.x/api-reference/components/crystal_oscillator",
+                      "atopile-0.12.x/api-reference/components/diode",
+                      "atopile-0.12.x/api-reference/components/dip",
+                      "atopile-0.12.x/api-reference/components/eeprom",
+                      "atopile-0.12.x/api-reference/components/electriclogicgate",
+                      "atopile-0.12.x/api-reference/components/fan",
+                      "atopile-0.12.x/api-reference/components/filter",
+                      "atopile-0.12.x/api-reference/components/filterelectricallc",
+                      "atopile-0.12.x/api-reference/components/filterelectricalrc",
+                      "atopile-0.12.x/api-reference/components/footprint",
+                      "atopile-0.12.x/api-reference/components/fuse",
+                      "atopile-0.12.x/api-reference/components/gdt",
+                      "atopile-0.12.x/api-reference/components/inductor",
+                      "atopile-0.12.x/api-reference/components/kicadfootprint",
+                      "atopile-0.12.x/api-reference/components/ldo",
+                      "atopile-0.12.x/api-reference/components/led",
+                      "atopile-0.12.x/api-reference/components/ledindicator",
+                      "atopile-0.12.x/api-reference/components/logicgate",
+                      "atopile-0.12.x/api-reference/components/mosfet",
+                      "atopile-0.12.x/api-reference/components/multicapacitor",
+                      "atopile-0.12.x/api-reference/components/net",
+                      "atopile-0.12.x/api-reference/components/nfet",
+                      "atopile-0.12.x/api-reference/components/opamp",
+                      "atopile-0.12.x/api-reference/components/pfet",
+                      "atopile-0.12.x/api-reference/components/potentiometer",
+                      "atopile-0.12.x/api-reference/components/poweredled",
+                      "atopile-0.12.x/api-reference/components/powermux",
+                      "atopile-0.12.x/api-reference/components/powerswitch",
+                      "atopile-0.12.x/api-reference/components/powerswitchmosfet",
+                      "atopile-0.12.x/api-reference/components/powerswitchstatic",
+                      "atopile-0.12.x/api-reference/components/regulator",
+                      "atopile-0.12.x/api-reference/components/relay",
+                      "atopile-0.12.x/api-reference/components/resistor",
+                      "atopile-0.12.x/api-reference/components/resistorarray",
+                      "atopile-0.12.x/api-reference/components/resistorvoltagedivider",
+                      "atopile-0.12.x/api-reference/components/smdtwopin",
+                      "atopile-0.12.x/api-reference/components/soic",
+                      "atopile-0.12.x/api-reference/components/spiflash",
+                      "atopile-0.12.x/api-reference/components/surgeprotection",
+                      "atopile-0.12.x/api-reference/components/symbol",
+                      "atopile-0.12.x/api-reference/components/testpoint",
+                      "atopile-0.12.x/api-reference/components/tvs"
+                    ]
+                  },
+                  {
+                    "group": "Interfaces",
+                    "pages": [
+                      "atopile-0.12.x/api-reference/interfaces/addressor",
+                      "atopile-0.12.x/api-reference/interfaces/can",
+                      "atopile-0.12.x/api-reference/interfaces/can_ttl",
+                      "atopile-0.12.x/api-reference/interfaces/differentialpair",
+                      "atopile-0.12.x/api-reference/interfaces/electrical",
+                      "atopile-0.12.x/api-reference/interfaces/electriclogic",
+                      "atopile-0.12.x/api-reference/interfaces/electricpower",
+                      "atopile-0.12.x/api-reference/interfaces/electricsignal",
+                      "atopile-0.12.x/api-reference/interfaces/enablepin",
+                      "atopile-0.12.x/api-reference/interfaces/ethernet",
+                      "atopile-0.12.x/api-reference/interfaces/hdmi",
+                      "atopile-0.12.x/api-reference/interfaces/i2c",
+                      "atopile-0.12.x/api-reference/interfaces/i2s",
+                      "atopile-0.12.x/api-reference/interfaces/jtag",
+                      "atopile-0.12.x/api-reference/interfaces/logic",
+                      "atopile-0.12.x/api-reference/interfaces/mechanical",
+                      "atopile-0.12.x/api-reference/interfaces/multispi",
+                      "atopile-0.12.x/api-reference/interfaces/pad",
+                      "atopile-0.12.x/api-reference/interfaces/pdm",
+                      "atopile-0.12.x/api-reference/interfaces/power",
+                      "atopile-0.12.x/api-reference/interfaces/rs232",
+                      "atopile-0.12.x/api-reference/interfaces/rs485halfduplex",
+                      "atopile-0.12.x/api-reference/interfaces/sercom",
+                      "atopile-0.12.x/api-reference/interfaces/signal",
+                      "atopile-0.12.x/api-reference/interfaces/spi",
+                      "atopile-0.12.x/api-reference/interfaces/swd",
+                      "atopile-0.12.x/api-reference/interfaces/uart",
+                      "atopile-0.12.x/api-reference/interfaces/uart_base",
+                      "atopile-0.12.x/api-reference/interfaces/usb2_0",
+                      "atopile-0.12.x/api-reference/interfaces/usb2_0_if",
+                      "atopile-0.12.x/api-reference/interfaces/usb3",
+                      "atopile-0.12.x/api-reference/interfaces/usb3_if",
+                      "atopile-0.12.x/api-reference/interfaces/usb_c",
+                      "atopile-0.12.x/api-reference/interfaces/xtalif"
+                    ]
+                  },
+                  {
+                    "group": "Traits",
+                    "pages": [
+                      "atopile-0.12.x/api-reference/traits/can_bridge_by_name",
+                      "atopile-0.12.x/api-reference/traits/requires_pulls"
+                    ]
+                  }
                 ]
               }
             ]
           }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Packages",
-          "href": "https://packages.atopile.io",
-          "icon": "box"
-        },
-        {
-          "anchor": "Support",
-          "href": "https://docs.atopile.io/support",
-          "icon": "question"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://discord.gg/CRe5xaDBr3",
-          "icon": "discord"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://blog.atopile.io",
-          "icon": "newspaper"
+        ],
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Packages",
+              "href": "https://packages.atopile.io",
+              "icon": "box"
+            },
+            {
+              "anchor": "Support",
+              "href": "https://docs.atopile.io/support",
+              "icon": "question"
+            },
+            {
+              "anchor": "Community",
+              "href": "https://discord.gg/CRe5xaDBr3",
+              "icon": "discord"
+            },
+            {
+              "anchor": "Blog",
+              "href": "https://blog.atopile.io",
+              "icon": "newspaper"
+            }
+          ]
         }
-      ]
-    }
+      },
+      {
+        "version": "0.14.x",
+        "tabs": [
+          {
+            "tab": "atopile",
+            "global": {
+              "anchors": [
+                {
+                  "anchor": "GitHub",
+                  "href": "https://github.com/atopile/atopile",
+                  "icon": "github"
+                }
+              ]
+            },
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "atopile-0.14.x/introduction",
+                  "atopile-0.14.x/changelog"
+                ]
+              },
+              {
+                "group": "Getting Started Guide",
+                "pages": [
+                  "atopile-0.14.x/quickstart/1-installation",
+                  "atopile-0.14.x/quickstart/2-create-a-project",
+                  "atopile-0.14.x/quickstart/3-adding-parts",
+                  "atopile-0.14.x/quickstart/4-manufacturing-files",
+                  "atopile-0.14.x/quickstart/5-examples"
+                ]
+              },
+              {
+                "group": "Essentials",
+                "pages": [
+                  "atopile-0.14.x/essentials/1-the-ato-language",
+                  "atopile-0.14.x/essentials/2-the-ato-compiler",
+                  "atopile-0.14.x/essentials/3-add-component",
+                  "atopile-0.14.x/essentials/4-packages",
+                  "atopile-0.14.x/essentials/5-project-structure",
+                  "atopile-0.14.x/essentials/6-layout",
+                  "atopile-0.14.x/essentials/7-saving-your-work",
+                  "atopile-0.14.x/essentials/8-traits"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "atopile-0.14.x/guides/git",
+                  "atopile-0.14.x/guides/publish",
+                  "atopile-0.14.x/guides/faebryk",
+                  "atopile-0.14.x/guides/fabll",
+                  "atopile-0.14.x/guides/development"
+                ]
+              },
+              {
+                "group": "Library Reference",
+                "pages": [
+                  {
+                    "group": "Components",
+                    "pages": [
+                      "atopile-0.14.x/api-reference/components/battery",
+                      "atopile-0.14.x/api-reference/components/bjt",
+                      "atopile-0.14.x/api-reference/components/capacitor",
+                      "atopile-0.14.x/api-reference/components/capacitorelectrolytic",
+                      "atopile-0.14.x/api-reference/components/common_mode_filter",
+                      "atopile-0.14.x/api-reference/components/comparator",
+                      "atopile-0.14.x/api-reference/components/crystal",
+                      "atopile-0.14.x/api-reference/components/crystal_oscillator",
+                      "atopile-0.14.x/api-reference/components/diode",
+                      "atopile-0.14.x/api-reference/components/dip",
+                      "atopile-0.14.x/api-reference/components/eeprom",
+                      "atopile-0.14.x/api-reference/components/electriclogicgate",
+                      "atopile-0.14.x/api-reference/components/fan",
+                      "atopile-0.14.x/api-reference/components/filter",
+                      "atopile-0.14.x/api-reference/components/filterelectricallc",
+                      "atopile-0.14.x/api-reference/components/filterelectricalrc",
+                      "atopile-0.14.x/api-reference/components/footprint",
+                      "atopile-0.14.x/api-reference/components/fuse",
+                      "atopile-0.14.x/api-reference/components/gdt",
+                      "atopile-0.14.x/api-reference/components/inductor",
+                      "atopile-0.14.x/api-reference/components/kicadfootprint",
+                      "atopile-0.14.x/api-reference/components/ldo",
+                      "atopile-0.14.x/api-reference/components/led",
+                      "atopile-0.14.x/api-reference/components/ledindicator",
+                      "atopile-0.14.x/api-reference/components/logicgate",
+                      "atopile-0.14.x/api-reference/components/mosfet",
+                      "atopile-0.14.x/api-reference/components/multicapacitor",
+                      "atopile-0.14.x/api-reference/components/net",
+                      "atopile-0.14.x/api-reference/components/nfet",
+                      "atopile-0.14.x/api-reference/components/opamp",
+                      "atopile-0.14.x/api-reference/components/pfet",
+                      "atopile-0.14.x/api-reference/components/potentiometer",
+                      "atopile-0.14.x/api-reference/components/poweredled",
+                      "atopile-0.14.x/api-reference/components/powermux",
+                      "atopile-0.14.x/api-reference/components/powerswitch",
+                      "atopile-0.14.x/api-reference/components/powerswitchmosfet",
+                      "atopile-0.14.x/api-reference/components/powerswitchstatic",
+                      "atopile-0.14.x/api-reference/components/regulator",
+                      "atopile-0.14.x/api-reference/components/relay",
+                      "atopile-0.14.x/api-reference/components/resistor",
+                      "atopile-0.14.x/api-reference/components/resistorarray",
+                      "atopile-0.14.x/api-reference/components/resistorvoltagedivider",
+                      "atopile-0.14.x/api-reference/components/smdtwopin",
+                      "atopile-0.14.x/api-reference/components/soic",
+                      "atopile-0.14.x/api-reference/components/spiflash",
+                      "atopile-0.14.x/api-reference/components/surgeprotection",
+                      "atopile-0.14.x/api-reference/components/symbol",
+                      "atopile-0.14.x/api-reference/components/testpoint",
+                      "atopile-0.14.x/api-reference/components/tvs"
+                    ]
+                  },
+                  {
+                    "group": "Interfaces",
+                    "pages": [
+                      "atopile-0.14.x/api-reference/interfaces/addressor",
+                      "atopile-0.14.x/api-reference/interfaces/can",
+                      "atopile-0.14.x/api-reference/interfaces/can_ttl",
+                      "atopile-0.14.x/api-reference/interfaces/differentialpair",
+                      "atopile-0.14.x/api-reference/interfaces/electrical",
+                      "atopile-0.14.x/api-reference/interfaces/electriclogic",
+                      "atopile-0.14.x/api-reference/interfaces/electricpower",
+                      "atopile-0.14.x/api-reference/interfaces/electricsignal",
+                      "atopile-0.14.x/api-reference/interfaces/enablepin",
+                      "atopile-0.14.x/api-reference/interfaces/ethernet",
+                      "atopile-0.14.x/api-reference/interfaces/hdmi",
+                      "atopile-0.14.x/api-reference/interfaces/i2c",
+                      "atopile-0.14.x/api-reference/interfaces/i2s",
+                      "atopile-0.14.x/api-reference/interfaces/jtag",
+                      "atopile-0.14.x/api-reference/interfaces/logic",
+                      "atopile-0.14.x/api-reference/interfaces/mechanical",
+                      "atopile-0.14.x/api-reference/interfaces/multispi",
+                      "atopile-0.14.x/api-reference/interfaces/pad",
+                      "atopile-0.14.x/api-reference/interfaces/pdm",
+                      "atopile-0.14.x/api-reference/interfaces/power",
+                      "atopile-0.14.x/api-reference/interfaces/rs232",
+                      "atopile-0.14.x/api-reference/interfaces/rs485halfduplex",
+                      "atopile-0.14.x/api-reference/interfaces/sercom",
+                      "atopile-0.14.x/api-reference/interfaces/signal",
+                      "atopile-0.14.x/api-reference/interfaces/spi",
+                      "atopile-0.14.x/api-reference/interfaces/swd",
+                      "atopile-0.14.x/api-reference/interfaces/uart",
+                      "atopile-0.14.x/api-reference/interfaces/uart_base",
+                      "atopile-0.14.x/api-reference/interfaces/usb2_0",
+                      "atopile-0.14.x/api-reference/interfaces/usb2_0_if",
+                      "atopile-0.14.x/api-reference/interfaces/usb3",
+                      "atopile-0.14.x/api-reference/interfaces/usb3_if",
+                      "atopile-0.14.x/api-reference/interfaces/usb_c",
+                      "atopile-0.14.x/api-reference/interfaces/xtalif"
+                    ]
+                  },
+                  {
+                    "group": "Traits",
+                    "pages": [
+                      "atopile-0.14.x/api-reference/traits/can_bridge_by_name",
+                      "atopile-0.14.x/api-reference/traits/requires_pulls"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "global": {
+          "anchors": [
+            {
+              "anchor": "Packages",
+              "href": "https://packages.atopile.io",
+              "icon": "box"
+            },
+            {
+              "anchor": "Support",
+              "href": "https://docs.atopile.io/support",
+              "icon": "question"
+            },
+            {
+              "anchor": "Community",
+              "href": "https://discord.gg/CRe5xaDBr3",
+              "icon": "discord"
+            },
+            {
+              "anchor": "Blog",
+              "href": "https://blog.atopile.io",
+              "icon": "newspaper"
+            }
+          ]
+        }
+      }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -203,23 +397,23 @@
   "redirects": [
     {
       "source": "/support",
-      "destination": "/atopile/support"
+      "destination": "/atopile-0.12.x/support"
     },
     {
       "source": "/installation",
-      "destination": "/atopile/guides/install"
+      "destination": "/atopile-0.12.x/guides/install"
     },
     {
       "source": "/publish-package",
-      "destination": "/atopile/guides/publish"
+      "destination": "/atopile-0.12.x/guides/publish"
     },
     {
       "source": "/quickstart",
-      "destination": "/atopile/quickstart"
+      "destination": "/atopile-0.12.x/quickstart"
     },
     {
       "source": "/package-management",
-      "destination": "/atopile/essentials/4-packages"
+      "destination": "/atopile-0.12.x/essentials/4-packages"
     }
   ],
   "footer": {

@@ -1,0 +1,48 @@
+---
+title: "2. Hello, World!"
+description: "Create a project and build your first component"
+icon: "hand-wave"
+---
+
+## Create a project
+
+Click the `+` button next to the project selector to create a new project.
+
+![Create a project](/atopile-0.14.x/images/project-create-1.png)
+
+Fill in the prompts, then click **Create**.
+
+![Fill in project details](/atopile-0.14.x/images/project-create-2.png)
+
+Click on `main.ato` in the file explorer to open it in the editor. 
+
+![Project overview](/atopile-0.14.x/images/project-overview.png)
+
+`.ato` files are where design intent is captured. See [`ato` Language](/atopile-0.14.x/essentials/1-the-ato-language) for more details. 
+
+Other project files contain metadata and export artifacts. They are auto-generated when creating a new project. See [Project Structure](/atopile-0.14.x/essentials/5-project-structure) for more details.
+
+## Build it
+
+import QuickstartExample from "/snippets/examples/ch1_0_quickstart.mdx";
+
+<QuickstartExample />
+
+Update `main.ato` with this code, then click the **Build** button in the extension.
+
+![Build button](/atopile-0.14.x/images/project-build.png)
+
+Build progress will appear in the **Build Queue** at the bottom of the sidebar.
+
+A green checkmark means success! 🎉
+
+## Views
+
+After a successful build, you can visualize your design with the buttons next to the build button:
+
+- **2D Layout:** opens a built-in viewer showing component placement and board outline.
+- **3D Model:** opens a built-in 3D preview of your assembled board.
+- **KiCad:** opens the layout in KiCad for routing and detailed editing. Requires [KiCad](https://www.kicad.org/) to be installed.
+
+![layout](/atopile-0.14.x/images/quickstart-layout.png)
+

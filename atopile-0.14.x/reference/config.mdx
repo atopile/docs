@@ -1,0 +1,176 @@
+---
+title: 'config'
+description: 'The `ato.yaml` config file'
+icon: 'gear'
+---
+
+### `ato-version`
+
+The compiler version with which the project was developed.
+
+This is used by the compiler to ensure the code in this project is compatible with the compiler version.
+
+**Default value**: current compiler version
+
+**Type**: `str`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+ato-version: 0.3.0
+```
+
+### `paths.src`
+
+Project source code directory
+
+**Default value**: `elec/src`
+
+**Type**: `str`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+paths:
+  src: "./"
+```
+
+### `paths.layout`
+
+Project layout directory where KiCAD projects are stored and searched for
+
+**Default value**: `elec/layout`
+
+**Type**: `str`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+paths:
+  layout: "./"
+```
+
+### `dependencies`
+
+List of dependencies for the project
+
+**Default value**: `[]` or no dependencies
+
+**Type**:
+
+| Field | Type | Description | Default |
+| ----- | ---- | ----------- | ------- |
+| `name` | `str` | The name of the dependency | No default and required |
+| `version_spec` | `str` | The version specifier for the dependency | Latest tagged version or commit on `main` |
+| `link_broken` | `bool` | Whether the link to the upstream version is maintained / broken | `false` |
+| `path` | `str` | The path to the dependency within this project | `.ato/modules/<name>` |
+
+**Example usage**:
+
+```toml title="ato.yaml"
+dependencies:
+  - name: rp2040
+    version_spec: ">=3.0.0,<4.0.0"
+```
+
+### `builds`
+
+Build targets for the project
+
+**Default value**: `{}` or no build targets
+
+**Type**: `dict` (see "builds.name" etc... below for details)
+
+
+### `builds.entry`
+
+Entry point for the build
+
+**Default value**: Required, no default
+
+**Type**: `str`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        entry: some_file.ato:App
+```
+
+
+### `builds.targets`
+
+Build targets for the project
+
+**Default value**: `["__default__"]`, which is a special value.
+
+**Type**: `list[str]`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        targets:
+          - bom
+          - mfg-data
+```
+
+
+### `builds.exclude_targets`
+
+Excluding the `mfg-data` target is useful, for example, for CI build targets that represent a
+module, but not a board you'd manufacture.
+
+**Default value**: `[]`, don't actively exclude any targets
+
+**Type**: `list[str]`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        exclude_targets:
+          - bom
+          - mfg-data
+```
+
+### `builds.exclude_checks`
+
+A list of checks to exclude. Use qualified name of check e.g
+  - `PCB.requires_drc_check`
+  - `I2C.requires_unique_addresses`
+  - `requires_external_usage`
+
+**Default value**: `[]`, don't actively exclude any targets
+
+**Type**: `list[str]`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        exclude_checks:
+          - PCB.requires_drc_check
+          - I2C.requires_unique_addresses
+          - requires_external_usage
+```
+
+### `builds.hide_designators`
+
+Hide all the designators from the built PCB.
+
+**Default value**: `false`
+
+**Type**: `bool`
+
+**Example usage**:
+
+```toml title="ato.yaml"
+builds:
+    default:
+        hide_designators: true
+```

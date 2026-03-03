@@ -1,0 +1,33 @@
+---
+title: "4. Manufacturing Export"
+description: "Generate manufacturing outputs from your design"
+icon: "file-export"
+---
+
+## Exporting production files
+
+Click the **Generate manufacturing data** button in the sidebar to open the manufacturing export wizard. The wizard walks you through three stages:
+
+### 1. Build
+
+The wizard checks for uncommitted changes and then builds your project to generate manufacturing outputs. Click **Start Build** to begin. You'll see live progress as each build step completes.
+
+### 2. Review
+
+Once the build finishes, review your outputs across three tabs:
+
+- **Gerber files** - Visual preview of your PCB layers
+- **BOM** - Bill of materials with part pricing and stock availability
+- **3D Preview** - 3D model of your assembled board
+
+Mark each tab as reviewed by clicking the checkmark button. The wizard also runs post-build checks including verifying that gerber, BOM, and pick-and-place files were generated, and checking parts availability.
+
+### 3. Export
+
+After reviewing, the wizard shows a board summary and estimated cost breakdown (PCB fabrication, components, and assembly). Choose an export directory and click **Export Files** to generate:
+
+- **Gerber files** (.zip) - PCB layer artwork for fabrication
+- **BOM** (.csv) - Component list for procurement
+- **Pick and place** (.csv) - Component placement data for assembly
+
+The exported files are ready to upload to JLCPCB. The wizard includes a direct link to their order page.

@@ -1,0 +1,129 @@
+---
+title: "1. Install"
+description: "Get atopile extension and KiCad set up"
+icon: "download"
+---
+
+<Tip>
+Just want to try atopile without installing anything? Check out the [playground](https://atopile-playground.fly.dev/) — it runs entirely in your browser.
+
+Note: Nothing is saved between sessions. If you want to save your work, proceed with installing the extension.
+</Tip>
+
+The primary way to interact with atopile locally is via the VS Code extension. We also support forks like Cursor or Antigravity.
+
+## 1. Install Preferred VS Code Fork
+
+| Editor | Download |
+| --- | --- |
+| VSCode | https://code.visualstudio.com/download |
+| Cursor | https://cursor.com/download |
+| Google Antigravity | https://antigravity.google/download |
+
+
+
+## 2. Install Extension
+
+Once you have a VS Code editor, search for the extension or install by clicking [atopile extension](https://marketplace.visualstudio.com/items?itemName=atopile.atopile).
+
+![atopile extension](/atopile-0.14.x/images/vscode-plugin.png)
+
+{/* <Accordion title="(Experimental) MCP server">
+    Set up an MCP server for this documentation with
+
+    ``` sh
+    npx mint-mcp add atopile
+    ```
+</Accordion> */}
+
+Once the extension is installed, you might see a popup for uv installing. Allow that to finish.
+![atopile extension installing](/atopile-0.14.x/images/vscode-plugin-installing.png)
+
+Complete!
+![atopile extension installed](/atopile-0.14.x/images/vscode-plugin-install-complete.png)
+
+You will now have a *fresh* new atopile icon in your sidebar. Click it to open the extension and get started.
+![atopile extension overview](/atopile-0.14.x/images/vscode-plugin-overview.png)
+
+
+## 3. Install KiCAD
+
+If you want to layout or route PCBs you will need to install [KiCAD](https://www.kicad.org/download/).
+
+<CodeGroup>
+```sh macOS (brew)
+brew install kicad
+```
+
+```sh Arch Linux
+sudo pacman -S kicad
+```
+
+```sh Ubuntu
+sudo apt install kicad
+```
+
+```sh other
+https://www.kicad.org/download/
+# or click the KiCAD link above
+```
+
+</CodeGroup>
+
+## 4. Done!
+Great! At this point you can move on and [create your first project](./2-create-a-project).
+
+
+## Other Install Methods (Optional)
+
+### Homebrew <small>(recommended for macOS)</small>
+
+``` sh
+brew install atopile/tap/atopile
+```
+
+### uv <small>(recommended for other platforms)</small>
+
+1. Install `uv`
+
+    https://docs.astral.sh/uv/getting-started/installation/
+
+2. Install atopile with `uv`
+
+    ``` sh
+    uv tool install atopile
+    ```
+
+    <Warning>
+        If this is the first time you've used `uv` for a tool install, it might give you another command to run to finish setup.
+
+        Do it.
+    </Warning>
+
+3. Check `ato` installed
+
+    ``` sh
+    ato --version
+    ```
+
+### Editable Installation <small>(best for development)</small>
+
+1. Install `uv` (see above)
+
+2. Clone the repo
+
+    ``` sh
+    git clone https://github.com/atopile/atopile
+    ```
+
+3. `cd` into the repo
+
+    ``` sh
+    cd atopile
+    ```
+
+4. Install
+
+    ``` sh
+    uv sync --dev
+    ```
