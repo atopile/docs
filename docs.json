@@ -18,7 +18,6 @@
     "versions": [
       {
         "version": "0.12.x",
-        "default": true,
         "tabs": [
           {
             "tab": "atopile",
@@ -199,6 +198,7 @@
       },
       {
         "version": "0.14.x",
+        "default": true,
         "tabs": [
           {
             "tab": "atopile",
@@ -397,23 +397,23 @@
   "redirects": [
     {
       "source": "/support",
-      "destination": "/atopile-0.12.x/support"
+      "destination": "/atopile-0.14.x/support"
     },
     {
       "source": "/installation",
-      "destination": "/atopile-0.12.x/guides/install"
+      "destination": "/atopile-0.14.x/quickstart/1-installation"
     },
     {
       "source": "/publish-package",
-      "destination": "/atopile-0.12.x/guides/publish"
+      "destination": "/atopile-0.14.x/guides/publish"
     },
     {
       "source": "/quickstart",
-      "destination": "/atopile-0.12.x/quickstart"
+      "destination": "/atopile-0.14.x/quickstart/1-installation"
     },
     {
       "source": "/package-management",
-      "destination": "/atopile-0.12.x/essentials/4-packages"
+      "destination": "/atopile-0.14.x/essentials/4-packages"
     }
   ],
   "footer": {
