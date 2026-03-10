@@ -414,6 +414,10 @@
     {
       "source": "/package-management",
       "destination": "/atopile-0.14.x/essentials/4-packages"
+    },
+    {
+      "source": "/atopile/:slug*",
+      "destination": "/atopile-0.14.x/:slug*"
     }
   ],
   "footer": {
