@@ -397,23 +397,27 @@
   "redirects": [
     {
       "source": "/support",
-      "destination": "/atopile-0.14.x/support"
+      "destination": "/atopile/support"
     },
     {
       "source": "/installation",
-      "destination": "/atopile-0.14.x/quickstart/1-installation"
+      "destination": "/atopile/quickstart/1-installation"
+    },
+    {
+      "source": "/atopile/guides/install",
+      "destination": "/atopile/quickstart/1-installation"
     },
     {
       "source": "/publish-package",
-      "destination": "/atopile-0.14.x/guides/publish"
+      "destination": "/atopile/guides/publish"
     },
     {
       "source": "/quickstart",
-      "destination": "/atopile-0.14.x/quickstart/1-installation"
+      "destination": "/atopile/quickstart/1-installation"
     },
     {
       "source": "/package-management",
-      "destination": "/atopile-0.14.x/essentials/4-packages"
+      "destination": "/atopile/essentials/4-packages"
     },
     {
       "source": "/atopile/:slug*",
